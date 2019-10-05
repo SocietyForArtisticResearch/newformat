@@ -1,0 +1,48 @@
+* talk sept 30, 2019
+** jar expositions, unique, hard to reduce, paradoxes inside, getting lost inside
+** "printing" an exposition, overview, orientation
+** how to reduce the dimensionality of an exposition
+** "scanning" as reading, how to see the whole thing?
+** printable (as svg/pdf), plot
+** different types of viewing: reader view, folder, linearize, printed, grid, responsive, sequence ("next")
+** museum plan/map, navigation should be full screen/main entry point, (similar to prezi), exposition with a shape
+** switch between viewing modes, only images, videos, text, "rooms", museum plan
+** trace your own reading, reading changes it, annotations, take notes, reviewing
+** bookmarks
+** level of notes and where reader has been before (the read part), turn on/off
+** take me to a place i haven't seen
+** tagging of objects
+** relationships between objects, rdf
+** physical model proximity rendering
+
+
+* to read
+
+** Virtual Reality, Game Design, and Virtual Art Galleries from "Curating the Digital"
+
+** Arjun Sabharwal, Information architecture and hypertextuality: concerns for digital curation, "Digital_Curation_in_the_Digital"
+*** notes luc
+**** problem of networked, interconnected data
+**** // question of identity and autonomy, self-contained data
+**** information architecture:
+**** The combination of organization, labeling, and navigation schemes
+**** information architect’s contribution is to represent the narrative through the design of the information space occupied by hypertext
+**** // perhaps "contraction" could be a metaphor for linearization
+**** type of interconnections/links, unidirectional, bidirectional, many-to-one, etc..
+**** finding aids: stand-alone (or axial) and networked
+**** spatialized knowledge in museum exhibitions (Dallas 2007, // perhaps worth checking out)
+**** // slogan "Navigating Knowledge"
+**** // perhaps "archival exhibition" is a good orientation for the exposition
+**** // getting information on particular media, its history description etc
+**** case view level, shelf view p.79
+**** This approach turns virtual exhibits into access points to the archival and library resources.
+**** mapping content
+**** // tool for learning and teaching
+**** This approach turns virtual exhibits into access points to the archival and library resources.
+* other books and references
+** Documenting Performance: The Context and Processes of Digital Curation and Archiving
+** Rethinking curating: art after new media 
+** Sematic Web (?)
+
+* other ideas
+** digital curating studies as portal partners (http://www.gsa.ac.uk/study/graduate-degrees/curatorial-practice-(contemporary-art)/)
