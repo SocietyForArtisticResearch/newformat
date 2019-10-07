@@ -16,9 +16,19 @@
 ** physical model proximity rendering
 
 
-* to read
+* Notes on Readings
 
-** Virtual Reality, Game Design, and Virtual Art Galleries from "Curating the Digital"
+** S. Guynup, Virtual Reality, Game Design, and Virtual Art Galleries from "Curating the Digital"
+*** notes
+**** videogame scholar Jesper Juul’s framework of rules and fictions
+**** non-game virtual worlds
+**** fiction represents the story-driven and subjective elements in a game, while rules are objective and encode the allowable interactions and outcomes.
+**** videogames are incomplete worlds, unable to provide all the interaction implied by the fictional surroundings // think zizek
+**** While videogames create rules allowing for failure for the sake of a user’s experience, most productive software seek to  failure altogether.
+**** using a lens of rules and fictions to understand virtual spaces appears to have value.
+**** The slideshow-like presentation allows for the fast presentation and searching through of virtual art. The experience of roaming a gallery, however, is lost.
+**** functions of art gallery: presentation, exploration, and sociability
+**** Gallery Rules: Navigate, Arrange, Search
 
 ** Arjun Sabharwal, Information architecture and hypertextuality: concerns for digital curation, "Digital_Curation_in_the_Digital"
 *** notes luc
@@ -39,7 +49,7 @@
 **** mapping content
 **** // tool for learning and teaching
 **** This approach turns virtual exhibits into access points to the archival and library resources.
-* other books and references
+* other books and references, stuff to read
 ** Documenting Performance: The Context and Processes of Digital Curation and Archiving
 ** Rethinking curating: art after new media 
 ** Sematic Web (?)
