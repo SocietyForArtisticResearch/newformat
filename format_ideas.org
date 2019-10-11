@@ -16,10 +16,27 @@
 ** physical model proximity rendering
 
 
+* talk oct 11, 2019
+** tag with intensity parameter (amount, strength) for sorting and display
+** "tag" could be relation to other object, allows 2d display with proximities of objects
+** compound category, combining tags
+** relationships (annotation, illustration, explanation,..)
+** layers of grid
+** (social) networking expositions through tags and relation, discover context of your practice
+** "instagram" model with tags and bringing people together
+** displaying graphs/paths, game map, mind map
+** how to represent objects in a map
+** generating paths/maps
+** doi for everything
+** "line check" validation if links still exist, links as dependency
+** point to internet archiving tools, use dois for object
+** spatialized knowledge
+** manage dates, timestamps etc.
+
 * Notes on Readings
 
 ** S. Guynup, Virtual Reality, Game Design, and Virtual Art Galleries from "Curating the Digital"
-*** notes
+*** notes luc
 **** videogame scholar Jesper Juul’s framework of rules and fictions
 **** non-game virtual worlds
 **** fiction represents the story-driven and subjective elements in a game, while rules are objective and encode the allowable interactions and outcomes.
@@ -48,7 +65,9 @@
 **** This approach turns virtual exhibits into access points to the archival and library resources.
 **** mapping content
 **** // tool for learning and teaching
-**** This approach turns virtual exhibits into access points to the archival and library resources.
+
+** Fitzpatrick, Chapter 3 (texts), 4 (preservation)
+
 * other books and references, stuff to read
 ** Documenting Performance: The Context and Processes of Digital Curation and Archiving
 ** Rethinking curating: art after new media 
