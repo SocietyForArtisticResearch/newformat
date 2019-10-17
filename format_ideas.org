@@ -67,6 +67,78 @@
 **** // tool for learning and teaching
 
 ** Fitzpatrick, Chapter 3 (texts), 4 (preservation)
+*** notes ending ch 2
+**** shift our thinking about the
+mode of our work away from a uniform focus on the traditional text-only
+formats, encouraging us instead to think about the ways that our work might
+interact with, include, and in fact be something more than just text.
+**** multimodal
+**** academic need to translate things into text
+**** We can thus write about images, but not in images; we can write about video, but not in video.
+**** divide between criticism and practice (different media)
+**** Scholarly analysis, in other words, can take the
+form of video, producing a visual response to a cultural object or phenom-
+enon; it might take the form of audio, layering sound in order to focus our
+attention on that which we ordinarily miss in the world around us; it might
+take the form of an interactive game, in which we encounter an interpreta-
+tion of a scenario in the rules that govern it.
+**** the computer is in some very material sense cowriting with us
+*** notes luc ch 3
+**** essence of the web lies in the hyperlink
+**** a more communicative sense of interaction across texts, between texts and readers, and among readers.
+**** Multimodal texts
+**** the bookness of the book derives from its organization
+**** “the capacity for random access,” allowing a reader to turn immediately to any particular point in a text (codex vs scroll)
+**** all too easy for the problem of the digital future of the book to get caught up in how the book looks rather than how it works;
+**** many digital texts reimpose the limitations of the scroll on our reading practices
+// "toilet-paper" text
+**** e-book and pdf mimicking (kitsch elements of) book
+**** the means of organizing and presenting digital texts in a structural sense, in a way that produces the greatest possible readerly and writerly engagement,
+**** // collective notes! (sort of thread, like on http://book.realworldhaskell.org/read/)
+**** disorientation in hypertext
+**** // how to make a toc of a network?
+**** collective thinking, author-reader hierarchy
+**** // adventure games for navigation, any contemporary examples?
+**** // automatic index (supply keywords, generate index)
+**** we need to create structures that foreground those social interactions that we have with and through texts.
+**** the database logic of new media, in which textual and media objects can be created, combined, remixed, and reused
+**** // with license field we can supply all reusable media elements
+**** Curated texts produced in such a platform might resemble
+edited volumes, whether by single or multiple authors, or they might take as
+yet unimagined forms, but they would allow users to access and manipulate
+a multiplicity of objects contained in a variable, extensible database, which
+could then be processed in a wide range of ways, as well as allowing users the
+ability to add to the database and to create their own texts from its materials.
+**** the “exhibit”
+**** Annotation, organization, analysis, and visualization
+**** communal reading
+**** // different granularity for annotations and comments
+**** see https://futureofthebook.org/commentpress/
+**** manage chaos in large-scale open discussions
+*** notes luc ch 4
+**** speed of copying and transmission inversely proportional to durability
+**** digital media texts and technologies are less short-lived than we think
+**** preservation not only technical, but also social question
+**** Preservation is always the work of a community.
+**** standardization
+**** // obsolete html: https://badhtml.com/obsolete-html-code/
+**** human legibility
+**** open standards, open source
+**** Text Encoding Initiative (Tei)
+**** Descriptive rather than procedural, demarcating logical structure rather
+than visual presentation, and thus both hardware- and software-indepen-
+dent
+**** // how to deal with programmability, which is procedural? 
+**** tei not multimodal, only text
+**** // references need to be marked as such
+**** We therefore need
+to develop structures for organizing information, and metadata to describe
+those structures, that will remain flexible and extensible into the future.
+**** supplement our expert-produced ontologies with user-generated tagging.
+**** link rot
+**** dois
+**** how publications are distributed and stored
+**** // copies, downloads? Lots Of Copies Keeps Stuff Safe
 
 * other books and references, stuff to read
 ** Documenting Performance: The Context and Processes of Digital Curation and Archiving
