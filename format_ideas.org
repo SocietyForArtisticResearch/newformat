@@ -1,4 +1,4 @@
-* talk sept 30, 2019
+* talk sept 30,f 2019
 ** jar expositions, unique, hard to reduce, paradoxes inside, getting lost inside
 ** "printing" an exposition, overview, orientation
 ** how to reduce the dimensionality of an exposition
@@ -32,6 +32,17 @@
 ** point to internet archiving tools, use dois for object
 ** spatialized knowledge
 ** manage dates, timestamps etc.
+
+
+* talk notes 17 oct. 2019
+** expositions as something that needs to be queried, like a txt-based adventure, at least "start"
+** dependencies (media, social, services)
+** response by reader (with media, text etc)
+** collective notes/comments, threads
+** generate maps of hyperlinks, connections, relations, keywords
+** exposition as dependencies for other processes/programs, expositions as input
+** restrictions on js/css, no external dependencies 
+** core timeline functions supported by rc (with callbacks and fallback view)
 
 * Notes on Readings
 
@@ -139,6 +150,45 @@ those structures, that will remain flexible and extensible into the future.
 **** dois
 **** how publications are distributed and stored
 **** // copies, downloads? Lots Of Copies Keeps Stuff Safe
+** A Developer’s Guide to the Semantic Web chapter 1 and 2
+*** notes luc
+**** namespaces, resources
+**** connecting data
+**** machine-understandable meanings
+**** The Web has been constructed in such a way that it is oblivious to the actual information content on any given Web site
+**** if all these meanings could be understood by a computer // !
+**** W3C Semantic Web Activity
+**** linked data
+**** (syntax, ontology, reasoning, queries) SPARQL query language
+**** RDF was proposed in 1999
+**** used for describing any resources and their relations existing in the real world
+**** RDF is an assertional language intended to be used to express propositions using precise formal vocabularies, particularly those specified using RDFS
+**** represent distributed information/knowledge
+**** rdf statement: subj -> pred -> obj (rdf triple)
+**** rdf graph, collection of statments (or triples)
+**** uri/url
+**** URIs in RDF models should return some content back, so that both human readers and applications can make use of the returned information.
+**** hash and slash uris
+**** dbpedia
+**** predicates to be treated as resources as well
+**** predicate can be seen as property and object as value of subject
+**** types
+**** n-ary relationships
+**** blank nodes (anonymous,  "local variable", not accessible from outside)
+**** // annotation ontology: https://www.w3.org/ns/oa.ttl
+**** // why is rdf:about="http://www.liyangyu.com/camera#Nikon_D300 not abbreviated using the namespace def on top of the document?
+**** // xml syntax seems strange, why not clearer triples?
+<rdf:Description rdf:about="http://www.liyangyu.com/camera#Nikon_D300">
+ <rdf:type rdf:resource="http://www.liyangyu.com/camera#DSLR"/>
+</rdf:Description>
+**** // properties on same subj can be grouped, perhaps reason for strange syntax breaking the triple
+**** // use http "head" method to check if external resources exist
+**** // define exposition ontology/vocab
+**** bag,seq,alternatives
+**** collection // linked list
+**** // turtle looks better than xml, still we need to rely on existing parsers
+
+** xanadu
 
 * other books and references, stuff to read
 ** Documenting Performance: The Context and Processes of Digital Curation and Archiving
@@ -146,4 +196,4 @@ those structures, that will remain flexible and extensible into the future.
 ** Sematic Web (?)
 
 * other ideas
-** digital curating studies as portal partners (http://www.gsa.ac.uk/study/graduate-degrees/curatorial-practice-(contemporary-art)/)
+** digital curating studies as portal partners (http://www.gsa.ac.uk/study/graduate-degrees/curatorial-practice-(contemporary-art)/)    

@@ -13,7 +13,7 @@
 * https://www.researchcatalogue.net/view/55614/55626
 * https://www.researchcatalogue.net/view/99519/99535
 
-
+  
 * An exposition is a 2dimensional sorting of Objects. It is mapping objects to a 2d space.
 
 Most of the attempts to introduce modern technologies in the digital
