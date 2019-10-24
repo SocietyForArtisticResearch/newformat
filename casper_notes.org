@@ -141,3 +141,33 @@ infrastructurally
 “Organizations must secure sufficient resources to sustain their
 digital preservation activities beyond the next budget cycle or the
 end of a grant award” (p. 12)
+
+// [Liyang_Yu_(auth.)]_A_Developer_s_Guide_to_the_Sem(z-lib.org).pdf
+
+(p 11) The statements contained in different Web sites cannot be completely arbitrary. For example, they should be created by using some common terms and relation- ships, at least for a given domain. For instance, to describe a person, we have some common terms such as name, birthday and homepage, etc.
+
+(p 11) Our agent has to be able to conduct reasoning based on its understanding of the common terms and relationships. For example, knowing the fact that resources A and B have the same e-mail address and considering the knowledge expressed by the common terms and relationships, it should be able to conclude that A and B are in fact the same resource.
+
+(p 15) .. it would much nicer if the application could understand the meaning of the Web pages on the fly so you do not have to change your code so often.
+
+(p 15) However, the conflict also starts from here: the current Web is entirely aimed at human readers, and it is purely display-oriented. In other words, the Web has been constructed in such a way that it is oblivious to the actual information content on any given Web site.
+
+
+(p17) our Web is constructed in such a way that its documents only contain enough information for a machine to present them, not to understand them.
+
+SPARQL query language
+
+• RDF is a framework for representing information on the Web (RDF Concept);
+• RDF is a general-purpose language for representing information in the Web
+(RDF Syntax, RDF Schema);
+• RDF is an assertional language intended to be used to express propositions using
+precise formal vocabularies, particularly those specified using RDFS, for access and use over the World Wide Web, and is intended to provide a basic foundation for more advanced assertional languages with a similar purpose (RDF Semantics).
+
+(p30) Rule #1: Knowledge (or information) is expressed as a list of statements; each statement takes the form of Subject-Predicate-Object, and this order should never be changed.
+
+// (S)ubject (P)redicate (O)bject , SPO
+
+especially with the development of the Linked Data project, dereferencing URIs in RDF models should return some content back, so that both human readers and applications can make use of the returned information.
+
+
+(p36) Rule #2: The name of a resource must be global and should be identified by Uniform Resource Identifier (URI). The name of predicate must also be global and should be identified by URI as well.
