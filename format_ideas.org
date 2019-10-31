@@ -44,6 +44,19 @@
 ** restrictions on js/css, no external dependencies 
 ** core timeline functions supported by rc (with callbacks and fallback view)
 
+
+* talk notes 24 oct
+** rendering relations visible (fundamental motivation for exposition, discover something about your work/media)
+** reward for adding metadata
+** select paragraph and add metadata/relations
+** annotation
+** we need an ontology
+** deviates from book and poster, genuinely digital objects 
+** needs to be queried
+** validate
+** different renderers, as function (rdf) -> html/pdf/docx
+** how to express meaning that is in the way things are displayed?
+
 * Notes on Readings
 
 ** S. Guynup, Virtual Reality, Game Design, and Virtual Art Galleries from "Curating the Digital"
@@ -187,7 +200,7 @@ those structures, that will remain flexible and extensible into the future.
 **** bag,seq,alternatives
 **** collection // linked list
 **** // turtle looks better than xml, still we need to rely on existing parsers
-
+** A Developer’s Guide to the Semantic Web chapter 4 and 5
 ** xanadu
 
 * other books and references, stuff to read
