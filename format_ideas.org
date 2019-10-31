@@ -210,3 +210,5 @@ those structures, that will remain flexible and extensible into the future.
 
 * other ideas
 ** digital curating studies as portal partners (http://www.gsa.ac.uk/study/graduate-degrees/curatorial-practice-(contemporary-art)/)    
+
+** OWL languea : OWL = RDF Schema + new constructs for better expressiveness

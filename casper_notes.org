@@ -159,6 +159,9 @@ SPARQL query language
 
 • RDF is a framework for representing information on the Web (RDF Concept);
 • RDF is a general-purpose language for representing information in the Web
+
+Interesting exposition by Emma Cocker: https://www.researchcatalogue.net/view/618849/618850
+
 (RDF Syntax, RDF Schema);
 • RDF is an assertional language intended to be used to express propositions using
 precise formal vocabularies, particularly those specified using RDFS, for access and use over the World Wide Web, and is intended to provide a basic foundation for more advanced assertional languages with a similar purpose (RDF Semantics).
