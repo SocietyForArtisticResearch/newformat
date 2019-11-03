@@ -201,6 +201,7 @@ those structures, that will remain flexible and extensible into the future.
 **** collection // linked list
 **** // turtle looks better than xml, still we need to rely on existing parsers
 ** A Developer’s Guide to the Semantic Web chapter 4 and 5
+** Semantic Web for the Working Ontologist
 ** xanadu
 
 * other books and references, stuff to read
