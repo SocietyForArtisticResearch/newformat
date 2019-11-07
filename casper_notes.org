@@ -174,3 +174,10 @@ especially with the development of the Linked Data project, dereferencing URIs i
 
 
 (p36) Rule #2: The name of a resource must be global and should be identified by Uniform Resource Identifier (URI). The name of predicate must also be global and should be identified by URI as well.
+
+[Dean_Allemang,_James_Hendler]_Semantic_Web_for_th(z-lib.org).pdf
+
+p48/ URIs and URLs look exactly the same, and, in fact, a URL is just a special case of the URI. Why does the Web have both of these ideas? Simplifying somewhat, the URI is an identifier with global (i.e., “World Wide” in the “World Wide Web” sense) scope. Any two Web applications in the world can refer to the same thing by referencing the same URI. But the syntax of the URI makes it possible to “dereference” it—that is, to use all the information in the URI (which specifies things like server name, protocol, port number, file name, etc.) to locate a file (or a location in a file) on the Web.1 
+
+
+p 308 How can we express our intentions for the purpose of a model? In the case where we are engineering a model from scratch, we can express requirements for the model we are creating. One common practice for semantic models usually starts with the notion of “competency questions.” Begin the modeling process by determining what questions the model will need to answer.
