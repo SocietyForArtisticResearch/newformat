@@ -1,27 +1,37 @@
-* Spatialized/Temporalized Knowledge
+
 * Structure:  
+
+An RC exposition exists of data (media/text) and an ontology and is consumed using a renderer.
+
 ** Data (text file rdf, content, tools, relations, ontology extensions) 
-** Exposition Ontology (owl, structure and possible relations of exposition, defintions on public uri) 
-** Renderers (Html, grid-based, time-based, Pdf, Svg, (and mixtures) etc)
-* Versioning of data, renderer, objects, ontology (use git), time machine 
-* Exposition as a queryable object 
-* Validation 
-* Temporal properties of objects
-* "Printing" making an networked object autonomous
-* Reading/viewing can be traced, affect the data, taking notes, collective note taking (threads) etc (feedback)
-* Everything newly defined needs to have relation to what is already there
-* Each object/paragraph has DOI and can be annotated
-* Media object can have a life of their own, not isolated but can be shared, searched etc.
-* Object/Text organization/relation before visual placement 
-* database api
-* Reading: 
-** Mapping/Navigation
-** Search/exploration within expositions, different types
+*** Media object can have a life of their own, not isolated but can be shared, searched etc.
+*** Each object/paragraph has DOI and can be annotated
+*** Versioning of data, renderer, objects, ontology (use git), time machine 
+*** Objects can have position properties (next/under/above/within/on top)
+*** Objects can have a property that orders them
+*** Objects can have temporalized knowledge
+
+** Exposition Ontology (owl, structure and possible relations of exposition, definitions on public uri) 
+*** Exposition as a queryable object 
+*** Database api
+*** Validation 
+
+** Renderers (Html, grid-based, time-based, Pdf, Svg, (and mixtures) etc, presentation, epub, book, verbalization)
+*** Renderers for accessibility
+*** "Printing" making an networked object autonomous
+
+** Reading: 
+*** Mapping/Navigation
+*** Search/exploration within expositions, different types
+*** Reading/viewing can be traced, affect the data, taking notes, collective note taking (threads) etc (feedback)
+
 * Writing process:
+** Everything newly defined needs to have relation to what is already there
+** Object/Text organization/relation before visual placement
 ** No waste in actions of user. Recording/effect on meaning
 ** Reward and ease of use for metadata (visualizations of structure)
 ** generating paths
-** constructing rhetorical structures
-** explicitely encoding a narrative order / structure
+** constructing rhetorical structures from data by hand (editor should assist)
 ** multiple views in the editor, list view, graph view, map view, layout view
 ** start describing by a path, skeleton (diagram language)
+
