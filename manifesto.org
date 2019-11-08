@@ -8,7 +8,7 @@ standards, this tripartite design creates the basis for a
 programmable, sustainable and flexible data architecture that can be
 consumed and queried by human and non-human actors.
 
-** Data  
+** Data  :Casper:
 *** (text file rdf, content, tools, relations, ontology extensions)
 *** Media object can have a life of their own, not isolated but can be shared, searched etc.
 *** Each object/paragraph has DOI and can be annotated
@@ -16,21 +16,24 @@ consumed and queried by human and non-human actors.
 *** Objects can have position properties (next/under/above/within/on top/absolute)
 *** Objects can have a property that orders them
 *** Objects can have temporalized knowledge
-** Ontology  
+*** objects that are representations of real-world events/objects/works, give a uri to an art work (idea of "work")
+** Ontology  :Luc:
 *** (owl, structure and possible relations of exposition, definitions on public uri)
 *** Exposition as a queryable object 
 *** Database api
 *** Validation 
-** Renderers 
+*** ontology also work new "work" feature
+*** linked data and vocabularies (linking outside and inside)
+** Renderers :Luc:
 *** (Html, grid-based, time-based, Pdf, Svg, (and mixtures) etc, presentation, epub, book, verbalization)
 *** Renderers for accessibility
 *** "Printing" making an networked object autonomous
-* Reading process: 
+* Reading process :Luc:
 *** Mapping/Navigation
 *** Search/exploration within expositions, different types
 *** Reading/viewing can be traced, affect the data, taking notes, collective note taking (threads) etc (feedback)
 
-* Writing process:
+* Writing process :Casper:
 ** Everything newly defined needs to have relation to what is already there
 ** Object/Text organization/relation before visual placement
 ** No waste in actions of user. Recording/effect on meaning
