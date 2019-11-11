@@ -122,17 +122,18 @@ into a structured digital object. To assist this process, the author has various
 to view the objects and and methods to create and update the network of relationships between them. 
 Examples of views include: 
 
-- list view, 
-- graph/tree view
 - map view
-- tree view
-- layout view. 
+- list view 
+- graph/tree view
+- text view
+- layout view
 
-Some of the relations are purely semantic (category, annotation, comment, example), others can be more 
-about temportal or spatial layout (left, right, under, during).
+Some of the relations are purely semantic (category, annotation, comment, 
+example), others define specific temportal or spatial annotation 
+(left, right, under, during, at word 34".
 
-This network of relations between objects can also be directly edited in the text serialization of the 
-format (which is to be human readable/writable).
+This network of relations between objects can also be directly edited in the text 
+serialization of the format (which is to be human readable/writable).
 
 The more metadata added by the author about the objects, the richer
 the views will be in terms of structure. Every action by the author
