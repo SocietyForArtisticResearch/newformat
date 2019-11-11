@@ -183,3 +183,5 @@ p48/ URIs and URLs look exactly the same, and, in fact, a URL is just a special 
 p 308 How can we express our intentions for the purpose of a model? In the case where we are engineering a model from scratch, we can express requirements for the model we are creating. One common practice for semantic models usually starts with the notion of “competency questions.” Begin the modeling process by determining what questions the model will need to answer.
 
 https://twobithistory.org/2018/05/27/semantic-web.html why semantic web is not popular.
+
+cory doctorow, https://people.well.com/user/doctorow/metacrap.htm
