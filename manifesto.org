@@ -16,21 +16,21 @@ consumed and queried by human and non-human actors.
 
 Data forms the source material upon which an exposition is built. 
 
-Examples of data types that can be used in expositions:
+Examples of data that can be used in expositions:
 
 - video/image/audio files
 - text (plain text, Markdown, Microsoft Word, Open/Libre Office,
   LaTeX, html, pdf)
 - online resources and definitions (identified by a public URL) 
 - bibliography (bibTex, ISBN, DOI) 
-- meta-data description of real world event ("works")
+- meta-data description of real world event, object or process ("works")
 - ?? data CSV/json/xml
 
 Data objects can have relationships with each other
 (see ontology). All data objects within an exposition can be searched 
-and organized in categories/groups. Each object has a DOI and is accessible through a
-unique URL that displays the object content and its
-metadata/relationships. The independence of the individual objects makes it easy to reuse object 
+and organized using categories. Each object has a DOI and is accessible 
+through a unique URL that displays the object content and its metadata. 
+The independence of the individual objects makes it possible to reuse objects \
 in other expositions or online publications.
 
 
@@ -116,18 +116,26 @@ specific social potential of reading digital publications.
 
 * Writing process :Casper:
 
-The construction of an exposition starts with author collecting media
-files, references and the writing of text. What follows is the
-translation of those materials into a digital representation. To
-assist the translation, the author is able to view and organise the
-material by creating relationships between the objects. The editor
-helps with this by allowing authors to view and sort their data in
-various views: list view, graph view, map view, layout view. The
-relationships between objects can also be directly edited in the text
-serialization of the format (which is to be human readable/writable).
+The construction of an exposition starts with the author collecting /data/. 
+What follows is the translation of the data objects and their interrelationships 
+into a structured digital object. To assist this process, the author has various ways 
+to view the objects and and methods to create and update the network of relationships between them. 
+Examples of views include: 
+
+- list view, 
+- graph/tree view
+- map view
+- tree view
+- layout view. 
+
+Some of the relations are purely semantic (category, annotation, comment, example), others can be more 
+about temportal or spatial layout (left, right, under, during).
+
+This network of relations between objects can also be directly edited in the text serialization of the 
+format (which is to be human readable/writable).
 
 The more metadata added by the author about the objects, the richer
-these views will be in terms of structure. Every action by the author
+the views will be in terms of structure. Every action by the author
 should result in a change in how the views display the data.
 
 In the end, the author than can choose how much they want to "fix" the
