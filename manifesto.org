@@ -1,3 +1,7 @@
+#+TITLE:       RC Exposition Format -- Fundamental Points
+#+AUTHOR:      Döbereiner and Schipper
+#+DATE:        October/November 2019
+#+LATEX_CLASS: scrartcl
 
 * Exposition Data Structure
 
@@ -18,12 +22,48 @@ consumed and queried by human and non-human actors.
 *** Objects can have temporalized knowledge
 *** objects that are representations of real-world events/objects/works, give a uri to an art work (idea of "work")
 ** Ontology  :Luc:
-*** (owl, structure and possible relations of exposition, definitions on public uri)
-*** Exposition as a queryable object 
-*** Database api
-*** Validation 
-*** ontology also work new "work" feature
-*** linked data and vocabularies (linking outside and inside)
+In order to turn the exposition into a structured data object, the
+possibilities of this structure need to be /modeled/. This extensible
+model is to be expressed in terms of a /web ontology/ in the Web
+Ontology Language (OWL)[fn:1]. Instead of limiting relations among
+data to their immediate visual presentation, an exposition will be
+modeled as a set of relations among distributed data. Following linked
+data principles the properties, possible relations and types of data
+(and metadata) of expositions and their components will be formally
+specified in terms of vocabularies and ontologies, which will be
+versioned and publicly accessible. In addition, expositions can create
+specific properties and relations as supersets of the fundamental RC
+exposition ontology.
+
+The RC exposition can thus be understood as a queryable data
+object. Queries can refer to any specified properties and their
+relations. This allows for filtering, gathering and linking of
+information from one or more expositions allowing for the creation of
+"meta-expositions" which can be comprised of information from a
+variety of sources. Any visual representation can be seen as a
+specific query.
+
+This new level of describing and linking data must be accompanied by
+the development of an publicly accessible database and respective
+API. By allowing the updating, creation and uploading of media entries
+and expositions, this API will form the foundation for front-end
+editors and rendering engines but will also facilitate the connection
+to external institutions. The "work" feature will also be overhauled
+in this context and turned into a media set and/or a resource
+describing a "real-world" event or object.
+
+The formalization of the exposition format by means of OWL/RDF[fn:2]
+renders relations among objects explicit and thus independent of
+specific visual constraints or layouts. However, a visual layout or
+proximity may itself be one of many relations among objects. The
+specification of an RC expositions as a set of structured relations
+among distributed data liberates it from ties to specific formats
+(such as HTML) and thus vastly increases long term accessibility and
+findability. In doing so, the RC exposition will accommodate multiple
+layers of relations, such as temporal and visual ones, that may be
+impossible to render simultaneously. Moreover, it allows for
+validation and automatic consistency checks.
+
 ** Renderers :Luc:
 *** (Html, grid-based, time-based, Pdf, Svg, (and mixtures) etc, presentation, epub, book, verbalization)
 *** Renderers for accessibility
@@ -43,4 +83,9 @@ consumed and queried by human and non-human actors.
 ** multiple views in the editor, list view, graph view, map view, layout view
 ** start describing by a path, skeleton (diagram language)
 ** editing content in the exposition format should be transparent enough that it can be done by hand
-   
+
+* Footnotes
+
+[fn:2]https://www.w3.org/RDF/ 
+
+[fn:1]https://www.w3.org/OWL/ 
