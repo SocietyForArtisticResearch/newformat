@@ -28,10 +28,11 @@ Examples of data objects:
 
 Data objects can have relationships with each other
 (see ontology). All data objects within an exposition can be searched 
-and organized using categories. Each object has a DOI and is accessible 
+and organized according to categories. Each object has a DOI and is accessible 
 through a unique URL that displays the object content and its metadata. 
 The independence of the individual objects makes it possible to reuse data 
-objects in other expositions or online publications.
+objects in other expositions or online publications. The copyright and 
+licensing works can be controlled on the level of individual objects as well.
 
 
 (part of ontology?)
@@ -119,27 +120,22 @@ specific social potential of reading digital publications.
 The construction of an exposition starts with the author collecting /data/. 
 What follows is the translation of the data objects and their interrelationships 
 into a structured digital object. To assist this process, the editor has various 
-modes to view the objects and edit the network of relationships.
+modes to view the objects and edit the network of relationships. The more metadata 
+added by the author about the objects, the richer the views will become in terms of structure. 
 
-Examples of views include: 
+Examples of editor modes include: 
 
-- map view
-- list view 
-- graph/tree view
-- text view
-- layout view
+- (mind)map 
+- list  
+- graph/tree [fn:3]
+- text 
+- layout 
 
-Some of the relations are purely semantic (category, annotation, comment, 
-example), others define specific temportal or spatial annotation 
-(left, right, under, during). 
-
+The associated view and type of relationships that are editable are constrained by the mode of the editor. 
 The network of relations between objects can also be directly edited in the text 
-serialization of the format.
+serialization of the format. 
 
-The more metadata added by the author about the objects, the richer
-the views will become in terms of structure. 
-
-The author can choose how much they want to "fix" the
+For the final digital object, the author can choose how much they want to "fix" the
 final layout structure: either it is completely fixed (the equivalent
 of the older graphical format), or it is left more free, where the
 final layout may depend on the view method and actions of the reader.
@@ -153,6 +149,8 @@ final layout may depend on the view method and actions of the reader.
 ** editing content in the exposition format should be transparent enough that it can be done by hand
 
 * Footnotes
+
+[fn:3]https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)
 
 [fn:2]https://www.w3.org/RDF/ 
 
