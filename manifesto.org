@@ -21,17 +21,17 @@ Examples of data types that can be used in expositions:
 - video/image/audio files
 - text (plain text, Markdown, Microsoft Word, Open/Libre Office,
   LaTeX, html, pdf)
-- external resources (identified by a public URL)
+- online resources and definitions (identified by a public URL) 
+- bibliography (bibTex, ISBN, DOI) 
+- meta-data description of real world event ("works")
 - ?? data CSV/json/xml
 
-Once a file is uploaded, it is represented as a /data object/ within
-the exposition. Data objects can have relationships with each other
-(see ontology). Each data object has its own license and copyright
-properties, that can be distinct from the containing exposition. Data
-within an exposition can be searched and organized in
-categories/groups. Each object has a DOI and is accessible through a
+Data objects can have relationships with each other
+(see ontology). All data objects within an exposition can be searched 
+and organized in categories/groups. Each object has a DOI and is accessible through a
 unique URL that displays the object content and its
-metadata/relationships.
+metadata/relationships. The independence of the individual objects makes it easy to reuse object 
+in other expositions or online publications.
 
 
 (part of ontology?)
