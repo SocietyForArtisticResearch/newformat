@@ -9,14 +9,24 @@ programmable, sustainable and flexible data architecture that can be
 consumed and queried by human and non-human actors.
 
 ** Data  :Casper:
-*** (text file rdf, content, tools, relations, ontology extensions)
-*** Media object can have a life of their own, not isolated but can be shared, searched etc.
-*** Each object/paragraph has DOI and can be annotated
-*** Versioning of data, renderer, objects, ontology (use git), time machine 
+
+Data forms the source material upon which an exposition is built. 
+
+Examples of data types that can be used in expositions:
+* video/image/audio files
+* text (plain text, Markdown, Microsoft Word, Open/Libre Office, LaTeX, html, pdf)
+* external resources identified by a public URL
+?? data CSV/json/xml
+
+Once a file is uploaded, it is represented as a /data object/ within the exposition. Data objects can have relationships with each other (see ontology). Each data object has its own license and copyright properties, that can be distinct from the containing exposition. Data within an exposition can be searched and organized in categories/groups. Each object has a DOI and is accessible through a unique URL that displays the object content and its metadata/relationships.
+
+
+(part of ontology?)
 *** Objects can have position properties (next/under/above/within/on top/absolute)
 *** Objects can have a property that orders them
 *** Objects can have temporalized knowledge
-*** objects that are representations of real-world events/objects/works, give a uri to an art work (idea of "work")
+*** Objects can be representations of real-world events/objects/works, give a uri to an art work (idea of "work")
+
 ** Ontology  :Luc:
 *** (owl, structure and possible relations of exposition, definitions on public uri)
 *** Exposition as a queryable object 
@@ -34,13 +44,18 @@ consumed and queried by human and non-human actors.
 *** Reading/viewing can be traced, affect the data, taking notes, collective note taking (threads) etc (feedback)
 
 * Writing process :Casper:
-** Everything newly defined needs to have relation to what is already there
+
+The construction of an exposition starts with author collecting media files, references and the writing of text. What follows is the translation of those materials into a digital representation. To assist the translation, the author is able to view and organise the material by creating relationships between the objects. The editor helps with this by allowing authors to view and sort their data in various views: list view, graph view, map view, layout view. The relationships between objects can also be directly edited in the text serialization of the format (which is to be human readable/writable).
+
+The more metadata added by the author about the objects, the richer these views will be in terms of structure. Every action by the author should result in a change in how the views display the data. 
+
+In the end, the author than can choose how much they want to "fix" the final layout structure: either it is completely fixed (the equivalent of the older graphical format), or it is left more free, where the final layout may depend on the view method and actions of the reader.
+
 ** Object/Text organization/relation before visual placement
 ** No waste in actions of user. Recording/effect on meaning
-** Reward and ease of use for metadata (visualizations of structure)
-** generating paths
+
 ** constructing rhetorical structures from data by hand (editor should assist)
-** multiple views in the editor, list view, graph view, map view, layout view
-** start describing by a path, skeleton (diagram language)
+** generating paths, skeleton (diagram language)
+
 ** editing content in the exposition format should be transparent enough that it can be done by hand
    
