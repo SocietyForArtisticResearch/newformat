@@ -14,9 +14,9 @@ consumed and queried by human and non-human actors.
 
 ** Data  :Casper:
 
-Data forms the source material upon which an exposition is built. 
+External data is represented in the RC format as data objects.
 
-Examples of data that can be used in expositions:
+Examples of data objects:
 
 - video/image/audio files
 - text (plain text, Markdown, Microsoft Word, Open/Libre Office,
@@ -30,8 +30,8 @@ Data objects can have relationships with each other
 (see ontology). All data objects within an exposition can be searched 
 and organized using categories. Each object has a DOI and is accessible 
 through a unique URL that displays the object content and its metadata. 
-The independence of the individual objects makes it possible to reuse objects \
-in other expositions or online publications.
+The independence of the individual objects makes it possible to reuse data 
+objects in other expositions or online publications.
 
 
 (part of ontology?)
