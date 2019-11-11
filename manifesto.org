@@ -1,7 +1,7 @@
 #+TITLE:       RC Exposition Format -- Fundamental Points
 #+AUTHOR:      Döbereiner and Schipper
 #+DATE:        October/November 2019
-#+LATEX_CLASS: scrartcl
+#+OPTIONS: toc:nil        
 
 * Exposition Data Structure
 
@@ -89,9 +89,22 @@ those properties and relations of the exposition that can be displayed
 in its medium.
 
 * Reading process :Luc:
-*** Mapping/Navigation
-*** Search/exploration within expositions, different types
-*** Reading/viewing can be traced, affect the data, taking notes, collective note taking (threads) etc (feedback)
+The reading (here understood in an extended sense) of expositions will
+be transformed by enhancing navigation and exploration tools. Having
+relations and properties explicitly specified allows for the
+exposition to experienced in a multiplicity of ways: It can be
+searched, filtered, rearranged according to criteria, queried,
+embedded and linked to external resources. New navigation tools will
+developed that extend the current outline overview and show both
+visual and semantic representations of connections, paths and
+groupings within the text and media data constituting the
+expositions. Certain queries and paths through the data can be seen as
+curated ways of exhibiting media objects.
+
+Moreover, the reading process will more strongly affect the exposition
+itself. Collective note taking and discussions relating to particular
+elements of an exposition will be made possible in order develop the
+specific social potential of reading digital publications.
 
 * Writing process :Casper:
 
