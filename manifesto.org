@@ -13,10 +13,11 @@ consumed and queried by human and non-human actors.
 Data forms the source material upon which an exposition is built. 
 
 Examples of data types that can be used in expositions:
-* video/image/audio files
-* text (plain text, Markdown, Microsoft Word, Open/Libre Office, LaTeX, html, pdf)
-* external resources identified by a public URL
-?? data CSV/json/xml
+
+- video/image/audio files
+- text (plain text, Markdown, Microsoft Word, Open/Libre Office, LaTeX, html, pdf)
+- external resources (identified by a public URL)
+- ?? data CSV/json/xml
 
 Once a file is uploaded, it is represented as a /data object/ within the exposition. Data objects can have relationships with each other (see ontology). Each data object has its own license and copyright properties, that can be distinct from the containing exposition. Data within an exposition can be searched and organized in categories/groups. Each object has a DOI and is accessible through a unique URL that displays the object content and its metadata/relationships.
 
