@@ -118,8 +118,9 @@ specific social potential of reading digital publications.
 
 The construction of an exposition starts with the author collecting /data/. 
 What follows is the translation of the data objects and their interrelationships 
-into a structured digital object. To assist this process, the author has various ways 
-to view the objects and and methods to create and update the network of relationships between them. 
+into a structured digital object. To assist this process, the editor has various 
+modes to view the objects and edit the network of relationships.
+
 Examples of views include: 
 
 - map view
@@ -130,16 +131,15 @@ Examples of views include:
 
 Some of the relations are purely semantic (category, annotation, comment, 
 example), others define specific temportal or spatial annotation 
-(left, right, under, during, at word 34".
+(left, right, under, during). 
 
-This network of relations between objects can also be directly edited in the text 
-serialization of the format (which is to be human readable/writable).
+The network of relations between objects can also be directly edited in the text 
+serialization of the format.
 
 The more metadata added by the author about the objects, the richer
-the views will be in terms of structure. Every action by the author
-should result in a change in how the views display the data.
+the views will become in terms of structure. 
 
-In the end, the author than can choose how much they want to "fix" the
+The author can choose how much they want to "fix" the
 final layout structure: either it is completely fixed (the equivalent
 of the older graphical format), or it is left more free, where the
 final layout may depend on the view method and actions of the reader.
