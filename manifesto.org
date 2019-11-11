@@ -76,9 +76,18 @@ impossible to render simultaneously. Moreover, it allows for
 validation and automatic consistency checks.
 
 ** Renderers :Luc:
-*** (Html, grid-based, time-based, Pdf, Svg, (and mixtures) etc, presentation, epub, book, verbalization)
-*** Renderers for accessibility
-*** "Printing" making an networked object autonomous
+Renderers turn the data and their relations into digital media objects
+for human consumption. While there is only one (extensible) RC
+ontology there can be any number of renderers. HTML will be generated
+in at least two forms: absolutely-positioned (graphical exposition)
+and grid-based (responsive). Standard file formats such as PDF, SVG,
+Epub etc. will be created. These should make it possible to turn the
+networked and distributed exposition into a static and autonomous
+object. Moreover, time-based formats and displays for visually
+impaired may be generated. It is important that each format may only
+those properties and relations of the exposition that can be displayed
+in its medium.
+
 * Reading process :Luc:
 *** Mapping/Navigation
 *** Search/exploration within expositions, different types
