@@ -185,3 +185,5 @@ p 308 How can we express our intentions for the purpose of a model? In the case 
 https://twobithistory.org/2018/05/27/semantic-web.html why semantic web is not popular.
 
 cory doctorow, https://people.well.com/user/doctorow/metacrap.htm
+
+https://www.researchcatalogue.net/view/294903/430525
