@@ -1,0 +1,125 @@
+* TODOS
+** TODO collect and select schema.org properties for objects by url
+* Question to be resolved
+** negation? can every property be negated
+** comparison vs position relation can (?)
+** conversational editor
+* Object
+** TimeBasedMedia :CASPER:
+*** Video
+** AudibleMedia :CASPER:
+*** Audio
+*** Midi
+** SpatialMedia :LUC:
+*** Svg
+*** Pdf
+*** Image
+** SerialMedia :LUC:
+*** Text
+*** Html
+** Properties
+*** Keywords are objects
+group connect, link to context in which keyword is used, extensible
+linking closed and open vocabularies
+*** dublin core metadata
+all optional unless otherwise stated
+**** contributor 
+**** coverage 
+**** (required) creator (author)
+**** date
+**** description
+**** format (automatically supplied)
+**** identifier (doi)
+**** language
+**** publisher
+**** relation
+**** (required) rights 
+**** (required) license (additional to dublin core)
+**** source
+**** subject (topic)
+**** (required) title
+**** type (nature or genre)
+*** real-world publication/event metadata for referencing
+**** publication
+***** publication: place
+***** paper: journal title, volume number, issue number, first page, last page
+***** online paper: accessed
+*** relation to other resources 
+****  TODO specify types of relation
+**** relation to real-world object, publication or event
+**** relation to media in works (media set)
+**** source (derived from)
+*** position and size
+**** optional absolute: x,y  + width, height
+*** Types of location in object for referencing
+**** all, entire
+**** SpatialMedia: x,y 
+**** SerialMedia: index
+**** TimeBasedMedia: h:m:s:ms
+**** Video: h:m:s:ms + x,y
+**** AudibleMedia: h:m:s:ms + position (panning)
+**** + description (e.g. "violin part")
+*** Area
+**** SpatialMedia: position + width, height
+**** SerialMedia: startIndex, endIndex
+**** TimeBased: start, end
+**** Video: start, end, x,y + width, height or paths per frame
+**** AudibleMedia: start, end + position (panning)
+**** + description (e.g. "violin part")
+** Object Relation
+*** Relation is a property but itself also an object with properties
+**** position
+**** annotated object
+**** annotating object
+**** Types of relations:
+***** Path
+chain/sequence of objects
+Sequence of more than two objects can be derived
+***** Annotation
+type of annotation:
+****** footnote
+****** description
+****** explanation
+****** caption
+****** subtitle
+****** reference (bibliographical, data provenance)
+****** representation
+****** realization
+***** Comparison
+we need something that checks for inconsistencies/incoherent order
+****** bigger than, smaller than
+****** context (e.g. order on page, quality) 
+
+* Layout
+** Container (2D)
+*** has sorting context that can be changed
+can contain other containers, RC-specific div
+
+one way of expressing the grid:
+containerid, display, grid
+subcontainerid, grid-row, 1
+subcontainerid, grid-column, 1
+
+containerid, contains, subcontainerid
+
+** Graph 
+graph:
+ startid, path, endid.
+ startid, path, endid.
+
+* Position relation
+between obj and obj, obj and container, container and container
+** Types of relations
+*** contains
+*** left of
+*** right of
+*** above
+*** below
+*** proximity:
+**** neighbors
+**** unspecified
+
+* MediaResource
+** URL/URI
+** Content
+** Metadata
