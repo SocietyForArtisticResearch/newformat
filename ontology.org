@@ -4,8 +4,13 @@
 ** negation? can every property be negated
 ** comparison vs position relation can (?)
 ** conversational editor
+
 * Object
-  https://schema.org/MediaObject
+- https://schema.org/MediaObject
+- https://schema.org/creator
+- https://schema.org/author
+- https://schema.org/exampleOfWork
+- https://schema.org/material
 
 ** TimeBasedMedia :CASPER:
    - helpful properties:
@@ -15,7 +20,13 @@
     - http://schema.org/VideoObject
     - http://schema.org/Clip (video, but short, maybe useful for citation)
 
-    Don't use : https://schema.org/video (this contains almost no metadata, the object is much better)
+    Alternative:  https://schema.org/video (very little metadata)
+
+**** helpful properties: 
+- citation https://schema.org/citation
+- https://schema.org/creator
+- https://schema.org/dateCreated
+- thumbnail/preview image https://schema.org/thumbnail
 
 ** AudibleMedia :CASPER:
 *** Audio 
