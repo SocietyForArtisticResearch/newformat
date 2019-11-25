@@ -5,11 +5,25 @@
 ** comparison vs position relation can (?)
 ** conversational editor
 * Object
+  https://schema.org/MediaObject
+
 ** TimeBasedMedia :CASPER:
+   - helpful properties:
+   https://schema.org/Duration
+   
 *** Video
+    - http://schema.org/VideoObject
+    - http://schema.org/Clip (video, but short, maybe useful for citation)
+
+    Don't use : https://schema.org/video (this contains almost no metadata, the object is much better)
+
 ** AudibleMedia :CASPER:
-*** Audio
+*** Audio 
+    https://schema.org/AudioObject
+**** https://schema.org/MusicRecording
+
 *** Midi
+    no specification in schema.org, so instead https://www.midi.org/ ?
 ** SpatialMedia :LUC:
 *** Svg
 *** Pdf
