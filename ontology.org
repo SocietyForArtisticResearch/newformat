@@ -11,6 +11,7 @@
 - https://schema.org/author
 - https://schema.org/exampleOfWork
 - https://schema.org/material
+for whole exposition: https://schema.org/ScholarlyArticle
 
 ** TimeBasedMedia :CASPER:
    - helpful properties:
@@ -37,9 +38,13 @@
     no specification in schema.org, so instead https://www.midi.org/ ?
 ** SpatialMedia :LUC:
 *** Svg
+    https://schema.org/ImageObject
 *** Pdf
+    https://schema.org/DigitalDocument
 *** Image
+    https://schema.org/ImageObject
 ** SerialMedia :LUC:
+   https://schema.org/Text
 *** Text
 *** Html
 ** Properties
