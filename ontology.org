@@ -10,7 +10,13 @@
 - https://schema.org/creator
 - https://schema.org/author
 - https://schema.org/exampleOfWork
-- https://schema.org/material
+
+**** helpful properties: 
+- citation https://schema.org/citation
+- creator/author  https://schema.org/creator
+- creation date  https://schema.org/dateCreated
+- thumbnail/preview image https://schema.org/thumbnail
+- material (wood, metal etc..)  https://schema.org/material
 
 ** TimeBasedMedia :CASPER:
    - helpful properties:
@@ -22,11 +28,7 @@
 
     Alternative:  https://schema.org/video (very little metadata)
 
-**** helpful properties: 
-- citation https://schema.org/citation
-- https://schema.org/creator
-- https://schema.org/dateCreated
-- thumbnail/preview image https://schema.org/thumbnail
+
 
 ** AudibleMedia :CASPER:
 *** Audio 
