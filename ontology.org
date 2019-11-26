@@ -13,6 +13,14 @@
 - https://schema.org/material
 for whole exposition: https://schema.org/ScholarlyArticle
 
+**** helpful properties: 
+- citation https://schema.org/citation
+- creator/author  https://schema.org/creator
+- creation date  https://schema.org/dateCreated
+- thumbnail/preview image https://schema.org/thumbnail
+- material (wood, metal etc..)  https://schema.org/material
+>>>>>>> 3303cfa898a79d6f0bbe7b2136401438aacae719
+
 ** TimeBasedMedia :CASPER:
    - helpful properties:
    https://schema.org/Duration
@@ -23,11 +31,7 @@ for whole exposition: https://schema.org/ScholarlyArticle
 
     Alternative:  https://schema.org/video (very little metadata)
 
-**** helpful properties: 
-- citation https://schema.org/citation
-- https://schema.org/creator
-- https://schema.org/dateCreated
-- thumbnail/preview image https://schema.org/thumbnail
+
 
 ** AudibleMedia :CASPER:
 *** Audio 
