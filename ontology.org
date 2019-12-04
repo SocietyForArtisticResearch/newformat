@@ -32,21 +32,24 @@ for whole exposition: https://schema.org/ScholarlyArticle
     Alternative:  https://schema.org/video (very little metadata)
 
 
-
+https://schema.org/Movie
 ** AudibleMedia :CASPER:
 *** Audio 
-    https://schema.org/AudioObject
-**** https://schema.org/MusicRecording
-
+****  https://schema.org/AudioObject 
+    https://schema.org/MusicRecording
 *** Midi
     no specification in schema.org, so instead https://www.midi.org/ ?
 ** SpatialMedia :LUC:
 *** Svg
     https://schema.org/ImageObject
+http://schema.org/SheetMusic
 *** Pdf
     https://schema.org/DigitalDocument
+http://schema.org/SheetMusic
+http://schema.org/Thesis
 *** Image
     https://schema.org/ImageObject
+https://schema.org/Photograph
 ** SerialMedia :LUC:
    https://schema.org/Text
 *** Text

@@ -1,0 +1,85 @@
+
+./app/Main.hs,37
+module Main Main0,1
+main main4,5
+
+./test/Spec.hs,15
+main main0,1
+
+./src/Exposition.hs,2101
+module ExpositionExposition0,1
+data Person Person11,12
+  PersonPerson12,13
+    { firstname firstname13,14
+    , lastname lastname14,15
+data Organization Organization17,18
+  OrganizationOrganization18,19
+    { name name19,20
+data EntityEntity22,23
+  = EntityOrg EntityOrg23,24
+  | EntityPerson EntityPerson24,25
+newtype URL URL26,27
+data MediaResourceMediaResource29,30
+  = MediaRC MediaRC30,31
+  | MediaURL MediaURL31,32
+data SpatialMediaTypeSpatialMediaType33,34
+  = SvgSvg34,35
+  | PdfPdf35,36
+  | ImageImage36,37
+data TimeBasedMediaTypeTimeBasedMediaType43,44
+  = VideoVideo44,45
+  | AudioAudio45,46
+  | ControlControl46,47
+data SerialMediaTypeSerialMediaType48,49
+  = TextText49,50
+  | HtmlHtml50,51
+data DataMediaType DataMediaType52,53
+  DataMediaDataMedia53,54
+data MediaTypeMediaType55,56
+  = Spatial Spatial56,57
+  | TimeBased TimeBased57,58
+  | Serial Serial58,59
+  | Data Data59,60
+data HeldLicenseHeldLicense61,62
+  = AllRightsReservedAllRightsReserved62,63
+  | CC_BYCC_BY63,64
+  | CC_BY_SACC_BY_SA64,65
+  | CC_BY_NCCC_BY_NC65,66
+  | CC_BY_NC_SACC_BY_NC_SA66,67
+  | CC_BY_NC_NDCC_BY_NC_ND67,68
+data LicenseLicense69,70
+  = PublicDomainPublicDomain70,71
+  | HeldLicense HeldLicense71,72
+data CoreMetaData CoreMetaData73,74
+  CoreMetaDataCoreMetaData74,75
+    { creator creator75,76
+    , contributor contributor76,77
+    , date date77,78
+    , description description78,79
+    , language language79,80
+    , license license80,81
+    , tag tag81,82
+data AnnotationTypeAnnotationType84,85
+  = CaptionCaption85,86
+  | ReferenceReference86,87
+  | DescriptionDescription87,88
+  | CommentComment88,89
+  | RealizationRealization89,90
+  | RepresentationRepresentation90,91
+data DataSizeDataSize92,93
+  = Bytes Bytes93,94
+  | StreamStream94,95
+data Citation Citation96,97
+  Citation Citation97,98
+data MediaObject MediaObject99,100
+  MediaObjectMediaObject100,101
+    { metaData metaData101,102
+    , mediaType mediaType102,103
+    , mediaSize mediaSize103,104
+
+./src/Lib.hs,42
+module LibLib0,1
+someFunc someFunc4,5
+
+./Setup.hs,15
+main main1,2
