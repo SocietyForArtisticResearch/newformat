@@ -6,76 +6,146 @@ main main4,5
 ./test/Spec.hs,15
 main main0,1
 
-./src/Exposition.hs,2101
-module ExpositionExposition0,1
-data Person Person11,12
-  PersonPerson12,13
-    { firstname firstname13,14
-    , lastname lastname14,15
-data Organization Organization17,18
-  OrganizationOrganization18,19
-    { name name19,20
-data EntityEntity22,23
-  = EntityOrg EntityOrg23,24
-  | EntityPerson EntityPerson24,25
-newtype URL URL26,27
-data MediaResourceMediaResource29,30
-  = MediaRC MediaRC30,31
-  | MediaURL MediaURL31,32
-data SpatialMediaTypeSpatialMediaType33,34
-  = SvgSvg34,35
-  | PdfPdf35,36
-  | ImageImage36,37
-data TimeBasedMediaTypeTimeBasedMediaType43,44
-  = VideoVideo44,45
-  | AudioAudio45,46
-  | ControlControl46,47
-data SerialMediaTypeSerialMediaType48,49
-  = TextText49,50
-  | HtmlHtml50,51
-data DataMediaType DataMediaType52,53
-  DataMediaDataMedia53,54
-data MediaTypeMediaType55,56
-  = Spatial Spatial56,57
-  | TimeBased TimeBased57,58
-  | Serial Serial58,59
-  | Data Data59,60
-data HeldLicenseHeldLicense61,62
-  = AllRightsReservedAllRightsReserved62,63
-  | CC_BYCC_BY63,64
-  | CC_BY_SACC_BY_SA64,65
-  | CC_BY_NCCC_BY_NC65,66
-  | CC_BY_NC_SACC_BY_NC_SA66,67
-  | CC_BY_NC_NDCC_BY_NC_ND67,68
-data LicenseLicense69,70
-  = PublicDomainPublicDomain70,71
-  | HeldLicense HeldLicense71,72
-data CoreMetaData CoreMetaData73,74
-  CoreMetaDataCoreMetaData74,75
-    { creator creator75,76
-    , contributor contributor76,77
-    , date date77,78
-    , description description78,79
-    , language language79,80
-    , license license80,81
-    , tag tag81,82
-data AnnotationTypeAnnotationType84,85
-  = CaptionCaption85,86
-  | ReferenceReference86,87
-  | DescriptionDescription87,88
-  | CommentComment88,89
-  | RealizationRealization89,90
-  | RepresentationRepresentation90,91
-data DataSizeDataSize92,93
-  = Bytes Bytes93,94
-  | StreamStream94,95
-data Citation Citation96,97
-  Citation Citation97,98
-data MediaObject MediaObject99,100
-  MediaObjectMediaObject100,101
-    { metaData metaData101,102
-    , mediaType mediaType102,103
-    , mediaSize mediaSize103,104
+./src/Exposition.hs,4432
+module Exposition Exposition3,4
+data Person Person12,13
+  PersonPerson13,14
+    { firstname firstname14,15
+    , lastname lastname15,16
+newtype Organization Organization18,19
+    { name name20,21
+data EntityEntity23,24
+  = EntityOrg EntityOrg24,25
+  | EntityPerson EntityPerson25,26
+newtype URL URL27,28
+data MediaResourceMediaResource30,31
+  = MediaRC MediaRC31,32
+  | MediaURL MediaURL32,33
+data MediaTypeMediaType57,58
+  = SVGSVG58,59
+  | PDFPDF59,60
+  | ImageImage60,61
+  | VideoVideo61,62
+  | AudioAudio62,63
+  | TextText63,64
+  | HtmlHtml64,65
+data TimePointer TimePointer88,89
+  TimePointerTimePointer89,90
+    { hours hours90,91
+    , minutes minutes91,92
+    , seconds seconds92,93
+    , milliseconds milliseconds93,94
+data PixelPointer PixelPointer96,97
+  PixelPointerPixelPointer97,98
+    { x x98,99
+    , y y99,100
+data PercPointer PercPointer102,103
+  PercPointerPercPointer103,104
+    { x x105,106
+    , y y106,107
+data MmPointer MmPointer110,111
+  MmPointerMmPointer111,112
+    { x x112,113
+    , y y113,114
+type CharacterPointer CharacterPointer116,117
+type BytePointer BytePointer118,119
+type PagePointer PagePointer120,121
+data ChannelPointer ChannelPointer122,123
+  ChannelChannel123,124
+    { channel channel124,125
+    , totalChannels totalChannels125,126
+data MediaPointerMediaPointer128,129
+  = SVGPointer SVGPointer129,130
+  | ImagePointer ImagePointer130,131
+  | PDFPointer PDFPointer131,132
+  | VideoPointer VideoPointer132,133
+  | AudioPointer AudioPointer133,134
+  | TextPointer TextPointer134,135
+  | HtmlPointer HtmlPointer135,136
+  | DataPointer DataPointer136,137
+  | NonSpecificPointer NonSpecificPointer137,138
+data HeldLicenseHeldLicense140,141
+  = AllRightsReservedAllRightsReserved141,142
+  | CC_BYCC_BY142,143
+  | CC_BY_SACC_BY_SA143,144
+  | CC_BY_NCCC_BY_NC144,145
+  | CC_BY_NC_SACC_BY_NC_SA145,146
+  | CC_BY_NC_NDCC_BY_NC_ND146,147
+data LicenseLicense148,149
+  = PublicDomainPublicDomain149,150
+  | HeldLicense HeldLicense150,151
+data CoreMetaData CoreMetaData152,153
+  CoreMetaDataCoreMetaData153,154
+    { creator creator154,155
+    , contributor contributor155,156
+    , date date156,157
+    , description description157,158
+    , language language158,159
+    , license license159,160
+    , tags tags160,161
+    , sets sets161,162
+data Tag Tag164,165
+  TagTag165,166
+    { title title166,167
+    , id id167,168
+    , description description168,169
+    , vocabulary vocabulary169,170
+data MediaSet MediaSet172,173
+  MediaSetMediaSet173,174
+    { title title174,175
+    , id id175,176
+    , description description176,177
+data MediaAnnotationTypeMediaAnnotationType179,180
+  = ReferenceReference180,181
+  | DescriptionDescription181,182
+  | CommentComment182,183
+  | RealizationRealization183,184
+  | RepresentationRepresentation184,185
+data ToolAnnotationTypeToolAnnotationType186,187
+  = AfterAfter187,188
+  | BeforeBefore188,189
+  | ContainsContains189,190
+  | LeftOfLeftOf190,191
+  | RightOfRightOf191,192
+  | LinkLink192,193
+  | OnHoverOnHover193,194
+data WithAnnotation WithAnnotation195,196
+  AnnotationAnnotation196,197
+    { subject subject197,198
+    , predicate predicate198,199
+    , object object199,200
+data MediaAnnotation MediaAnnotation202,203
+  MediaAnnotation MediaAnnotation203,204
+data ToolAnnotation ToolAnnotation205,206
+  ToolAnnotation ToolAnnotation206,207
+data DataSizeDataSize208,209
+  = Bytes Bytes209,210
+  | StreamStream210,211
+data Citation Citation212,213
+  Citation Citation213,214
+data ObjectObject215,216
+  = MediaObjectMediaObject216,217
+      { metaData metaData217,218
+      , mediaType mediaType218,219
+      , mediaSize mediaSize219,220
+  | CitationObject CitationObject221,222
+data Rectangle Rectangle223,224
+  RectangleRectangle224,225
+    { x x225,226
+    , y y226,227
+    , width width227,228
+    , height height228,229
+data Options Options232,233
+    { {233,234
+    { keepAscpectRation keepAscpectRation233,234
+data DisplayPropertiesDisplayProperties237,238
+  = CSSClass CSSClass238,239
+  | Dimensions Dimensions239,240
+  | GridCell GridCell240,241
+data Tool Tool242,243
+  ObjectToolObjectTool243,244
+    { mediaObject mediaObject244,245
+    , display display245,246
 
 ./src/Lib.hs,42
 module LibLib0,1

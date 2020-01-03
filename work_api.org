@@ -1,0 +1,35 @@
+* There is no metadata!
+** annotations, relations
+** audio,images etc. as "metadata"
+** relations turn data into exposition
+* Single Media
+** metadata
+** share status (private, shared with group (portal, single users), rc, public) 
+*** reading/writing
+** can be part of several collections
+** media page links to collections and to where it used (references)
+* Media Collections 
+** metadata/ should reflect "work"/ event /publication
+** share status (private, shared with group (portal, single users), rc, public) 
+*** reading/writing
+** contained media/collections - enforce a tree/directory structure
+** can be displayed as folder structure
+** exposition is a collection
+* "Garbage collector"
+** reference counting
+** when media is no longer used and deleted then it will be deleted
+** object will know where it is used
+* publication
+** on publication media should be copied
+* you cannot replace media 
+* Usability
+** upload folder
+** searchability
+* API
+** all collections by user
+** all media not part of a collection by user
+** all media from a collection by user
+** 
+** global search
+
+
