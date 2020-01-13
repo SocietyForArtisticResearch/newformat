@@ -187,3 +187,5 @@ https://twobithistory.org/2018/05/27/semantic-web.html why semantic web is not p
 cory doctorow, https://people.well.com/user/doctorow/metacrap.htm
 
 https://www.researchcatalogue.net/view/294903/430525
+
+"This works for R scripts, where the author is trying to tell a story about the data while presenting and including the data itself."
