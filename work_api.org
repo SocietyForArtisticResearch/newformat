@@ -9,6 +9,11 @@
 * Ideas
 ** markdown import/ meta-data/ set
 ** word import as set
+** exposition is set
+** scrivener as example
+** limit to data. free/default 10 gb
+** format of object and its links
+** dummy backend for development
 * There is no metadata!
 ** annotations, relations
 ** audio,images etc. as "metadata"
@@ -48,8 +53,9 @@
 *** members of the same set
 *** sharing a tag
 *** having a relation (connected to, recording of, annotation of, part of etc)
-** Set metadata by media metadata schemes
-a
+** Set metadata vs media metadata schemes
+** when to/how to remove media
+** how to link things
 
 * workflow descriptions
 ** user uploads folder
@@ -66,8 +72,9 @@ from the set by using tags and completes the metadata for the set itself.
 The user uploads a single large doc file. She will be asked if she
 wants the file to be converted to media files (images) and markdown
 text. If she decides so, a set containing text and images will be
-created.
+created. Image positions should be pointers.
 ** user groups uploaded media
 A user starts taking notes in the markdown editor of the RC repo. She
 uploads a number of images and connects these to the text fragments.
 In the exposition she searches for media by tags.
+
