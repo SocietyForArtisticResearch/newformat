@@ -1,3 +1,14 @@
+* todos
+** redesign profile page
+** design/sketch repository and user interaction
+** design repo integration into editors
+** specify functionality
+** metadata scheme
+** specify api
+
+* Ideas
+** markdown import/ meta-data/ set
+** word import as set
 * There is no metadata!
 ** annotations, relations
 ** audio,images etc. as "metadata"
@@ -32,4 +43,30 @@
 ** 
 ** global search
 
+* Questions
+** Ways of relating/grouping media
+*** members of the same set
+*** sharing a tag
+*** having a relation (connected to, recording of, annotation of, part of etc)
+** Set metadata by media metadata schemes
 
+* workflow descriptions
+** user uploads folder
+The user adds/uploads a folder of documents that belong to a
+project. She will be asked if text documents (odt, tex, doc, docx,
+txt, rtf, org) are to be converted to markdown, so that they can be
+edited in the RC repository. She will also be asked if all the media
+files belong to a set (existing or new). Copyright and license
+information will be taken from the default settings (though the upload
+dialog allows the user to change that). All the newly uploaded media
+now appears in one set.  The user proceeds to further group media
+from the set by using tags and completes the metadata for the set itself.
+** uploads large doc with media
+The user uploads a single large doc file. She will be asked if she
+wants the file to be converted to media files (images) and markdown
+text. If she decides so, a set containing text and images will be
+created.
+** user groups uploaded media
+A user starts taking notes in the markdown editor of the RC repo. She
+uploads a number of images and connects these to the text fragments.
+In the exposition she searches for media by tags.
