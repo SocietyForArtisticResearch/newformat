@@ -48,6 +48,188 @@
 ** 
 ** global search
 
+* create file 
+endpoint /file POST 
+endpoint /file/#id PUT
+endpoint /file/#id DELETE
+- needs to check if media is used in any exposition
+
+fields in the body:
+- file (optional, mime type is extracted from file)
+- title
+- copyright
+- license
+- description 
+- MIME (derived, GET only)
+- parents [ folder-ids ]
+- keyword id's (closed vocabulary)
+- keyword (open vocabulary)
+- tags (personal organising)
+- type  
+  - metadata of specific type
+- dates (last/modified/creation)
+
+Any file can be a folder
+
+/file/#id/children GET
+
+* vocabularies
+
+/keywords/closed GET
+/keywords/open GET
+/keywords/closed PUT/POST
+/keywords/open PUT/POST
+
+/tags/userid GET
+/tags GET (returns all tags)
+
+/types GET
+(painting, movie, animated film, article, act)
+ 
+/types/schema/id GET
+type specific metadata
+
+* sharing
+
+/file/id/permissions GET/POST/PUT
+
+
+#+NAME user permissions
+#+BEGIN_SRC js
+
+{
+"read" : { 
+"users" : [ user-ids ],
+/* "groups" : [ user-ids ],  for future */
+"all" : Boolean 
+}
+"write" : [ user-ids ], {
+ "users" : [ user-ids ],
+ /* "groups" : [ user-ids ],  for future */
+ "all" : Boolean 
+}
+}
+
+#+END_SRC 
+
+Notes:
+- sharing will result in a message to the invited
+- you can leave
+- sharing a folder will propagate downwards to its children
+
+* getting everything:
+
+/index GET
+
+- all the folders and media ids (as a structured hierarchy) including what is shared with you
+including metadat
+
+* media
+
+/media/#id (defaults to master) GET
+/media/#id/thumb GET/PUT
+/media/#id/master GET
+/media/#id/resize/#w/#h GET
+
+* connections
+
+/file/#id/connections/subject GET
+/file/#id/connections/object GET
+/file/#id/connection/ POST
+gets an id
+
+/file/#id/connection/#id GET/PUT/DELETE
+
+#+NAME user permissions
+#+BEGIN_SRC js
+
+{ 
+    "subject" : exposition/file/folder + pointer
+    , "predicate" : relation 
+    , "object" : exposition/file/folder + pointer
+}
+
+relations :
+
+[ "contains", "annotates", "description", "realisation", "representation", "reference", "comment" ]
+
+#+END_SRC
+
+/predicates GET/POST
+/predicates/#id PUT/DELETE
+
+* search
+
+/search/local POST
+
+#+NAME search 
+#+BEGIN_SRC js
+
+{
+    "title" : Maybe str (any part),
+    "type" : Maybe type,
+    "date" : Maybe range,
+    "filetype" : Maybe filetype,
+    "copyright" : Maybe str,
+    "license" : Maybe license,
+    "tag" : Maybe [ tag-ids ],
+    "keywords" : Maybe [ keywords-ids ],
+    "keywords open" : [ keywords-ids ],
+    "subject-or-object-connection" : [ id ]
+}
+
+/search/global POST
+
+#+NAME search 
+#+BEGIN_SRC js
+
+{
+    "user-id" : Maybe int
+    "title" : Maybe str (any part),
+    "type" : Maybe type,
+    "date" : Maybe range,
+    "filetype" : Maybe filetype,
+    "copyright" : Maybe str,
+    "license" : Maybe license,
+    "tag" : Maybe [ tag-ids ],
+    "keywords" : Maybe [ keywords-ids ],
+    "keywords open" : [ keywords-ids ],
+    "subject-or-object-connection" : [ id ]
+}
+
+only publicly visible (or the things that you have permission to see)
+
+#+END_SRC
+
+
+* doc import
+
+/import/doc POST 
+
+#+NAME word import
+#+BEGIN_SRC js
+
+{
+    "file" : worddoc
+    "name" : name
+}
+#+END_SRC
+
+returns a folder (id), with the media and parsed text content as Markdown (pandoc)
+
+* folder upload
+
+/import/folder POST
+
+through <input type="file" webkitdirectory mozdirectory>
+
+returns a folder ID
+
+* space usage / free space
+
+/storage/usage GET 
+
+
 * Questions
 ** Ways of relating/grouping media
 *** members of the same set
