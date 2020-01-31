@@ -49,10 +49,10 @@
 ** global search
 
 * create file 
-endpoint /file POST 
-endpoint /file/#id PUT
-endpoint /file/#id DELETE
-- needs to check if media is used in any exposition
+endpoint /media POST 
+endpoint /media/#id PUT
+endpoint /media/#id DELETE
+- media cannot be deleted if it is in an exposition
 
 fields in the body:
 - file (optional, mime type is extracted from file)
@@ -60,7 +60,8 @@ fields in the body:
 - copyright
 - license
 - description 
-- MIME (derived, GET only)
+- creator (user-id , derived only GET)
+- video/audio/image/svg/pdf/text MIME (derived, GET only)
 - parents [ folder-ids ]
 - keyword id's (closed vocabulary)
 - keyword (open vocabulary)
@@ -68,10 +69,15 @@ fields in the body:
 - type  
   - metadata of specific type
 - dates (last/modified/creation)
+- connections (optional)
+
+
+/media/text POST
+/media/text/#id PUT/DELETE (only the text)
 
 Any file can be a folder
 
-/file/#id/children GET
+/media/#id/children GET
 
 * vocabularies
 
@@ -91,7 +97,7 @@ type specific metadata
 
 * sharing
 
-/file/id/permissions GET/POST/PUT
+/media/id/permissions GET/POST/PUT
 
 
 #+NAME user permissions
@@ -101,12 +107,12 @@ type specific metadata
 "read" : { 
 "users" : [ user-ids ],
 /* "groups" : [ user-ids ],  for future */
-"all" : Boolean 
+"public" : Boolean 
 }
 "write" : [ user-ids ], {
  "users" : [ user-ids ],
  /* "groups" : [ user-ids ],  for future */
- "all" : Boolean 
+ "public" : Boolean 
 }
 }
 
@@ -121,32 +127,44 @@ Notes:
 
 /index GET
 
+all the media accessible by the user
+- Exposition simple media
+- Works media
+- Media 
+- Media shared with the user by others
+(excludes the public media)
+
+/index/public GET
+
+{
+    some query 
+}
+
 - all the folders and media ids (as a structured hierarchy) including what is shared with you
 including metadat
 
 * media
 
-/media/#id (defaults to master) GET
 /media/#id/thumb GET/PUT
-/media/#id/master GET
+/media/#id/file GET
 /media/#id/resize/#w/#h GET
 
 * connections
 
-/file/#id/connections/subject GET
-/file/#id/connections/object GET
-/file/#id/connection/ POST
+/media/#id/connections/subject GET
+/media/#id/connections/object GET
+/media/#id/connection/ POST
 gets an id
 
-/file/#id/connection/#id GET/PUT/DELETE
+/media/#id/connection/#id GET/PUT/DELETE
 
 #+NAME user permissions
 #+BEGIN_SRC js
 
 { 
-    "subject" : exposition/file/folder + pointer
+    "subject" : exposition/media/folder + pointer
     , "predicate" : relation 
-    , "object" : exposition/file/folder + pointer
+    , "object" : exposition/media/folder + pointer
 }
 
 relations :
@@ -199,6 +217,8 @@ relations :
 
 only publicly visible (or the things that you have permission to see)
 
+
+
 #+END_SRC
 
 
@@ -215,7 +235,11 @@ only publicly visible (or the things that you have permission to see)
 }
 #+END_SRC
 
-returns a folder (id), with the media and parsed text content as Markdown (pandoc)
+returns a folder (id), with the media and parsed text content as Markdown (pandoc).
+The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata.
+(... contains media1) 
+Every time any text is edited or created, the relationships have to computed.
+
 
 * folder upload
 
@@ -242,21 +266,43 @@ returns a folder ID
 * workflow descriptions
 ** user uploads folder
 The user adds/uploads a folder of documents that belong to a
-project. She will be asked if text documents (odt, tex, doc, docx,
+project. ( /import/folder )
+
+Text documents (odt, tex, doc, docx,
 txt, rtf, org) are to be converted to markdown, so that they can be
-edited in the RC repository. She will also be asked if all the media
-files belong to a set (existing or new). Copyright and license
+edited in the RC repository. (pandoc)
+
+Copyright and license 
+
+(filled in or change)
+
 information will be taken from the default settings (though the upload
-dialog allows the user to change that). All the newly uploaded media
-now appears in one set.  The user proceeds to further group media
+dialog allows the user to change that).  
+
+
+All the newly uploaded media
+now appears in one set.  
+
+The user proceeds to further group media
 from the set by using tags and completes the metadata for the set itself.
+
 ** uploads large doc with media
-The user uploads a single large doc file. She will be asked if she
+
+/import/doc 
+
+The user uploads a single large doc file.  She will be asked if she
 wants the file to be converted to media files (images) and markdown
 text. If she decides so, a set containing text and images will be
-created. Image positions should be pointers.
+created.  
+(/image positions are signified by !{} syntax in the Markdown and computed as connections between the media and the text object/)
+
 ** user groups uploaded media
+
 A user starts taking notes in the markdown editor of the RC repo. She
 uploads a number of images and connects these to the text fragments.
 In the exposition she searches for media by tags.
 
+
+The user uploads a single file
+
+THe user selects a folder where this media is inserted.
