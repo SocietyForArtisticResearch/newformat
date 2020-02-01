@@ -86,6 +86,7 @@ Any file can be a folder
 /keywords/closed PUT/POST
 /keywords/open PUT/POST
 
+/tags POST
 /tags/userid GET
 /tags GET (returns all tags)
 
@@ -176,7 +177,7 @@ relations :
 /predicates GET/POST
 /predicates/#id PUT/DELETE
 
-* search
+* search (luc)
 
 /search/local POST
 
@@ -222,7 +223,7 @@ only publicly visible (or the things that you have permission to see)
 #+END_SRC
 
 
-* doc import
+* doc import (casper)
 
 /import/doc POST 
 
@@ -241,7 +242,7 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
 Every time any text is edited or created, the relationships have to computed.
 
 
-* folder upload
+* folder upload (casper)
 
 /import/folder POST
 
@@ -249,7 +250,7 @@ through <input type="file" webkitdirectory mozdirectory>
 
 returns a folder ID
 
-* space usage / free space
+* space usage / free space (casper)
 
 /storage/usage GET 
 

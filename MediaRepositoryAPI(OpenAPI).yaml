@@ -18,36 +18,36 @@ tags:
   - name: service
     description: Operation for external services
 paths:
-  /media:
-    post:
-      tags:
-        - user
-      summary: upload a media file and creating a media record
-      operationId: postMedia
-      description: >
-        Upload a media file, providing the required fields returns the id of the
-        media. A ShareStatus object is created automatically for this media record. 
-      responses: 
-        '201':
-          description: successful creation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MediaRecord'
-        '400':
-          description: incorrect request
+  # /media:
+    # post:
+    #   tags:
+    #     - user
+    #   summary: upload a media file and creating a media record
+    #   operationId: postMedia
+    #   description: >
+    #     Upload a media file, providing the required fields returns the id of the
+    #     media. A ShareStatus object is created automatically for this media record. 
+    #   responses: 
+    #     '201':
+    #       description: successful creation
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/MediaRecord'
+    #     '400':
+    #       description: incorrect request
           
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                  mediaRecord:
-                      $ref: '#/components/schemas/MediaRecord'
-                  file:
-                      type: string
-                      format: binary
+    #   requestBody:
+    #     content:
+    #       multipart/form-data:
+    #         schema:
+    #           type: object
+    #           properties:
+    #               mediaRecord:
+    #                   $ref: '#/components/schemas/MediaRecord'
+    #               file:
+    #                   type: string
+    #                   format: binary
    
   /media/{mediaId}:
     put:
@@ -660,11 +660,16 @@ components:
           type: string
           description: RC id
         pointer:
-          oneOf:
-            - $ref: '#/components/schemas/TimePointer'
-            - $ref: '#/components/schemas/2dPointer'
-            - $ref: '#/components/schemas/CounterPointer'
-            - $ref: '#/components/schemas/ChannelPointer'
+          type: object
+          properties:
+            timePointer:
+              $ref: '#/components/schemas/TimePointer'
+            twoDPointer:
+              $ref: '#/components/schemas/TwoDPointer'
+            counterPointer:
+              $ref: '#/components/schemas/CounterPointer'
+            channelPointer:
+              $ref: '#/components/schemas/ChannelPointer'
     TimePointer:
       type: object
       required:
@@ -681,7 +686,7 @@ components:
           type: integer
         milliseconds:
           type: integer
-    2dPointer:
+    TwoDPointer:
       type: object
       required:
         - unit
