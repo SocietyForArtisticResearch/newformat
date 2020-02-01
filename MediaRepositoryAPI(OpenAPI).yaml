@@ -30,11 +30,330 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+          
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MediaRecord'
+  /media/{mediaId}:
+    put:
+      summary: update a media record
+      operationId: putMedia
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
+      responses:
+        '200':
+          description: successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+          
+        '404':
+          description: media record not found
+    get:
+      summary: get media record
+      operationId: getMedia
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '404':
+          description: media record not found
+    
+  /media/{mediaId}/children:
+    get:
+      summary: get the children of a media record
+      operationId: getMediaChildren
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: array of children media records
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+        '404':
+          description: media record not found
+          
+  /media/{mediaId}/shareStatus:
+    get:
+      summary: get the share status of a media record
+      operationId: getShareStatus
+      parameters:
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        '404':
+          description: media record not found
+    put:
+      summary: put the share status of a media record
+      operationId: putShareStatus
+      parameters:
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareStatus'
+      responses:
+        '200':
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        '404':
+          description: media record not found
+    
+  
+  /keywords/closed:
+    get:
+      summary: get closed vocabulary keywords
+      operationId: getKeywordsClosed
+      responses:
+        '200':
+          description: array of vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/VocabularyTerm'
+    post:
+      summary: create a new keyword
+      operationId: postKeywordsClosed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+      responses:
+        '201':
+          description: returns a vocabulary term with an id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabularyTerm'
+        '400':
+          description: bad request, cannot create keyword
+  
+                  
+  /keywords/closed/{keywordId}:
+    put:
+      summary: update a keyword
+      operationId: putKeywordsClosed
+      parameters:
+       - name: keywordId
+         in: path
+         required: true
+         description: id of keyword
+         schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+      responses:
+        '200':
+          description: keyword updated
+        '404':
+          description: keyword closed vocabulary not found
+  /keywords/open:
+    get:
+      summary: get open vocabulary keywords, starting with a given string
+      operationId: getKeywordsOpen
+      parameters:
+       - in: query
+         name: startingWith
+         schema: 
+           type: string
+         description: filter keywords using this string as start
+       - in: query
+         name: limit
+         schema:
+           type: integer
+         description: maximum number of keywords to return.
+      responses:
+        '200':
+          description: array of open vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/OpenVocabularyTerm'
+    post:
+      summary: add a keyword to the open vocabulary
+      operationId: postKeywordsOpen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: keyword as string
+      responses:
+        '200':
+          description: created keyword including id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVocabularyTerm' 
+  /keywords/open/{openKeywordId}:
+      delete:
+        summary: deletes a keyword from the open vocabulary (case insensitive)
+        operationId: deleteKeywordsOpen
+        parameters: 
+          - name: openKeywordId
+            in: path
+            required: true
+            description: id of keyword
+            schema:
+              type: string
+        responses:
+          '202':
+            description: keyword successfully deleted from open vocabulary
+          '404':
+            description: keyword not found in open vocabulary
+        
+  /tags:
+      get:
+        summary: |
+          get users tags, the user has a set of personal tags
+          user is identified from header
+        operationId: getTags
+        responses:
+          '200':
+            description: array of tags
+            content:
+              application/json:
+                schema:
+                  type: array 
+                  items:
+                    $ref: '#/components/schemas/OpenVocabularyTerm'
+      post:
+        summary: | 
+          add a tag to the users personal list of tags
+          user is identified from header
+        operationId: postTag
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: tag as string
+        responses:
+          '200':
+            description: created tag including id
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/OpenVocabularyTerm' 
+  /tags/{tagId}:
+      delete:
+        summary: | 
+          deletes a tag from the users list of tags
+          user is identified from header
+        operationId: deleteTag
+        parameters: 
+          - name: tagId
+            in: path
+            required: true
+            description: id of tag
+            schema:
+              type: string
+        responses:
+          '202':
+            description: tag successfully deleted from users tag list
+          '404':
+            description: tag not found in users tag list
+            
+          
+  /types:
+    get:
+      summary: gets the id's of type schemas
+      operationId: getTypes
+      responses:
+        '200':
+          description: this is the array of type schema id's
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type : string 
+  /types/schema/{schemaId}:
+    get:
+      summary: get the schema of a type
+      operationId: getTypesSchema
+      parameters:
+      - name: schemaId
+        in: path
+        required: true
+        description: id of schema
+        schema: 
+          type: string
+      responses:
+        '200':
+          description: free form schema specification, dealt with in client
+          content:
+            application/json:
+              schema:
+                type: object
+                    
+  
+  
+  
+        
  
 components:
   schemas:
@@ -120,6 +439,14 @@ components:
         file:
           type: string
           format: byte
+        text:
+          type: object
+          properties:
+            textType:
+              enum: [ markdown, altText, html, plain ]
+            content:
+              type: string
+          
         title:
           type: string
           example: My Human Title
@@ -191,3 +518,652 @@ components:
           items:
             $ref: '#/components/schemas/Connection'
           description: 'this connects one media record to another, or an exposition.'
+    VocabularyTerm:
+      type: object
+      description: a term from a closed vocabulary
+      properties:
+        id:
+          type: string
+          readOnly: true
+        externalURI:
+          type: string
+          description: external definition URI.
+        terms:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultiLangString'
+          description: a list of synonymous terms in different languages.
+    OpenVocabularyTerm:
+      type: object
+      description: a term from a open vocabulary
+      properties:
+        id:
+          type: string
+          readOnly: true
+        term:
+          type: string
+          description: the keyword, language unspecified
+          
+    MultiLangString:
+      type: object
+      description: a string with language tag
+      required:
+        - lang
+        - value
+      properties:
+        lang:
+          type: string
+        value:
+          type: string
+    ShareStatus:
+      type: object
+      description: Read and write permssions for users that are not the creator
+      properties: 
+        read:
+          type: object
+          properties:
+            users:
+              description: list of user id's who can read
+              type: array
+              items: 
+                type: string
+            public:
+              description: if true, anybody can read
+              type: boolean
+        write:
+          type: object
+          properties:
+            users:
+              description: list of user id's who can write
+              type: array
+              items: 
+                type: string
+       
+              
+    
+      
+       openapi: 3.0.0
+info:
+  description: This is the Research Catalouge Media Repository API
+  version: "1.0.0-oas3"
+  title: Media Repository API
+  contact:
+    email: support@researchcatalogue.net
+  license:
+    name: GPL-3
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+  - name: users
+    description: Operations for the users
+paths:
+  /media:
+    post:
+      summary: upload a media file and creating a media record
+      operationId: postMedia
+      description: >
+        Upload a media file, providing the required fields returns the id of the
+        media
+      responses: 
+        '201':
+          description: successful creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+          
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
+  /media/{mediaId}:
+    put:
+      summary: update a media record
+      operationId: putMedia
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
+      responses:
+        '200':
+          description: successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+          
+        '404':
+          description: media record not found
+    get:
+      summary: get media record
+      operationId: getMedia
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '404':
+          description: media record not found
+    
+  /media/{mediaId}/children:
+    get:
+      summary: get the children of a media record
+      operationId: getMediaChildren
+      parameters: 
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: array of children media records
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+        '404':
+          description: media record not found
+          
+  /media/{mediaId}/shareStatus:
+    get:
+      summary: get the share status of a media record
+      operationId: getShareStatus
+      parameters:
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      responses:
+        '200':
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        '404':
+          description: media record not found
+    put:
+      summary: put the share status of a media record
+      operationId: putShareStatus
+      parameters:
+        - name: mediaId
+          in: path
+          required: true
+          description: id of media record
+          schema:
+            type: string
+      requestBody:
+        contents:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareStatus'
+      responses:
+        '200':
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        '404':
+          description: media record not found
+    
+  
+  /keywords/closed:
+    get:
+      summary: get closed vocabulary keywords
+      operationId: getKeywordsClosed
+      responses:
+        '200':
+          description: array of vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/VocabularyTerm'
+    post:
+      summary: create a new keyword
+      operationId: postKeywordsClosed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+      responses:
+        '201':
+          description: returns a vocabulary term with an id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabularyTerm'
+        '400':
+          description: bad request, cannot create keyword
+  
+                  
+  /keywords/closed/{keywordId}:
+    put:
+      summary: update a keyword
+      operationId: putKeywordsClosed
+      parameters:
+       - name: keywordId
+         in: path
+         required: true
+         description: id of keyword
+         schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+      responses:
+        '200':
+          description: keyword updated
+        '404':
+          description: keyword closed vocabulary not found
+  /keywords/open:
+    get:
+      summary: get open vocabulary keywords, starting with a given string
+      operationId: getKeywordsOpen
+      parameters:
+       - in: query
+         name: startingWith
+         schema: 
+           type: string
+         description: filter keywords using this string as start
+       - in: query
+         name: limit
+         schema:
+           type: integer
+         description: maximum number of keywords to return.
+      responses:
+        '200':
+          description: array of open vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/OpenVocabularyTerm'
+    post:
+      summary: add a keyword to the open vocabulary
+      operationId: postKeywordsOpen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        description: keyword as string
+      responses:
+        '200':
+          description: created keyword including id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVocabularyTerm' 
+  /keywords/open/{openKeywordId}:
+      delete:
+        summary: deletes a keyword from the open vocabulary (case insensitive)
+        operationId: deleteKeywordsOpen
+        parameters: 
+          - name: openKeywordId
+            in: path
+            required: true
+            description: id of keyword
+            schema:
+              type: string
+        responses:
+          '202':
+            description: keyword successfully deleted from open vocabulary
+          '404':
+            description: keyword not found in open vocabulary
+        
+  /tags:
+      get:
+        summary: |
+          get users tags, the user has a set of personal tags
+          user is identified from header
+        operationId: getTags
+        responses:
+          '200':
+            description: array of tags
+            content:
+              application/json:
+                schema:
+                  type: array 
+                  items:
+                    $ref: '#/components/schemas/OpenVocabularyTerm'
+      post:
+        summary: | 
+          add a tag to the users personal list of tags
+          user is identified from header
+        operationId: postTag
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: tag as string
+        responses:
+          '200':
+            description: created tag including id
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/OpenVocabularyTerm' 
+  /tags/{tagId}:
+      delete:
+        summary: | 
+          deletes a tag from the users list of tags
+          user is identified from header
+        operationId: deleteTag
+        parameters: 
+          - name: tagId
+            in: path
+            required: true
+            description: id of tag
+            schema:
+              type: string
+        responses:
+          '202':
+            description: tag successfully deleted from users tag list
+          '404':
+            description: tag not found in users tag list
+            
+          
+  /types:
+    get:
+      summary: gets the id's of type schemas
+      operationId: getTypes
+      responses:
+        '200':
+          description: this is the array of type schema id's
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type : string 
+  /types/schema/{schemaId}:
+    get:
+      summary: get the schema of a type
+      operationId: getTypesSchema
+      parameters:
+      - name: schemaId
+        in: path
+        required: true
+        description: id of schema
+        schema: 
+          type: string
+      responses:
+        '200':
+          description: free form schema specification, dealt with in client
+          content:
+            application/json:
+              schema:
+                type: object
+                    
+  
+  
+  
+        
+ 
+components:
+  schemas:
+    ObjectPointer:
+      type: object
+      properties:
+        objectType:
+          type: string
+          enum:
+            - mediaRecord
+            - exposition
+        id:
+          type: string
+          description: RC id
+        pointer:
+          oneOf:
+            - $ref: '#/components/schemas/TimePointer'
+            - $ref: '#/components/schemas/2dPointer'
+            - $ref: '#/components/schemas/CounterPointer'
+            - $ref: '#/components/schemas/ChannelPointer'
+    TimePointer:
+      type: object
+      properties:
+        hours:
+          type: integer
+        minutes:
+          type: integer
+        seconds:
+          type: integer
+        milliseconds:
+          type: integer
+    2dPointer:
+      type: object
+      properties:
+        unit:
+          enum:
+            - perc
+            - pixel
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+    CounterPointer:
+      type: object
+      properties:
+        counterType:
+          type: string
+          enum:
+            - character
+            - byte
+            - page
+    ChannelPointer:
+      type: object
+      properties:
+        channel:
+          type: number
+          format: float
+        totalChannels:
+          type: integer
+    Connection:
+      type: object
+      properties:
+        subject: 
+          $ref: '#/components/schemas/ObjectPointer'
+        predicate:
+          type: string
+          description: predicates can be retrieved from /predicates
+        object: 
+          $ref: '#/components/schemas/ObjectPointer'
+    MediaRecord:
+      type: object
+      required:
+        - title
+        - copyright
+        - license
+      properties:
+        id:
+          type: string
+          description: 'id generated by server, immutable'
+          readOnly: true
+        file:
+          type: string
+          format: byte
+        text:
+          type: object
+          properties:
+            textType:
+              enum: [ markdown, altText, html, plain ]
+            content:
+              type: string
+          
+        title:
+          type: string
+          example: My Human Title
+        copyright:
+          type: string
+          example: © Name Surname
+        license:
+          type: string
+          description: 'RC id of the license, obtained with the call /licenses'
+        description:
+          type: string
+          example: this is a description
+        creator:
+          type: string
+          description: 'RC user id, immutable'
+          readOnly: true
+        mediaType:
+          type: string
+          enum:
+            - video
+            - audio
+            - image
+            - svg
+            - pdf
+            - text
+          readOnly: true
+        parents:
+          type: array
+          items:
+            type: string
+          description: media record ids
+        keywordsClosed:
+          type: array
+          items:
+            type: string
+          description: 'closed vocabolary keywords ids, obtained by /keywords/closed'
+        keywordsOpen:
+          type: array
+          items:
+            type: string
+          description: 'open vocabolary keywords ids, obtained by /keywords/open'
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            tags by user, non existing tags are added automatically, obtained by
+            /tags/#userid
+        type:
+          description: type obtained from the portfolio API ...
+          type: object
+          properties:
+            id:
+              type: string
+            metadata:
+              type: object
+        creationDate:
+          type: string
+          format: date
+          readOnly: true
+          description: date when object was created
+        modifiedDate:
+          type: string
+          readOnly: true
+          format: date
+          description: date when anything in the object was last changed
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+          description: 'this connects one media record to another, or an exposition.'
+    VocabularyTerm:
+      type: object
+      description: a term from a closed vocabulary
+      properties:
+        id:
+          type: string
+          readOnly: true
+        externalURI:
+          type: string
+          description: external definition URI.
+        terms:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultiLangString'
+          description: a list of synonymous terms in different languages.
+    OpenVocabularyTerm:
+      type: object
+      description: a term from a open vocabulary
+      properties:
+        id:
+          type: string
+          readOnly: true
+        term:
+          type: string
+          description: the keyword, language unspecified
+          
+    MultiLangString:
+      type: object
+      description: a string with language tag
+      required:
+        - lang
+        - value
+      properties:
+        lang:
+          type: string
+        value:
+          type: string
+    ShareStatus:
+      type: object
+      description: Read and write permssions for users that are not the creator
+      properties: 
+        read:
+          type: object
+          properties:
+            users:
+              description: list of user id's who can read
+              type: array
+              items: 
+                type: string
+            public:
+              description: if true, anybody can read
+              type: boolean
+        write:
+          type: object
+          properties:
+            users:
+              description: list of user id's who can write
+              type: array
+              items: 
+                type: string
+       
+              
+    
+      
+       
