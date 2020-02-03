@@ -1,0 +1,2770 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Media Repository API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>Media Repository API</h1>
+    <div class="app-desc">The Research Catalouge Media Repository API</div>
+    <div class="app-desc">More information: <a href="https://openapi-generator.tech">https://openapi-generator.tech</a></div>
+    <div class="app-desc">Contact Info: <a href="support@researchcatalogue.net">support@researchcatalogue.net</a></div>
+    <div class="app-desc">Version: 1.0.0-oas3</div>
+    <div class="app-desc">BasePath:</div>
+    <div class="license-info">GPL-3</div>
+    <div class="license-url">https://www.gnu.org/licenses/gpl-3.0.en.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Admin">Admin</a></h4>
+  <ul>
+  <li><a href="#deletePredicate"><code><span class="http-method">delete</span> /predicates/{predicateId}</code></a></li>
+  <li><a href="#postKeywordsClosed"><code><span class="http-method">post</span> /keywords/closed</code></a></li>
+  <li><a href="#postPredicate"><code><span class="http-method">post</span> /predicates</code></a></li>
+  <li><a href="#putKeywordsClosed"><code><span class="http-method">put</span> /keywords/closed/{keywordId}</code></a></li>
+  <li><a href="#putPredicate"><code><span class="http-method">put</span> /predicates/{predicateId}</code></a></li>
+  </ul>
+  <h4><a href="#Service">Service</a></h4>
+  <ul>
+  <li><a href="#getPublicMediaIndex"><code><span class="http-method">get</span> /media/index/public</code></a></li>
+  </ul>
+  <h4><a href="#User">User</a></h4>
+  <ul>
+  <li><a href="#deleteConnection"><code><span class="http-method">delete</span> /connection/{connectionId}</code></a></li>
+  <li><a href="#deleteKeywordsOpen"><code><span class="http-method">delete</span> /keywords/open/{openKeywordId}</code></a></li>
+  <li><a href="#deleteTag"><code><span class="http-method">delete</span> /tags/{tagId}</code></a></li>
+  <li><a href="#getConnections"><code><span class="http-method">get</span> /media/{mediaId}/connections</code></a></li>
+  <li><a href="#getKeywordsClosed"><code><span class="http-method">get</span> /keywords/closed</code></a></li>
+  <li><a href="#getKeywordsOpen"><code><span class="http-method">get</span> /keywords/open</code></a></li>
+  <li><a href="#getMedia"><code><span class="http-method">get</span> /media/{mediaId}</code></a></li>
+  <li><a href="#getMediaChildren"><code><span class="http-method">get</span> /media/{mediaId}/children</code></a></li>
+  <li><a href="#getMediaFile"><code><span class="http-method">get</span> /media/{mediaId}/file</code></a></li>
+  <li><a href="#getMediaIndex"><code><span class="http-method">get</span> /media/index</code></a></li>
+  <li><a href="#getMediaThumb"><code><span class="http-method">get</span> /media/{mediaId}/thumb</code></a></li>
+  <li><a href="#getPredicates"><code><span class="http-method">get</span> /predicates</code></a></li>
+  <li><a href="#getShareStatus"><code><span class="http-method">get</span> /media/{mediaId}/shareStatus</code></a></li>
+  <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
+  <li><a href="#getTypes"><code><span class="http-method">get</span> /types</code></a></li>
+  <li><a href="#getTypesSchema"><code><span class="http-method">get</span> /types/schema/{schemaId}</code></a></li>
+  <li><a href="#mediaMediaIdDelete"><code><span class="http-method">delete</span> /media/{mediaId}</code></a></li>
+  <li><a href="#postConnection"><code><span class="http-method">post</span> /connection</code></a></li>
+  <li><a href="#postKeywordsOpen"><code><span class="http-method">post</span> /keywords/open</code></a></li>
+  <li><a href="#postMedia"><code><span class="http-method">post</span> /media</code></a></li>
+  <li><a href="#postTag"><code><span class="http-method">post</span> /tags</code></a></li>
+  <li><a href="#putConnection"><code><span class="http-method">put</span> /connection/{connectionId}</code></a></li>
+  <li><a href="#putMedia"><code><span class="http-method">put</span> /media/{mediaId}</code></a></li>
+  <li><a href="#putMediaFile"><code><span class="http-method">put</span> /media/{mediaId}/file</code></a></li>
+  <li><a href="#putMediaThumb"><code><span class="http-method">put</span> /media/{mediaId}/thumb</code></a></li>
+  <li><a href="#putShareStatus"><code><span class="http-method">put</span> /media/{mediaId}/shareStatus</code></a></li>
+  </ul>
+
+  <h1><a name="Admin">Admin</a></h1>
+  <div class="method"><a name="deletePredicate"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /predicates/{predicateId}</code></pre></div>
+    <div class="method-summary">Delete an existing predicate. (<span class="nickname">deletePredicate</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">predicateId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of a predicate default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    Predicate was successfully deleted.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Predicate not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postKeywordsClosed"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /keywords/closed</code></pre></div>
+    <div class="method-summary">create a new keyword (<span class="nickname">postKeywordsClosed</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">VocabularyTerm <a href="#VocabularyTerm">VocabularyTerm</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#VocabularyTerm">VocabularyTerm</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "externalURI" : "externalURI",
+  "terms" : [ {
+    "lang" : "lang",
+    "value" : "value"
+  }, {
+    "lang" : "lang",
+    "value" : "value"
+  } ],
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    returns a vocabulary term with an id
+        <a href="#VocabularyTerm">VocabularyTerm</a>
+    <h4 class="field-label">400</h4>
+    bad request, cannot create keyword
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postPredicate"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /predicates</code></pre></div>
+    <div class="method-summary">Define a new predicate. (<span class="nickname">postPredicate</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Predicate <a href="#Predicate">Predicate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Predicate">Predicate</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "predicate" : "predicate",
+  "id" : "id",
+  "uri" : "uri"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Predicate created. Returns a predicate with id.
+        <a href="#Predicate">Predicate</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putKeywordsClosed"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /keywords/closed/{keywordId}</code></pre></div>
+    <div class="method-summary">update a keyword (<span class="nickname">putKeywordsClosed</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">keywordId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of keyword default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">VocabularyTerm <a href="#VocabularyTerm">VocabularyTerm</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    keyword updated
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    keyword closed vocabulary not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putPredicate"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /predicates/{predicateId}</code></pre></div>
+    <div class="method-summary">Update an existing predicate. (<span class="nickname">putPredicate</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">predicateId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of a predicate default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Predicate <a href="#Predicate">Predicate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Predicate was successfully updated.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Service">Service</a></h1>
+  <div class="method"><a name="getPublicMediaIndex"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/index/public</code></pre></div>
+    <div class="method-summary">Get all publicly available media records. May produce large amounts of data. (<span class="nickname">getPublicMediaIndex</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#MediaRecord">MediaRecord</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of children media records
+        
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="User">User</a></h1>
+  <div class="method"><a name="deleteConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /connection/{connectionId}</code></pre></div>
+    <div class="method-summary">Delete a connection (<span class="nickname">deleteConnection</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of a connection default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    Connection deleted
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Connection not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteKeywordsOpen"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /keywords/open/{openKeywordId}</code></pre></div>
+    <div class="method-summary">deletes a keyword from the open vocabulary (case insensitive) (<span class="nickname">deleteKeywordsOpen</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">openKeywordId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of keyword default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    keyword successfully deleted from open vocabulary
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    keyword not found in open vocabulary
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /tags/{tagId}</code></pre></div>
+    <div class="method-summary">deletes a tag from the users list of tags
+user is identified from header (<span class="nickname">deleteTag</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">tagId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of tag default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    tag successfully deleted from users tag list
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    tag not found in users tag list
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getConnections"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}/connections</code></pre></div>
+    <div class="method-summary">Get all connections for which this record is the subject or the object (<span class="nickname">getConnections</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Connection">Connection</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "predicate" : "predicate",
+  "subject" : {
+    "pointer" : {
+      "timePointer" : {
+        "milliseconds" : 5,
+        "hours" : 0,
+        "seconds" : 1,
+        "minutes" : 6
+      },
+      "channelPointer" : {
+        "totalChannels" : 3,
+        "channel" : 9.301444
+      },
+      "twoDPointer" : {
+        "unit" : "perc",
+        "x" : 5.637377,
+        "y" : 2.302136
+      },
+      "counterPointer" : {
+        "counter" : 7,
+        "counterType" : "character"
+      }
+    },
+    "id" : "id",
+    "objectType" : "mediaRecord"
+  },
+  "id" : "id",
+  "object" : {
+    "pointer" : {
+      "timePointer" : {
+        "milliseconds" : 5,
+        "hours" : 0,
+        "seconds" : 1,
+        "minutes" : 6
+      },
+      "channelPointer" : {
+        "totalChannels" : 3,
+        "channel" : 9.301444
+      },
+      "twoDPointer" : {
+        "unit" : "perc",
+        "x" : 5.637377,
+        "y" : 2.302136
+      },
+      "counterPointer" : {
+        "counter" : 7,
+        "counterType" : "character"
+      }
+    },
+    "id" : "id",
+    "objectType" : "mediaRecord"
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    List of connections
+        
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getKeywordsClosed"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /keywords/closed</code></pre></div>
+    <div class="method-summary">Get closed vocabulary keywords (<span class="nickname">getKeywordsClosed</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#VocabularyTerm">VocabularyTerm</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "externalURI" : "externalURI",
+  "terms" : [ {
+    "lang" : "lang",
+    "value" : "value"
+  }, {
+    "lang" : "lang",
+    "value" : "value"
+  } ],
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of vocabulary terms
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getKeywordsOpen"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /keywords/open</code></pre></div>
+    <div class="method-summary">get open vocabulary keywords, starting with a given string (<span class="nickname">getKeywordsOpen</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">startingWith (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; filter keywords using this string as start default: null </div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximum number of keywords to return. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "term" : "term",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of open vocabulary terms
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getMedia"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}</code></pre></div>
+    <div class="method-summary">get media record (<span class="nickname">getMedia</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MediaRecord">MediaRecord</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    media record
+        <a href="#MediaRecord">MediaRecord</a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getMediaChildren"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}/children</code></pre></div>
+    <div class="method-summary">get the children of a media record (<span class="nickname">getMediaChildren</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#MediaRecord">MediaRecord</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of children media records
+        
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getMediaFile"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}/file</code></pre></div>
+    <div class="method-summary">Get the file of a media record. Will not return a file if the media record is a text object. (<span class="nickname">getMediaFile</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The url of a media file of the media record
+        <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    No media file associated with the media record.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getMediaIndex"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/index</code></pre></div>
+    <div class="method-summary">get all media accessible to the user (<span class="nickname">getMediaIndex</span>)</div>
+    <div class="method-notes">Get all media accessible to user based on id. User is is derived from token.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#MediaRecord">MediaRecord</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    list of media records
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getMediaThumb"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}/thumb</code></pre></div>
+    <div class="method-summary">Get the preview thumbnail of the media record. All media records have a default thumb. (<span class="nickname">getMediaThumb</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      File
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>image/png</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Thumbnail in PNG format
+        <a href="#File">File</a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getPredicates"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /predicates</code></pre></div>
+    <div class="method-summary">Return all defined predicates (<span class="nickname">getPredicates</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Predicate">Predicate</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "predicate" : "predicate",
+  "id" : "id",
+  "uri" : "uri"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of predicates.
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getShareStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/{mediaId}/shareStatus</code></pre></div>
+    <div class="method-summary">get the share status of a media record (<span class="nickname">getShareStatus</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ShareStatus">ShareStatus</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "read" : {
+    "public" : true,
+    "users" : [ "users", "users" ]
+  },
+  "write" : {
+    "users" : [ "users", "users" ]
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    share status of the media record
+        <a href="#ShareStatus">ShareStatus</a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTags"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tags</code></pre></div>
+    <div class="method-summary">get users tags, the user has a set of personal tags
+user is identified from header (<span class="nickname">getTags</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "term" : "term",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of tags
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTypes"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /types</code></pre></div>
+    <div class="method-summary">gets the id's of type schemas (<span class="nickname">getTypes</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      array[String]
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    this is the array of type schema id's
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getTypesSchema"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /types/schema/{schemaId}</code></pre></div>
+    <div class="method-summary">get the schema of a type (<span class="nickname">getTypesSchema</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">schemaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of schema default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    free form schema specification, dealt with in client
+        <a href="#Object">Object</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="mediaMediaIdDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /media/{mediaId}</code></pre></div>
+    <div class="method-summary">delete media record (<span class="nickname">mediaMediaIdDelete</span>)</div>
+    <div class="method-notes">deletes a media record and also the respective share status object.
+It cannot be deleted if media record is used in exposition.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    media record deleted
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    media record is used in one or more expositions
+        
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /connection</code></pre></div>
+    <div class="method-summary">Create a connection. The requester needs to have write permission for the subject entity and write or read permission for the object. (<span class="nickname">postConnection</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Connection <a href="#Connection">Connection</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    The connection has been created.
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Connection could not be created
+        <a href="#ProblemWithRCObject">ProblemWithRCObject</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postKeywordsOpen"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /keywords/open</code></pre></div>
+    <div class="method-summary">add a keyword to the open vocabulary (<span class="nickname">postKeywordsOpen</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#string">string</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "term" : "term",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    created keyword including id
+        <a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postMedia"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /media</code></pre></div>
+    <div class="method-summary">Post a new media record. The file needs to be uploaded separately. (<span class="nickname">postMedia</span>)</div>
+    <div class="method-notes">Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">MediaRecord <a href="#MediaRecord">MediaRecord</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MediaRecord">MediaRecord</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    successful creation
+        <a href="#MediaRecord">MediaRecord</a>
+    <h4 class="field-label">400</h4>
+    incorrect request
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postTag"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /tags</code></pre></div>
+    <div class="method-summary">add a tag to the users personal list of tags
+user is identified from header (<span class="nickname">postTag</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#string">string</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "term" : "term",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    created tag including id
+        <a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putConnection"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /connection/{connectionId}</code></pre></div>
+    <div class="method-summary">Update a connection (<span class="nickname">putConnection</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">connectionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of a connection default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">Connection <a href="#Connection">Connection</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The connection has been updated.
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Connection could not be updated
+        <a href="#ProblemWithRCObject">ProblemWithRCObject</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putMedia"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}</code></pre></div>
+    <div class="method-summary">Update a media record (<span class="nickname">putMedia</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">MediaRecord <a href="#MediaRecord">MediaRecord</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MediaRecord">MediaRecord</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "type" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful update
+        <a href="#MediaRecord">MediaRecord</a>
+    <h4 class="field-label">400</h4>
+    Incorrect request
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putMediaFile"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}/file</code></pre></div>
+    <div class="method-summary">Upload media file of media record or replace it if it already exists. (<span class="nickname">putMediaFile</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">file (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null format: binary</div>
+    </div>  <!-- field-items -->
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Media file updated
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putMediaThumb"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}/thumb</code></pre></div>
+    <div class="method-summary">Replace tge preview thumbail image. (<span class="nickname">putMediaThumb</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>image/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#file">file</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Thumbnail updated
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putShareStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}/shareStatus</code></pre></div>
+    <div class="method-summary">put the share status of a media record (<span class="nickname">putShareStatus</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ShareStatus <a href="#ShareStatus">ShareStatus</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ShareStatus">ShareStatus</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "read" : {
+    "public" : true,
+    "users" : [ "users", "users" ]
+  },
+  "write" : {
+    "users" : [ "users", "users" ]
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    share status of the media record
+        <a href="#ShareStatus">ShareStatus</a>
+    <h4 class="field-label">404</h4>
+    media record not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#ChannelPointer"><code>ChannelPointer</code> - </a></li>
+    <li><a href="#Connection"><code>Connection</code> - </a></li>
+    <li><a href="#CounterPointer"><code>CounterPointer</code> - </a></li>
+    <li><a href="#MediaRecord"><code>MediaRecord</code> - </a></li>
+    <li><a href="#MediaRecord_text"><code>MediaRecord_text</code> - </a></li>
+    <li><a href="#MediaRecord_type"><code>MediaRecord_type</code> - </a></li>
+    <li><a href="#MultiLangString"><code>MultiLangString</code> - </a></li>
+    <li><a href="#ObjectPointer"><code>ObjectPointer</code> - </a></li>
+    <li><a href="#ObjectPointer_pointer"><code>ObjectPointer_pointer</code> - </a></li>
+    <li><a href="#OpenVocabularyTerm"><code>OpenVocabularyTerm</code> - </a></li>
+    <li><a href="#Predicate"><code>Predicate</code> - </a></li>
+    <li><a href="#ProblemWithRCObject"><code>ProblemWithRCObject</code> - </a></li>
+    <li><a href="#ShareStatus"><code>ShareStatus</code> - </a></li>
+    <li><a href="#ShareStatus_read"><code>ShareStatus_read</code> - </a></li>
+    <li><a href="#ShareStatus_write"><code>ShareStatus_write</code> - </a></li>
+    <li><a href="#TimePointer"><code>TimePointer</code> - </a></li>
+    <li><a href="#TwoDPointer"><code>TwoDPointer</code> - </a></li>
+    <li><a href="#VocabularyTerm"><code>VocabularyTerm</code> - </a></li>
+    <li><a href="#inline_object"><code>inline_object</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="ChannelPointer"><code>ChannelPointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">channel </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">totalChannels </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Connection"><code>Connection</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The id of the connection </div>
+<div class="param">subject </div><div class="param-desc"><span class="param-type"><a href="#ObjectPointer">ObjectPointer</a></span>  </div>
+<div class="param">predicate </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Id of a predicate. Predicates can be retrieved from /predicates </div>
+<div class="param">object </div><div class="param-desc"><span class="param-type"><a href="#ObjectPointer">ObjectPointer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CounterPointer"><code>CounterPointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">counterType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">character</div><div class="param-enum">byte</div><div class="param-enum">page</div>
+<div class="param">counter </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MediaRecord"><code>MediaRecord</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> id generated by server, immutable </div>
+<div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_text">MediaRecord_text</a></span>  </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">copyright </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">license </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC id of the license, obtained with the call /licenses </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">creator (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC user id, immutable </div>
+<div class="param">mediaType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">video</div><div class="param-enum">audio</div><div class="param-enum">image</div><div class="param-enum">svg</div><div class="param-enum">pdf</div><div class="param-enum">text</div>
+<div class="param">parents (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> media record ids </div>
+<div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> closed vocabolary keywords ids, obtained by /keywords/closed </div>
+<div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> open vocabolary keywords ids, obtained by /keywords/open </div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> tags by user, non existing tags are added automatically, obtained by /tags/#userid </div>
+<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_type">MediaRecord_type</a></span>  </div>
+<div class="param">creationDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date when object was created format: date</div>
+<div class="param">modifiedDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date of last change to the media record format: date</div>
+<div class="param">mediaDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> Date of the media record or what it represents format: date</div>
+<div class="param">connections (optional)</div><div class="param-desc"><span class="param-type"><a href="#Connection">array[Connection]</a></span> this connects one media record to another, or an exposition. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MediaRecord_text"><code>MediaRecord_text</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">textType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">markdown</div><div class="param-enum">altText</div><div class="param-enum">html</div><div class="param-enum">plain</div>
+<div class="param">content (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MediaRecord_type"><code>MediaRecord_type</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>type obtained from the portfolio API ...</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#">Object</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MultiLangString"><code>MultiLangString</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>a string with language tag</div>
+    <div class="field-items">
+      <div class="param">lang </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">value </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ObjectPointer"><code>ObjectPointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">objectType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">mediaRecord</div><div class="param-enum">exposition</div>
+<div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC id </div>
+<div class="param">pointer </div><div class="param-desc"><span class="param-type"><a href="#ObjectPointer_pointer">ObjectPointer_pointer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ObjectPointer_pointer"><code>ObjectPointer_pointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">timePointer (optional)</div><div class="param-desc"><span class="param-type"><a href="#TimePointer">TimePointer</a></span>  </div>
+<div class="param">twoDPointer (optional)</div><div class="param-desc"><span class="param-type"><a href="#TwoDPointer">TwoDPointer</a></span>  </div>
+<div class="param">counterPointer (optional)</div><div class="param-desc"><span class="param-type"><a href="#CounterPointer">CounterPointer</a></span>  </div>
+<div class="param">channelPointer (optional)</div><div class="param-desc"><span class="param-type"><a href="#ChannelPointer">ChannelPointer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="OpenVocabularyTerm"><code>OpenVocabularyTerm</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>a term from a open vocabulary</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">term </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the keyword, language unspecified </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Predicate"><code>Predicate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>a predicate used in a connection</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">predicate </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the description </div>
+<div class="param">uri (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> an optional uri defining the predicate </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProblemWithRCObject"><code>ProblemWithRCObject</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Problem with an expositon or media record</div>
+    <div class="field-items">
+      <div class="param">objectType </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">mediaRecord</div><div class="param-enum">exposition</div>
+<div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC id </div>
+<div class="param">problem </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">does not exist</div><div class="param-enum">insufficient permissions</div><div class="param-enum">conflict</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ShareStatus"><code>ShareStatus</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Read and write permssions for users that are not the creator</div>
+    <div class="field-items">
+      <div class="param">read </div><div class="param-desc"><span class="param-type"><a href="#ShareStatus_read">ShareStatus_read</a></span>  </div>
+<div class="param">write </div><div class="param-desc"><span class="param-type"><a href="#ShareStatus_write">ShareStatus_write</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ShareStatus_read"><code>ShareStatus_read</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">users </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> list of user id's who can read </div>
+<div class="param">public </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> if true, anybody can read </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ShareStatus_write"><code>ShareStatus_write</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">users </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> list of user id's who can write </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TimePointer"><code>TimePointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">hours </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">minutes </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">seconds </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">milliseconds </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TwoDPointer"><code>TwoDPointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">unit </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">perc</div><div class="param-enum">pixel</div>
+<div class="param">x </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">y </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="VocabularyTerm"><code>VocabularyTerm</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>a term from a closed vocabulary</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">externalURI (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> external definition URI. </div>
+<div class="param">terms </div><div class="param-desc"><span class="param-type"><a href="#MultiLangString">array[MultiLangString]</a></span> a list of synonymous terms in different languages. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_object"><code>inline_object</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">file (optional)</div><div class="param-desc"><span class="param-type"><a href="#file">File</a></span>  format: binary</div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
