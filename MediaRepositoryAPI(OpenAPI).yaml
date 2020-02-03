@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  description: This is the Research Catalouge Media Repository API
+  description: The Research Catalouge Media Repository API
   version: "1.0.0-oas3"
   title: Media Repository API
   contact:
@@ -11,49 +11,40 @@ info:
 tags:
   - name: admins
     description: Secured Admin-only calls
-  - name: developers
-    description: Operations available to regular developers
   - name: users
     description: Operations for the users
   - name: service
     description: Operation for external services
 paths:
-  # /media:
-    # post:
-    #   tags:
-    #     - user
-    #   summary: upload a media file and creating a media record
-    #   operationId: postMedia
-    #   description: >
-    #     Upload a media file, providing the required fields returns the id of the
-    #     media. A ShareStatus object is created automatically for this media record. 
-    #   responses: 
-    #     '201':
-    #       description: successful creation
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/MediaRecord'
-    #     '400':
-    #       description: incorrect request
-          
-    #   requestBody:
-    #     content:
-    #       multipart/form-data:
-    #         schema:
-    #           type: object
-    #           properties:
-    #               mediaRecord:
-    #                   $ref: '#/components/schemas/MediaRecord'
-    #               file:
-    #                   type: string
-    #                   format: binary
+  /media:
+    post:
+      tags:
+        - user
+      summary: Post a new media record. The file needs to be uploaded separately.
+      operationId: postMedia
+      description: >
+        Upload a media file, providing the required fields returns the id of the
+        media. A ShareStatus object is created automatically for this media record. 
+      responses: 
+        '201':
+          description: successful creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
    
   /media/{mediaId}:
     put:
       tags:
         - user
-      summary: update a media record
+      summary: Update a media record
       operationId: putMedia
       parameters: 
         - $ref: '#/components/parameters/mediaId'
@@ -64,16 +55,16 @@ paths:
               $ref: '#/components/schemas/MediaRecord'
       responses:
         '200':
-          description: successful update
+          description: Successful update
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MediaRecord'
         '400':
-          description: incorrect request
+          description: Incorrect request
           
         '404':
-          description: media record not found
+          description: Media record not found
     get:
       tags:
         - user
@@ -92,6 +83,8 @@ paths:
           description: media record not found
     delete:
       summary: delete media record
+      tags:
+        - user
       description: |
         deletes a media record and also the respective share status object. 
         It cannot be deleted if media record is used in exposition.
@@ -171,6 +164,7 @@ paths:
                 $ref: '#/components/schemas/ShareStatus'
         '404':
           description: media record not found
+
   /media/index:
     get:
       tags: 
@@ -188,6 +182,7 @@ paths:
                 type: array 
                 items:
                   $ref: '#/components/schemas/MediaRecord'
+
   /media/index/public:
     get:
         tags: 
@@ -203,6 +198,7 @@ paths:
                   type: array 
                   items:
                     $ref: '#/components/schemas/MediaRecord'
+
   /media/{mediaId}/thumb:
     get:
       tags:
@@ -238,7 +234,8 @@ paths:
         '201':
           description: Thumbnail updated
         '404':
-          description: media record not found    
+          description: media record not found
+          
   /media/{mediaId}/file:
       get:
         tags:
@@ -257,12 +254,12 @@ paths:
           '400':
             description: No media file associated with the media record.
           '404':
-            description: media record not found    
+            description: Media record not found    
                   
       put:
         tags:
           - user
-        summary: Replace media file of media record.
+        summary: Upload media file of media record or replace it if it already exists.
         operationId: putMediaFile
         parameters: 
           - $ref: '#/components/parameters/mediaId'
@@ -436,7 +433,9 @@ paths:
             description: Predicate not found.
   /keywords/closed:
     get:
-      summary: get closed vocabulary keywords
+      summary: Get closed vocabulary keywords
+      tags:
+        - user
       operationId: getKeywordsClosed
       responses:
         '200':
@@ -449,6 +448,8 @@ paths:
                   $ref: '#/components/schemas/VocabularyTerm'
     post:
       summary: create a new keyword
+      tags:
+        - admin
       operationId: postKeywordsClosed
       requestBody:
         content:
@@ -469,6 +470,8 @@ paths:
   /keywords/closed/{keywordId}:
     put:
       summary: update a keyword
+      tags:
+        - admin
       operationId: putKeywordsClosed
       parameters:
        - name: keywordId
@@ -490,6 +493,8 @@ paths:
   /keywords/open:
     get:
       summary: get open vocabulary keywords, starting with a given string
+      tags:
+        - user
       operationId: getKeywordsOpen
       parameters:
        - in: query
@@ -513,6 +518,8 @@ paths:
                   $ref: '#/components/schemas/OpenVocabularyTerm'
     post:
       summary: add a keyword to the open vocabulary
+      tags:
+        - user
       operationId: postKeywordsOpen
       requestBody:
         content:
@@ -527,9 +534,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenVocabularyTerm' 
+
   /keywords/open/{openKeywordId}:
       delete:
         summary: deletes a keyword from the open vocabulary (case insensitive)
+        tags:
+          - user
         operationId: deleteKeywordsOpen
         parameters: 
           - name: openKeywordId
@@ -543,12 +553,14 @@ paths:
             description: keyword successfully deleted from open vocabulary
           '404':
             description: keyword not found in open vocabulary
-        
+            
   /tags:
       get:
         summary: |
           get users tags, the user has a set of personal tags
           user is identified from header
+        tags:
+          - user
         operationId: getTags
         responses:
           '200':
@@ -563,6 +575,8 @@ paths:
         summary: | 
           add a tag to the users personal list of tags
           user is identified from header
+        tags:
+          - user
         operationId: postTag
         requestBody:
           content:
@@ -582,6 +596,8 @@ paths:
         summary: | 
           deletes a tag from the users list of tags
           user is identified from header
+        tags:
+          - user
         operationId: deleteTag
         parameters: 
           - name: tagId
@@ -600,6 +616,8 @@ paths:
   /types:
     get:
       summary: gets the id's of type schemas
+      tags:
+        - user
       operationId: getTypes
       responses:
         '200':
@@ -613,6 +631,8 @@ paths:
   /types/schema/{schemaId}:
     get:
       summary: get the schema of a type
+      tags:
+        - user
       operationId: getTypesSchema
       parameters:
       - name: schemaId
@@ -631,9 +651,7 @@ paths:
                     
   
   
-  
-        
- 
+   
 components:
   parameters:
     mediaId:
@@ -830,7 +848,12 @@ components:
           type: string
           readOnly: true
           format: date
-          description: date when anything in the object was last changed
+          description: date of last change to the media record
+        mediaDate:
+          type: string
+          format: date
+          readOnly: true
+          description: Date of the media record or what it represents
         connections:
           type: array
           items:
