@@ -15,7 +15,8 @@
 
 
 module Api.Request.Admin exposing
-    ( deletePredicate
+    ( deleteKeywordsClosed
+    , deletePredicate
     , postKeywordsClosed
     , postPredicate
     , putKeywordsClosed
@@ -28,6 +29,19 @@ import Dict
 import Http
 import Json.Decode
 import Json.Encode
+
+
+
+deleteKeywordsClosed : String -> Api.Request ()
+deleteKeywordsClosed keywordId_path =
+    Api.request
+        "DELETE"
+        "/keywords/closed/{keywordId}"
+        [ ( "keywordId", identity keywordId_path ) ]
+        []
+        []
+        Nothing
+        (Json.Decode.succeed ())
 
 
 

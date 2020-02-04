@@ -21,6 +21,7 @@ module Api.Request.User exposing
     , getConnections
     , getKeywordsClosed
     , getKeywordsOpen
+    , getLicenses
     , getMedia
     , getMediaChildren
     , getMediaFile
@@ -32,6 +33,7 @@ module Api.Request.User exposing
     , getTypes
     , getTypesSchema
     , mediaMediaIdDelete
+    , mediaSearchGet
     , postConnection
     , postKeywordsOpen
     , postMedia
@@ -127,6 +129,19 @@ getKeywordsOpen startingWith_query limit_query =
         []
         Nothing
         (Json.Decode.list Api.Data.openVocabularyTermDecoder)
+
+
+
+getLicenses : Api.Request (List Api.Data.License)
+getLicenses =
+    Api.request
+        "GET"
+        "/licenses"
+        []
+        []
+        []
+        Nothing
+        (Json.Decode.list Api.Data.licenseDecoder)
 
 
 
@@ -262,7 +277,7 @@ getTypesSchema schemaId_path =
 
 
 
-{-| deletes a media record and also the respective share status object.  It cannot be deleted if media record is used in exposition. 
+{-| deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition.
 -}
 mediaMediaIdDelete : String -> Api.Request ()
 mediaMediaIdDelete mediaId_path =
@@ -274,6 +289,19 @@ mediaMediaIdDelete mediaId_path =
         []
         Nothing
         (Json.Decode.succeed ())
+
+
+
+mediaSearchGet : Api.Data.SearchRequest -> Api.Request (List Api.Data.MediaRecord)
+mediaSearchGet searchRequest_body =
+    Api.request
+        "GET"
+        "/media/search"
+        []
+        []
+        []
+        (Just (Api.Data.encodeSearchRequest searchRequest_body))
+        (Json.Decode.list Api.Data.mediaRecordDecoder)
 
 
 
@@ -303,7 +331,7 @@ postKeywordsOpen body_body =
 
 
 
-{-| Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record.  
+{-| Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record.
 -}
 postMedia : Api.Data.MediaRecord -> Api.Request Api.Data.MediaRecord
 postMedia mediaRecord_body =

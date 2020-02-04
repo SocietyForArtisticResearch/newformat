@@ -7,16 +7,19 @@ module MediaRepository.Types (
   ChannelPointer (..),
   Connection (..),
   CounterPointer (..),
+  DateRange (..),
   InlineObject (..),
+  License (..),
   MediaRecord (..),
+  MediaRecordRecrodType (..),
   MediaRecordText (..),
-  MediaRecordType (..),
   MultiLangString (..),
   ObjectPointer (..),
   ObjectPointerPointer (..),
   OpenVocabularyTerm (..),
   Predicate (..),
   ProblemWithRCObject (..),
+  SearchRequest (..),
   ShareStatus (..),
   ShareStatusRead (..),
   ShareStatusWrite (..),
@@ -81,6 +84,18 @@ instance ToJSON CounterPointer where
   toJSON = genericToJSON (removeFieldLabelPrefix False "counterPointer")
 
 
+-- | A temporal range between included but optional start and end points
+data DateRange = DateRange
+  { dateRangeStart :: Maybe Day -- ^ 
+  , dateRangeEnd :: Maybe Day -- ^ 
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON DateRange where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "dateRange")
+instance ToJSON DateRange where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "dateRange")
+
+
 -- | 
 data InlineObject = InlineObject
   { inlineObjectFile :: Maybe FilePath -- ^ 
@@ -90,6 +105,19 @@ instance FromJSON InlineObject where
   parseJSON = genericParseJSON (removeFieldLabelPrefix True "inlineObject")
 instance ToJSON InlineObject where
   toJSON = genericToJSON (removeFieldLabelPrefix False "inlineObject")
+
+
+-- | A license
+data License = License
+  { licenseId :: Maybe Text -- ^ 
+  , licenseExternalURI :: Text -- ^ external definition URI.
+  , licenseName :: Maybe Text -- ^ The name of the license
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON License where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "license")
+instance ToJSON License where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "license")
 
 
 -- | 
@@ -103,10 +131,10 @@ data MediaRecord = MediaRecord
   , mediaRecordCreator :: Maybe Text -- ^ RC user id, immutable
   , mediaRecordMediaType :: Maybe Text -- ^ 
   , mediaRecordParents :: Maybe [Text] -- ^ media record ids
-  , mediaRecordKeywordsClosed :: Maybe [Text] -- ^ closed vocabolary keywords ids, obtained by /keywords/closed
-  , mediaRecordKeywordsOpen :: Maybe [Text] -- ^ open vocabolary keywords ids, obtained by /keywords/open
+  , mediaRecordKeywordsClosed :: Maybe [Text] -- ^ closed vocabulary keywords ids, obtained by /keywords/closed
+  , mediaRecordKeywordsOpen :: Maybe [Text] -- ^ open vocabulary keywords ids, obtained by /keywords/open
   , mediaRecordTags :: Maybe [Text] -- ^ tags by user, non existing tags are added automatically, obtained by /tags/#userid
-  , mediaRecordType :: Maybe MediaRecordType -- ^ 
+  , mediaRecordRecrodType :: Maybe MediaRecordRecrodType -- ^ 
   , mediaRecordCreationDate :: Maybe Day -- ^ date when object was created
   , mediaRecordModifiedDate :: Maybe Day -- ^ date of last change to the media record
   , mediaRecordMediaDate :: Maybe Day -- ^ Date of the media record or what it represents
@@ -119,6 +147,18 @@ instance ToJSON MediaRecord where
   toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecord")
 
 
+-- | Type obtained from the portfolio API ...
+data MediaRecordRecrodType = MediaRecordRecrodType
+  { mediaRecordRecrodTypeId :: Maybe Text -- ^ 
+  , mediaRecordRecrodTypeMetadata :: Maybe Value -- ^ 
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON MediaRecordRecrodType where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "mediaRecordRecrodType")
+instance ToJSON MediaRecordRecrodType where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecordRecrodType")
+
+
 -- | 
 data MediaRecordText = MediaRecordText
   { mediaRecordTextTextType :: Maybe Text -- ^ 
@@ -129,18 +169,6 @@ instance FromJSON MediaRecordText where
   parseJSON = genericParseJSON (removeFieldLabelPrefix True "mediaRecordText")
 instance ToJSON MediaRecordText where
   toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecordText")
-
-
--- | type obtained from the portfolio API ...
-data MediaRecordType = MediaRecordType
-  { mediaRecordTypeId :: Maybe Text -- ^ 
-  , mediaRecordTypeMetadata :: Maybe Value -- ^ 
-  } deriving (Show, Eq, Generic, Data)
-
-instance FromJSON MediaRecordType where
-  parseJSON = genericParseJSON (removeFieldLabelPrefix True "mediaRecordType")
-instance ToJSON MediaRecordType where
-  toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecordType")
 
 
 -- | a string with language tag
@@ -218,6 +246,29 @@ instance FromJSON ProblemWithRCObject where
   parseJSON = genericParseJSON (removeFieldLabelPrefix True "problemWithRCObject")
 instance ToJSON ProblemWithRCObject where
   toJSON = genericToJSON (removeFieldLabelPrefix False "problemWithRCObject")
+
+
+-- | An object to filter searches for media records
+data SearchRequest = SearchRequest
+  { searchRequestCreator :: Maybe Text -- ^ User id
+  , searchRequestTitle :: Maybe Text -- ^ Part of the title of the media record
+  , searchRequestMediaType :: Maybe Text -- ^ 
+  , searchRequestRecordType :: Maybe Text -- ^ Id of type obtained from the portfolio API
+  , searchRequestCreationDate :: Maybe DateRange -- ^ 
+  , searchRequestModificationDate :: Maybe DateRange -- ^ 
+  , searchRequestDate :: Maybe DateRange -- ^ 
+  , searchRequestLicense :: Maybe Text -- ^ Id of a license
+  , searchRequestCopyright :: Maybe Text -- ^ Part of the copyright statement
+  , searchRequestTag :: Maybe [Text] -- ^ A list tag ids
+  , searchRequestKeywordsClosed :: Maybe [Text] -- ^ A list closed vocabulary keyword ids
+  , searchRequestKeywordsOpen :: Maybe [Text] -- ^ Open vocabulary keywords ids
+  , searchRequestConnectedTo :: Maybe [Text] -- ^ A list of media record or exposition ids that the search result should be connected to as subject or object.
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON SearchRequest where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "searchRequest")
+instance ToJSON SearchRequest where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "searchRequest")
 
 
 -- | Read and write permssions for users that are not the creator

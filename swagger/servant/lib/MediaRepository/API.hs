@@ -128,7 +128,8 @@ formatSeparatedQueryList char = T.intercalate (T.singleton char) . map toQueryPa
 
 -- | Servant type-level API, generated from the OpenAPI spec for MediaRepository.
 type MediaRepositoryAPI
-    =    "predicates" :> Capture "predicateId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deletePredicate' route
+    =    "keywords" :> "closed" :> Capture "keywordId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deleteKeywordsClosed' route
+    :<|> "predicates" :> Capture "predicateId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deletePredicate' route
     :<|> "keywords" :> "closed" :> ReqBody '[JSON] VocabularyTerm :> Verb 'POST 200 '[JSON] VocabularyTerm -- 'postKeywordsClosed' route
     :<|> "predicates" :> ReqBody '[JSON] Predicate :> Verb 'POST 200 '[JSON] Predicate -- 'postPredicate' route
     :<|> "keywords" :> "closed" :> Capture "keywordId" Text :> ReqBody '[JSON] VocabularyTerm :> Verb 'PUT 200 '[JSON] () -- 'putKeywordsClosed' route
@@ -140,6 +141,7 @@ type MediaRepositoryAPI
     :<|> "media" :> Capture "mediaId" Text :> "connections" :> Verb 'GET 200 '[JSON] [Connection] -- 'getConnections' route
     :<|> "keywords" :> "closed" :> Verb 'GET 200 '[JSON] [VocabularyTerm] -- 'getKeywordsClosed' route
     :<|> "keywords" :> "open" :> QueryParam "startingWith" Text :> QueryParam "limit" Int :> Verb 'GET 200 '[JSON] [OpenVocabularyTerm] -- 'getKeywordsOpen' route
+    :<|> "licenses" :> Verb 'GET 200 '[JSON] [License] -- 'getLicenses' route
     :<|> "media" :> Capture "mediaId" Text :> Verb 'GET 200 '[JSON] MediaRecord -- 'getMedia' route
     :<|> "media" :> Capture "mediaId" Text :> "children" :> Verb 'GET 200 '[JSON] [MediaRecord] -- 'getMediaChildren' route
     :<|> "media" :> Capture "mediaId" Text :> "file" :> Verb 'GET 200 '[JSON] Text -- 'getMediaFile' route
@@ -151,6 +153,7 @@ type MediaRepositoryAPI
     :<|> "types" :> Verb 'GET 200 '[JSON] [Text] -- 'getTypes' route
     :<|> "types" :> "schema" :> Capture "schemaId" Text :> Verb 'GET 200 '[JSON] Value -- 'getTypesSchema' route
     :<|> "media" :> Capture "mediaId" Text :> Verb 'DELETE 200 '[JSON] () -- 'mediaMediaIdDelete' route
+    :<|> "media" :> "search" :> ReqBody '[JSON] SearchRequest :> Verb 'GET 200 '[JSON] [MediaRecord] -- 'mediaSearchGet' route
     :<|> "connection" :> ReqBody '[JSON] Connection :> Verb 'POST 200 '[JSON] () -- 'postConnection' route
     :<|> "keywords" :> "open" :> ReqBody '[JSON] Text :> Verb 'POST 200 '[JSON] OpenVocabularyTerm -- 'postKeywordsOpen' route
     :<|> "media" :> ReqBody '[JSON] MediaRecord :> Verb 'POST 200 '[JSON] MediaRecord -- 'postMedia' route
@@ -180,7 +183,8 @@ newtype MediaRepositoryClientError = MediaRepositoryClientError ClientError
 -- is a backend that executes actions by sending HTTP requests (see @createMediaRepositoryClient@). Alternatively, provided
 -- a backend, the API can be served using @runMediaRepositoryMiddlewareServer@.
 data MediaRepositoryBackend m = MediaRepositoryBackend
-  { deletePredicate :: Text -> m (){- ^  -}
+  { deleteKeywordsClosed :: Text -> m (){- ^  -}
+  , deletePredicate :: Text -> m (){- ^  -}
   , postKeywordsClosed :: VocabularyTerm -> m VocabularyTerm{- ^  -}
   , postPredicate :: Predicate -> m Predicate{- ^  -}
   , putKeywordsClosed :: Text -> VocabularyTerm -> m (){- ^  -}
@@ -192,6 +196,7 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , getConnections :: Text -> m [Connection]{- ^  -}
   , getKeywordsClosed :: m [VocabularyTerm]{- ^  -}
   , getKeywordsOpen :: Maybe Text -> Maybe Int -> m [OpenVocabularyTerm]{- ^  -}
+  , getLicenses :: m [License]{- ^  -}
   , getMedia :: Text -> m MediaRecord{- ^  -}
   , getMediaChildren :: Text -> m [MediaRecord]{- ^  -}
   , getMediaFile :: Text -> m Text{- ^  -}
@@ -202,10 +207,11 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , getTags :: m [OpenVocabularyTerm]{- ^  -}
   , getTypes :: m [Text]{- ^  -}
   , getTypesSchema :: Text -> m Value{- ^  -}
-  , mediaMediaIdDelete :: Text -> m (){- ^ deletes a media record and also the respective share status object.  It cannot be deleted if media record is used in exposition.  -}
+  , mediaMediaIdDelete :: Text -> m (){- ^ deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. -}
+  , mediaSearchGet :: SearchRequest -> m [MediaRecord]{- ^  -}
   , postConnection :: Connection -> m (){- ^  -}
   , postKeywordsOpen :: Text -> m OpenVocabularyTerm{- ^  -}
-  , postMedia :: MediaRecord -> m MediaRecord{- ^ Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record.   -}
+  , postMedia :: MediaRecord -> m MediaRecord{- ^ Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record. -}
   , postTag :: Text -> m OpenVocabularyTerm{- ^  -}
   , putConnection :: Text -> Connection -> m (){- ^  -}
   , putMedia :: Text -> MediaRecord -> m MediaRecord{- ^  -}
@@ -235,7 +241,8 @@ instance MonadIO MediaRepositoryClient where
 createMediaRepositoryClient :: MediaRepositoryBackend MediaRepositoryClient
 createMediaRepositoryClient = MediaRepositoryBackend{..}
   where
-    ((coerce -> deletePredicate) :<|>
+    ((coerce -> deleteKeywordsClosed) :<|>
+     (coerce -> deletePredicate) :<|>
      (coerce -> postKeywordsClosed) :<|>
      (coerce -> postPredicate) :<|>
      (coerce -> putKeywordsClosed) :<|>
@@ -247,6 +254,7 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> getConnections) :<|>
      (coerce -> getKeywordsClosed) :<|>
      (coerce -> getKeywordsOpen) :<|>
+     (coerce -> getLicenses) :<|>
      (coerce -> getMedia) :<|>
      (coerce -> getMediaChildren) :<|>
      (coerce -> getMediaFile) :<|>
@@ -258,6 +266,7 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> getTypes) :<|>
      (coerce -> getTypesSchema) :<|>
      (coerce -> mediaMediaIdDelete) :<|>
+     (coerce -> mediaSearchGet) :<|>
      (coerce -> postConnection) :<|>
      (coerce -> postKeywordsOpen) :<|>
      (coerce -> postMedia) :<|>
@@ -314,7 +323,8 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
   liftIO $ Warp.runSettings warpSettings $ middleware $ serve (Proxy :: Proxy MediaRepositoryAPI) (serverFromBackend backend)
   where
     serverFromBackend MediaRepositoryBackend{..} =
-      (coerce deletePredicate :<|>
+      (coerce deleteKeywordsClosed :<|>
+       coerce deletePredicate :<|>
        coerce postKeywordsClosed :<|>
        coerce postPredicate :<|>
        coerce putKeywordsClosed :<|>
@@ -326,6 +336,7 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce getConnections :<|>
        coerce getKeywordsClosed :<|>
        coerce getKeywordsOpen :<|>
+       coerce getLicenses :<|>
        coerce getMedia :<|>
        coerce getMediaChildren :<|>
        coerce getMediaFile :<|>
@@ -337,6 +348,7 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce getTypes :<|>
        coerce getTypesSchema :<|>
        coerce mediaMediaIdDelete :<|>
+       coerce mediaSearchGet :<|>
        coerce postConnection :<|>
        coerce postKeywordsOpen :<|>
        coerce postMedia :<|>

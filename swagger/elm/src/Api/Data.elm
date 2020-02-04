@@ -18,16 +18,19 @@ module Api.Data exposing
     ( ChannelPointer
     , Connection
     , CounterPointer, CounterPointerCounterType(..), counterPointerCounterTypeVariants
+    , DateRange
     , InlineObject
+    , License
     , MediaRecord, MediaRecordMediaType(..), mediaRecordMediaTypeVariants
+    , MediaRecordRecrodType
     , MediaRecordText, MediaRecordTextTextType(..), mediaRecordTextTextTypeVariants
-    , MediaRecordType
     , MultiLangString
     , ObjectPointer, ObjectPointerObjectType(..), objectPointerObjectTypeVariants
     , ObjectPointerPointer
     , OpenVocabularyTerm
     , Predicate
     , ProblemWithRCObject, ProblemWithRCObjectObjectType(..), problemWithRCObjectObjectTypeVariants, ProblemWithRCObjectProblem(..), problemWithRCObjectProblemVariants
+    , SearchRequest, SearchRequestMediaType(..), searchRequestMediaTypeVariants
     , ShareStatus
     , ShareStatusRead
     , ShareStatusWrite
@@ -37,16 +40,19 @@ module Api.Data exposing
     , encodeChannelPointer
     , encodeConnection
     , encodeCounterPointer
+    , encodeDateRange
     , encodeInlineObject
+    , encodeLicense
     , encodeMediaRecord
+    , encodeMediaRecordRecrodType
     , encodeMediaRecordText
-    , encodeMediaRecordType
     , encodeMultiLangString
     , encodeObjectPointer
     , encodeObjectPointerPointer
     , encodeOpenVocabularyTerm
     , encodePredicate
     , encodeProblemWithRCObject
+    , encodeSearchRequest
     , encodeShareStatus
     , encodeShareStatusRead
     , encodeShareStatusWrite
@@ -56,16 +62,19 @@ module Api.Data exposing
     , channelPointerDecoder
     , connectionDecoder
     , counterPointerDecoder
+    , dateRangeDecoder
     , inlineObjectDecoder
+    , licenseDecoder
     , mediaRecordDecoder
+    , mediaRecordRecrodTypeDecoder
     , mediaRecordTextDecoder
-    , mediaRecordTypeDecoder
     , multiLangStringDecoder
     , objectPointerDecoder
     , objectPointerPointerDecoder
     , openVocabularyTermDecoder
     , predicateDecoder
     , problemWithRCObjectDecoder
+    , searchRequestDecoder
     , shareStatusDecoder
     , shareStatusReadDecoder
     , shareStatusWriteDecoder
@@ -118,8 +127,25 @@ counterPointerCounterTypeVariants =
     ]
 
 
+{-| A temporal range between included but optional start and end points
+-}
+type alias DateRange =
+    { start : Maybe Posix
+    , end : Maybe Posix
+    }
+
+
 type alias InlineObject =
     { file : Maybe String
+    }
+
+
+{-| A license
+-}
+type alias License =
+    { id : Maybe String
+    , externalURI : String
+    , name : Maybe String
     }
 
 
@@ -136,7 +162,7 @@ type alias MediaRecord =
     , keywordsClosed : Maybe (List (String))
     , keywordsOpen : Maybe (List (String))
     , tags : Maybe (List (String))
-    , type_ : Maybe MediaRecordType
+    , recrodType : Maybe MediaRecordRecrodType
     , creationDate : Maybe Posix
     , modifiedDate : Maybe Posix
     , mediaDate : Maybe Posix
@@ -164,6 +190,14 @@ mediaRecordMediaTypeVariants =
     ]
 
 
+{-| Type obtained from the portfolio API ...
+-}
+type alias MediaRecordRecrodType =
+    { id : Maybe String
+    , metadata : Maybe Object
+    }
+
+
 type alias MediaRecordText =
     { textType : Maybe MediaRecordTextTextType
     , content : Maybe String
@@ -184,14 +218,6 @@ mediaRecordTextTextTypeVariants =
     , MediaRecordTextTextTypeHtml
     , MediaRecordTextTextTypePlain
     ]
-
-
-{-| type obtained from the portfolio API ...
--}
-type alias MediaRecordType =
-    { id : Maybe String
-    , metadata : Maybe Object
-    }
 
 
 {-| a string with language tag
@@ -278,6 +304,45 @@ problemWithRCObjectProblemVariants =
     [ ProblemWithRCObjectProblemDoesNotExist
     , ProblemWithRCObjectProblemInsufficientPermissions
     , ProblemWithRCObjectProblemConflict
+    ]
+
+
+{-| An object to filter searches for media records
+-}
+type alias SearchRequest =
+    { creator : Maybe String
+    , title : Maybe String
+    , mediaType : Maybe SearchRequestMediaType
+    , recordType : Maybe String
+    , creationDate : Maybe DateRange
+    , modificationDate : Maybe DateRange
+    , date : Maybe DateRange
+    , license : Maybe String
+    , copyright : Maybe String
+    , tag : Maybe (List (String))
+    , keywordsClosed : Maybe (List (String))
+    , keywordsOpen : Maybe (List (String))
+    , connectedTo : Maybe (List (String))
+    }
+
+
+type SearchRequestMediaType
+    = SearchRequestMediaTypeVideo
+    | SearchRequestMediaTypeAudio
+    | SearchRequestMediaTypeImage
+    | SearchRequestMediaTypeSvg
+    | SearchRequestMediaTypePdf
+    | SearchRequestMediaTypeText
+
+
+searchRequestMediaTypeVariants : List SearchRequestMediaType
+searchRequestMediaTypeVariants =
+    [ SearchRequestMediaTypeVideo
+    , SearchRequestMediaTypeAudio
+    , SearchRequestMediaTypeImage
+    , SearchRequestMediaTypeSvg
+    , SearchRequestMediaTypePdf
+    , SearchRequestMediaTypeText
     ]
 
 
@@ -422,6 +487,27 @@ encodeCounterPointerCounterType =
 
 
 
+encodeDateRange : DateRange -> Json.Encode.Value
+encodeDateRange =
+    encodeObject << encodeDateRangePairs
+
+
+encodeDateRangeWithTag : ( String, String ) -> DateRange -> Json.Encode.Value
+encodeDateRangeWithTag (tagField, tag) model =
+    encodeObject (encodeDateRangePairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeDateRangePairs : DateRange -> List EncodedField
+encodeDateRangePairs model =
+    let
+        pairs =
+            [ maybeEncode "start" Api.Time.encodeDate model.start
+            , maybeEncode "end" Api.Time.encodeDate model.end
+            ]
+    in
+    pairs
+
+
 encodeInlineObject : InlineObject -> Json.Encode.Value
 encodeInlineObject =
     encodeObject << encodeInlineObjectPairs
@@ -437,6 +523,28 @@ encodeInlineObjectPairs model =
     let
         pairs =
             [ maybeEncode "file" Json.Decode.string model.file
+            ]
+    in
+    pairs
+
+
+encodeLicense : License -> Json.Encode.Value
+encodeLicense =
+    encodeObject << encodeLicensePairs
+
+
+encodeLicenseWithTag : ( String, String ) -> License -> Json.Encode.Value
+encodeLicenseWithTag (tagField, tag) model =
+    encodeObject (encodeLicensePairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeLicensePairs : License -> List EncodedField
+encodeLicensePairs model =
+    let
+        pairs =
+            [ maybeEncode "id" Json.Encode.string model.id
+            , encode "externalURI" Json.Encode.string model.externalURI
+            , maybeEncode "name" Json.Encode.string model.name
             ]
     in
     pairs
@@ -468,7 +576,7 @@ encodeMediaRecordPairs model =
             , maybeEncode "keywordsClosed" (Json.Encode.list Json.Encode.string) model.keywordsClosed
             , maybeEncode "keywordsOpen" (Json.Encode.list Json.Encode.string) model.keywordsOpen
             , maybeEncode "tags" (Json.Encode.list Json.Encode.string) model.tags
-            , maybeEncode "type" encodeMediaRecordType model.type_
+            , maybeEncode "recrodType" encodeMediaRecordRecrodType model.recrodType
             , maybeEncode "creationDate" Api.Time.encodeDate model.creationDate
             , maybeEncode "modifiedDate" Api.Time.encodeDate model.modifiedDate
             , maybeEncode "mediaDate" Api.Time.encodeDate model.mediaDate
@@ -503,6 +611,27 @@ encodeMediaRecordMediaType : MediaRecordMediaType -> Json.Encode.Value
 encodeMediaRecordMediaType =
     Json.Encode.string << stringFromMediaRecordMediaType
 
+
+
+encodeMediaRecordRecrodType : MediaRecordRecrodType -> Json.Encode.Value
+encodeMediaRecordRecrodType =
+    encodeObject << encodeMediaRecordRecrodTypePairs
+
+
+encodeMediaRecordRecrodTypeWithTag : ( String, String ) -> MediaRecordRecrodType -> Json.Encode.Value
+encodeMediaRecordRecrodTypeWithTag (tagField, tag) model =
+    encodeObject (encodeMediaRecordRecrodTypePairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeMediaRecordRecrodTypePairs : MediaRecordRecrodType -> List EncodedField
+encodeMediaRecordRecrodTypePairs model =
+    let
+        pairs =
+            [ maybeEncode "id" Json.Encode.string model.id
+            , maybeEncode "metadata" encodeObject model.metadata
+            ]
+    in
+    pairs
 
 
 encodeMediaRecordText : MediaRecordText -> Json.Encode.Value
@@ -545,27 +674,6 @@ encodeMediaRecordTextTextType : MediaRecordTextTextType -> Json.Encode.Value
 encodeMediaRecordTextTextType =
     Json.Encode.string << stringFromMediaRecordTextTextType
 
-
-
-encodeMediaRecordType : MediaRecordType -> Json.Encode.Value
-encodeMediaRecordType =
-    encodeObject << encodeMediaRecordTypePairs
-
-
-encodeMediaRecordTypeWithTag : ( String, String ) -> MediaRecordType -> Json.Encode.Value
-encodeMediaRecordTypeWithTag (tagField, tag) model =
-    encodeObject (encodeMediaRecordTypePairs model ++ [ encode tagField Json.Encode.string tag ])
-
-
-encodeMediaRecordTypePairs : MediaRecordType -> List EncodedField
-encodeMediaRecordTypePairs model =
-    let
-        pairs =
-            [ maybeEncode "id" Json.Encode.string model.id
-            , maybeEncode "metadata" encodeObject model.metadata
-            ]
-    in
-    pairs
 
 
 encodeMultiLangString : MultiLangString -> Json.Encode.Value
@@ -744,6 +852,65 @@ stringFromProblemWithRCObjectProblem model =
 encodeProblemWithRCObjectProblem : ProblemWithRCObjectProblem -> Json.Encode.Value
 encodeProblemWithRCObjectProblem =
     Json.Encode.string << stringFromProblemWithRCObjectProblem
+
+
+
+encodeSearchRequest : SearchRequest -> Json.Encode.Value
+encodeSearchRequest =
+    encodeObject << encodeSearchRequestPairs
+
+
+encodeSearchRequestWithTag : ( String, String ) -> SearchRequest -> Json.Encode.Value
+encodeSearchRequestWithTag (tagField, tag) model =
+    encodeObject (encodeSearchRequestPairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeSearchRequestPairs : SearchRequest -> List EncodedField
+encodeSearchRequestPairs model =
+    let
+        pairs =
+            [ maybeEncode "creator" Json.Encode.string model.creator
+            , maybeEncode "title" Json.Encode.string model.title
+            , maybeEncode "mediaType"  model.mediaType
+            , maybeEncode "recordType" Json.Encode.string model.recordType
+            , maybeEncode "creationDate" encodeDateRange model.creationDate
+            , maybeEncode "modificationDate" encodeDateRange model.modificationDate
+            , maybeEncode "date" encodeDateRange model.date
+            , maybeEncode "license" Json.Encode.string model.license
+            , maybeEncode "copyright" Json.Encode.string model.copyright
+            , maybeEncode "tag" (Json.Encode.list Json.Encode.string) model.tag
+            , maybeEncode "keywordsClosed" (Json.Encode.list Json.Encode.string) model.keywordsClosed
+            , maybeEncode "keywordsOpen" (Json.Encode.list Json.Encode.string) model.keywordsOpen
+            , maybeEncode "connectedTo" (Json.Encode.list Json.Encode.string) model.connectedTo
+            ]
+    in
+    pairs
+
+stringFromSearchRequestMediaType : SearchRequestMediaType -> String
+stringFromSearchRequestMediaType model =
+    case model of
+        SearchRequestMediaTypeVideo ->
+            "video"
+
+        SearchRequestMediaTypeAudio ->
+            "audio"
+
+        SearchRequestMediaTypeImage ->
+            "image"
+
+        SearchRequestMediaTypeSvg ->
+            "svg"
+
+        SearchRequestMediaTypePdf ->
+            "pdf"
+
+        SearchRequestMediaTypeText ->
+            "text"
+
+
+encodeSearchRequestMediaType : SearchRequestMediaType -> Json.Encode.Value
+encodeSearchRequestMediaType =
+    Json.Encode.string << stringFromSearchRequestMediaType
 
 
 
@@ -938,10 +1105,25 @@ counterPointerCounterTypeDecoder =
 
 
 
+dateRangeDecoder : Json.Decode.Decoder DateRange
+dateRangeDecoder =
+    Json.Decode.succeed DateRange
+        |> maybeDecode "start" Api.Time.dateDecoder Nothing
+        |> maybeDecode "end" Api.Time.dateDecoder Nothing
+
+
 inlineObjectDecoder : Json.Decode.Decoder InlineObject
 inlineObjectDecoder =
     Json.Decode.succeed InlineObject
         |> maybeDecode "file" Json.Decode.string Nothing
+
+
+licenseDecoder : Json.Decode.Decoder License
+licenseDecoder =
+    Json.Decode.succeed License
+        |> maybeDecode "id" Json.Decode.string Nothing
+        |> decode "externalURI" Json.Decode.string 
+        |> maybeDecode "name" Json.Decode.string Nothing
 
 
 mediaRecordDecoder : Json.Decode.Decoder MediaRecord
@@ -959,7 +1141,7 @@ mediaRecordDecoder =
         |> maybeDecode "keywordsClosed" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "keywordsOpen" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "tags" (Json.Decode.list Json.Decode.string) Nothing
-        |> maybeDecode "type" mediaRecordTypeDecoder Nothing
+        |> maybeDecode "recrodType" mediaRecordRecrodTypeDecoder Nothing
         |> maybeDecode "creationDate" Api.Time.dateDecoder Nothing
         |> maybeDecode "modifiedDate" Api.Time.dateDecoder Nothing
         |> maybeDecode "mediaDate" Api.Time.dateDecoder Nothing
@@ -996,6 +1178,13 @@ mediaRecordMediaTypeDecoder =
 
 
 
+mediaRecordRecrodTypeDecoder : Json.Decode.Decoder MediaRecordRecrodType
+mediaRecordRecrodTypeDecoder =
+    Json.Decode.succeed MediaRecordRecrodType
+        |> maybeDecode "id" Json.Decode.string Nothing
+        |> maybeDecode "metadata" objectDecoder Nothing
+
+
 mediaRecordTextDecoder : Json.Decode.Decoder MediaRecordText
 mediaRecordTextDecoder =
     Json.Decode.succeed MediaRecordText
@@ -1025,13 +1214,6 @@ mediaRecordTextTextTypeDecoder =
                         Json.Decode.fail <| "Unknown type: " ++ other
             )
 
-
-
-mediaRecordTypeDecoder : Json.Decode.Decoder MediaRecordType
-mediaRecordTypeDecoder =
-    Json.Decode.succeed MediaRecordType
-        |> maybeDecode "id" Json.Decode.string Nothing
-        |> maybeDecode "metadata" objectDecoder Nothing
 
 
 multiLangStringDecoder : Json.Decode.Decoder MultiLangString
@@ -1131,6 +1313,54 @@ problemWithRCObjectProblemDecoder =
 
                     "conflict" ->
                         Json.Decode.succeed ProblemWithRCObjectProblemConflict
+
+                    other ->
+                        Json.Decode.fail <| "Unknown type: " ++ other
+            )
+
+
+
+searchRequestDecoder : Json.Decode.Decoder SearchRequest
+searchRequestDecoder =
+    Json.Decode.succeed SearchRequest
+        |> maybeDecode "creator" Json.Decode.string Nothing
+        |> maybeDecode "title" Json.Decode.string Nothing
+        |> maybeDecode "mediaType"  Nothing
+        |> maybeDecode "recordType" Json.Decode.string Nothing
+        |> maybeDecode "creationDate" dateRangeDecoder Nothing
+        |> maybeDecode "modificationDate" dateRangeDecoder Nothing
+        |> maybeDecode "date" dateRangeDecoder Nothing
+        |> maybeDecode "license" Json.Decode.string Nothing
+        |> maybeDecode "copyright" Json.Decode.string Nothing
+        |> maybeDecode "tag" (Json.Decode.list Json.Decode.string) Nothing
+        |> maybeDecode "keywordsClosed" (Json.Decode.list Json.Decode.string) Nothing
+        |> maybeDecode "keywordsOpen" (Json.Decode.list Json.Decode.string) Nothing
+        |> maybeDecode "connectedTo" (Json.Decode.list Json.Decode.string) Nothing
+
+
+searchRequestMediaTypeDecoder : Json.Decode.Decoder SearchRequestMediaType
+searchRequestMediaTypeDecoder =
+    Json.Decode.string
+        |> Json.Decode.andThen
+            (\value ->
+                case value of
+                    "video" ->
+                        Json.Decode.succeed SearchRequestMediaTypeVideo
+
+                    "audio" ->
+                        Json.Decode.succeed SearchRequestMediaTypeAudio
+
+                    "image" ->
+                        Json.Decode.succeed SearchRequestMediaTypeImage
+
+                    "svg" ->
+                        Json.Decode.succeed SearchRequestMediaTypeSvg
+
+                    "pdf" ->
+                        Json.Decode.succeed SearchRequestMediaTypePdf
+
+                    "text" ->
+                        Json.Decode.succeed SearchRequestMediaTypeText
 
                     other ->
                         Json.Decode.fail <| "Unknown type: " ++ other

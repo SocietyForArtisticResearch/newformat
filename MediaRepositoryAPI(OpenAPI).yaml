@@ -22,9 +22,7 @@ paths:
         - user
       summary: Post a new media record. The file needs to be uploaded separately.
       operationId: postMedia
-      description: >
-        Upload a media file, providing the required fields returns the id of the
-        media. A ShareStatus object is created automatically for this media record. 
+      description: Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record. 
       responses: 
         '201':
           description: successful creation
@@ -87,8 +85,7 @@ paths:
       summary: delete media record
       tags:
         - user
-      description: |
-        deletes a media record and also the respective share status object. 
+      description: deletes a media record and also the respective share status object. 
         It cannot be deleted if media record is used in exposition.
       parameters: 
         - $ref: '#/components/parameters/mediaId'
@@ -168,6 +165,28 @@ paths:
         '404':
           description: media record not found
 
+  /media/search:
+    get:
+      tags:
+        - user
+      summary: Search for media records using the search filter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: list of media records
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+        
+          
   /media/index:
     get:
       tags: 
@@ -440,6 +459,22 @@ paths:
             description: Predicate was successfully deleted.
           '404':
             description: Predicate not found.
+  /licenses:
+    get:
+      summary: Get all licenses
+      tags:
+        - user
+      operationId: getLicenses
+      responses:
+        '200':
+          description: array of licenses
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/License'
+
   /keywords/closed:
     get:
       summary: Get closed vocabulary keywords
@@ -501,6 +536,25 @@ paths:
           description: keyword updated
         '404':
           description: keyword closed vocabulary not found
+    delete:
+      summary: Delete a keyword. Backend needs to delete all uses of it.
+      tags:
+        - admin
+      operationId: deleteKeywordsClosed
+      parameters:
+       - name: keywordId
+         in: path
+         required: true
+         description: id of keyword
+         schema:
+          type: string
+      responses:
+        '202':
+          description: keyword deleted
+        '404':
+          description: keyword closed vocabulary not found
+
+          
   /keywords/open:
     get:
       summary: get open vocabulary keywords, starting with a given string
@@ -607,8 +661,8 @@ paths:
   /tags/{tagId}:
       delete:
         summary: | 
-          deletes a tag from the users list of tags
-          user is identified from header
+          Deletes a tag from the user's list of tags.
+          User is identified from header
         tags:
           - user
         operationId: deleteTag
@@ -831,12 +885,12 @@ components:
           type: array
           items:
             type: string
-          description: 'closed vocabolary keywords ids, obtained by /keywords/closed'
+          description: 'closed vocabulary keywords ids, obtained by /keywords/closed'
         keywordsOpen:
           type: array
           items:
             type: string
-          description: 'open vocabolary keywords ids, obtained by /keywords/open'
+          description: 'open vocabulary keywords ids, obtained by /keywords/open'
         tags:
           type: array
           items:
@@ -844,8 +898,8 @@ components:
           description: >-
             tags by user, non existing tags are added automatically, obtained by
             /tags/#userid
-        type:
-          description: type obtained from the portfolio API ...
+        recrodType:
+          description: Type obtained from the portfolio API ...
           type: object
           properties:
             id:
@@ -889,6 +943,22 @@ components:
           items:
             $ref: '#/components/schemas/MultiLangString'
           description: a list of synonymous terms in different languages.
+    License:
+      type: object
+      description: A license
+      required:
+       - license
+       - externalURI
+      properties:
+        id:
+          type: string
+          readOnly: true
+        externalURI:
+          type: string
+          description: external definition URI.
+        name:
+          type: string
+          description: The name of the license
     OpenVocabularyTerm:
       type: object
       description: a term from a open vocabulary
@@ -976,3 +1046,67 @@ components:
           description: RC id
         problem: 
           enum: [ does not exist, insufficient permissions, conflict ]
+    DateRange:
+      type: object
+      description: A temporal range between included but optional start and end points
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+    SearchRequest:
+      type: object
+      description: An object to filter searches for media records
+      properties:
+        creator:
+          type: string
+          description: User id
+        title:
+          type: string
+          description: Part of the title of the media record
+        mediaType:
+          type: string
+          enum:
+            - video
+            - audio
+            - image
+            - svg
+            - pdf
+            - text
+        recordType:
+          description: Id of type obtained from the portfolio API
+          type: string
+        creationDate:
+          $ref: '#/components/schemas/DateRange'
+        modificationDate:
+          $ref: '#/components/schemas/DateRange'
+        date:
+          $ref: '#/components/schemas/DateRange'
+        license:
+          type: string
+          description: Id of a license
+        copyright:
+          type: string
+          description: Part of the copyright statement
+        tag:
+          type: array
+          items:
+            type: string
+          description: A list tag ids
+        keywordsClosed:
+          type: array
+          items:
+            type: string
+          description: A list closed vocabulary keyword ids
+        keywordsOpen:
+          type: array
+          items:
+            type: string
+          description: Open vocabulary keywords ids
+        connectedTo:
+          type: array
+          items:
+            type: string
+          description: A list of media record or exposition ids that the search result should be connected to as subject or object.

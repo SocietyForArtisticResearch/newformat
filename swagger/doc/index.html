@@ -196,6 +196,7 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Admin">Admin</a></h4>
   <ul>
+  <li><a href="#deleteKeywordsClosed"><code><span class="http-method">delete</span> /keywords/closed/{keywordId}</code></a></li>
   <li><a href="#deletePredicate"><code><span class="http-method">delete</span> /predicates/{predicateId}</code></a></li>
   <li><a href="#postKeywordsClosed"><code><span class="http-method">post</span> /keywords/closed</code></a></li>
   <li><a href="#postPredicate"><code><span class="http-method">post</span> /predicates</code></a></li>
@@ -214,6 +215,7 @@ font-style: italic;
   <li><a href="#getConnections"><code><span class="http-method">get</span> /media/{mediaId}/connections</code></a></li>
   <li><a href="#getKeywordsClosed"><code><span class="http-method">get</span> /keywords/closed</code></a></li>
   <li><a href="#getKeywordsOpen"><code><span class="http-method">get</span> /keywords/open</code></a></li>
+  <li><a href="#getLicenses"><code><span class="http-method">get</span> /licenses</code></a></li>
   <li><a href="#getMedia"><code><span class="http-method">get</span> /media/{mediaId}</code></a></li>
   <li><a href="#getMediaChildren"><code><span class="http-method">get</span> /media/{mediaId}/children</code></a></li>
   <li><a href="#getMediaFile"><code><span class="http-method">get</span> /media/{mediaId}/file</code></a></li>
@@ -225,6 +227,7 @@ font-style: italic;
   <li><a href="#getTypes"><code><span class="http-method">get</span> /types</code></a></li>
   <li><a href="#getTypesSchema"><code><span class="http-method">get</span> /types/schema/{schemaId}</code></a></li>
   <li><a href="#mediaMediaIdDelete"><code><span class="http-method">delete</span> /media/{mediaId}</code></a></li>
+  <li><a href="#mediaSearchGet"><code><span class="http-method">get</span> /media/search</code></a></li>
   <li><a href="#postConnection"><code><span class="http-method">post</span> /connection</code></a></li>
   <li><a href="#postKeywordsOpen"><code><span class="http-method">post</span> /keywords/open</code></a></li>
   <li><a href="#postMedia"><code><span class="http-method">post</span> /media</code></a></li>
@@ -237,6 +240,39 @@ font-style: italic;
   </ul>
 
   <h1><a name="Admin">Admin</a></h1>
+  <div class="method"><a name="deleteKeywordsClosed"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /keywords/closed/{keywordId}</code></pre></div>
+    <div class="method-summary">Delete a keyword. Backend needs to delete all uses of it. (<span class="nickname">deleteKeywordsClosed</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">keywordId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of keyword default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">202</h4>
+    keyword deleted
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    keyword closed vocabulary not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="deletePredicate"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -504,14 +540,14 @@ font-style: italic;
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -714,8 +750,8 @@ font-style: italic;
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /tags/{tagId}</code></pre></div>
-    <div class="method-summary">deletes a tag from the users list of tags
-user is identified from header (<span class="nickname">deleteTag</span>)</div>
+    <div class="method-summary">Deletes a tag from the user's list of tags.
+User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <div class="method-notes"></div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -941,6 +977,48 @@ user is identified from header (<span class="nickname">deleteTag</span>)</div>
         
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getLicenses"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /licenses</code></pre></div>
+    <div class="method-summary">Get all licenses (<span class="nickname">getLicenses</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#License">License</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "externalURI" : "externalURI",
+  "name" : "name",
+  "id" : "id"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    array of licenses
+        
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getMedia"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -976,14 +1054,14 @@ user is identified from header (<span class="nickname">deleteTag</span>)</div>
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1153,14 +1231,14 @@ user is identified from header (<span class="nickname">deleteTag</span>)</div>
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1371,14 +1449,14 @@ user is identified from header (<span class="nickname">deleteTag</span>)</div>
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1777,8 +1855,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /media/{mediaId}</code></pre></div>
     <div class="method-summary">delete media record (<span class="nickname">mediaMediaIdDelete</span>)</div>
-    <div class="method-notes">deletes a media record and also the respective share status object.
-It cannot be deleted if media record is used in exposition.</div>
+    <div class="method-notes">deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -1813,6 +1890,186 @@ It cannot be deleted if media record is used in exposition.</div>
     <h4 class="field-label">404</h4>
     media record not found
         <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="mediaSearchGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/search</code></pre></div>
+    <div class="method-summary">Search for media records using the search filter (<span class="nickname">mediaSearchGet</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">SearchRequest <a href="#SearchRequest">SearchRequest</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#MediaRecord">MediaRecord</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    list of media records
+        
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="postConnection"/>
@@ -1954,14 +2211,14 @@ It cannot be deleted if media record is used in exposition.</div>
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -2248,14 +2505,14 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
-  "type" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "creationDate" : "2000-01-23",
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -2558,15 +2815,18 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     <li><a href="#ChannelPointer"><code>ChannelPointer</code> - </a></li>
     <li><a href="#Connection"><code>Connection</code> - </a></li>
     <li><a href="#CounterPointer"><code>CounterPointer</code> - </a></li>
+    <li><a href="#DateRange"><code>DateRange</code> - </a></li>
+    <li><a href="#License"><code>License</code> - </a></li>
     <li><a href="#MediaRecord"><code>MediaRecord</code> - </a></li>
+    <li><a href="#MediaRecord_recrodType"><code>MediaRecord_recrodType</code> - </a></li>
     <li><a href="#MediaRecord_text"><code>MediaRecord_text</code> - </a></li>
-    <li><a href="#MediaRecord_type"><code>MediaRecord_type</code> - </a></li>
     <li><a href="#MultiLangString"><code>MultiLangString</code> - </a></li>
     <li><a href="#ObjectPointer"><code>ObjectPointer</code> - </a></li>
     <li><a href="#ObjectPointer_pointer"><code>ObjectPointer_pointer</code> - </a></li>
     <li><a href="#OpenVocabularyTerm"><code>OpenVocabularyTerm</code> - </a></li>
     <li><a href="#Predicate"><code>Predicate</code> - </a></li>
     <li><a href="#ProblemWithRCObject"><code>ProblemWithRCObject</code> - </a></li>
+    <li><a href="#SearchRequest"><code>SearchRequest</code> - </a></li>
     <li><a href="#ShareStatus"><code>ShareStatus</code> - </a></li>
     <li><a href="#ShareStatus_read"><code>ShareStatus_read</code> - </a></li>
     <li><a href="#ShareStatus_write"><code>ShareStatus_write</code> - </a></li>
@@ -2605,6 +2865,23 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="DateRange"><code>DateRange</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A temporal range between included but optional start and end points</div>
+    <div class="field-items">
+      <div class="param">start (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+<div class="param">end (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="License"><code>License</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A license</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">externalURI </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> external definition URI. </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the license </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="MediaRecord"><code>MediaRecord</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
@@ -2619,14 +2896,22 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">video</div><div class="param-enum">audio</div><div class="param-enum">image</div><div class="param-enum">svg</div><div class="param-enum">pdf</div><div class="param-enum">text</div>
 <div class="param">parents (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> media record ids </div>
-<div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> closed vocabolary keywords ids, obtained by /keywords/closed </div>
-<div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> open vocabolary keywords ids, obtained by /keywords/open </div>
+<div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> closed vocabulary keywords ids, obtained by /keywords/closed </div>
+<div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> open vocabulary keywords ids, obtained by /keywords/open </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> tags by user, non existing tags are added automatically, obtained by /tags/#userid </div>
-<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_type">MediaRecord_type</a></span>  </div>
+<div class="param">recrodType (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_recrodType">MediaRecord_recrodType</a></span>  </div>
 <div class="param">creationDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date when object was created format: date</div>
 <div class="param">modifiedDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date of last change to the media record format: date</div>
 <div class="param">mediaDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> Date of the media record or what it represents format: date</div>
 <div class="param">connections (optional)</div><div class="param-desc"><span class="param-type"><a href="#Connection">array[Connection]</a></span> this connects one media record to another, or an exposition. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="MediaRecord_recrodType"><code>MediaRecord_recrodType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Type obtained from the portfolio API ...</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#">Object</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -2637,14 +2922,6 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">markdown</div><div class="param-enum">altText</div><div class="param-enum">html</div><div class="param-enum">plain</div>
 <div class="param">content (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="MediaRecord_type"><code>MediaRecord_type</code> - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>type obtained from the portfolio API ...</div>
-    <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">metadata (optional)</div><div class="param-desc"><span class="param-type"><a href="#">Object</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -2704,6 +2981,27 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
 <div class="param">problem </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">does not exist</div><div class="param-enum">insufficient permissions</div><div class="param-enum">conflict</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SearchRequest"><code>SearchRequest</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>An object to filter searches for media records</div>
+    <div class="field-items">
+      <div class="param">creator (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> User id </div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Part of the title of the media record </div>
+<div class="param">mediaType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">video</div><div class="param-enum">audio</div><div class="param-enum">image</div><div class="param-enum">svg</div><div class="param-enum">pdf</div><div class="param-enum">text</div>
+<div class="param">recordType (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Id of type obtained from the portfolio API </div>
+<div class="param">creationDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateRange">DateRange</a></span>  </div>
+<div class="param">modificationDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateRange">DateRange</a></span>  </div>
+<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateRange">DateRange</a></span>  </div>
+<div class="param">license (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Id of a license </div>
+<div class="param">copyright (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Part of the copyright statement </div>
+<div class="param">tag (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list tag ids </div>
+<div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list closed vocabulary keyword ids </div>
+<div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Open vocabulary keywords ids </div>
+<div class="param">connectedTo (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of media record or exposition ids that the search result should be connected to as subject or object. </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
