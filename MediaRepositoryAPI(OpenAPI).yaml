@@ -166,7 +166,7 @@ paths:
           description: media record not found
 
   /media/search:
-    get:
+    post:
       tags:
         - user
       summary: Search for media records using the search filter
