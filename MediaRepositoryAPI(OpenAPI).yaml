@@ -716,7 +716,41 @@ paths:
               schema:
                 type: object
                     
-  
+  /import/doc:
+    post:
+      summary: |
+        Import a text document file (word, odt etc..). 
+        The document is converted using Pandoc, and creates a (media record) 
+        folder containing a text media record and a folder of its contained media.
+        v text record (text converted to markdown)
+          v media
+            - illustration1.jpg
+            - illustration2.jpg
+            - illustration3.jpg
+      tags:
+        - user
+      operationId: postDocument
+      requestBody:
+        required: true
+        content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                    file:
+                      type: string
+                      format: binary
+      responses: 
+        '201':
+          description: successful import
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
+          description: incorrect request
+          
+      
   
    
 components:
