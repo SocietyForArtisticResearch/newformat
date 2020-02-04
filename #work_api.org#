@@ -250,7 +250,7 @@ through <input type="file" webkitdirectory mozdirectory>
 
 returns a folder ID
 
-* space usage / free space (casper)
+* space usage / free space
 
 /storage/usage GET 
 

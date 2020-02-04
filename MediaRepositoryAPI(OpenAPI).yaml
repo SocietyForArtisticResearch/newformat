@@ -44,6 +44,9 @@ paths:
       tags:
         - user
       summary: Update a media record
+      description: |
+        Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships
+        between that markdown and the media records it references through !{} notation.
       operationId: putMedia
       parameters: 
         - $ref: '#/components/parameters/mediaId'
@@ -721,12 +724,13 @@ paths:
       summary: |
         Import a text document file (word, odt etc..). 
         The document is converted using Pandoc, and creates a (media record) 
-        folder containing a text media record and a folder of its contained media.
+        folder containing a text media record and a folder of its media files.
         v text record (text converted to markdown)
           v media
             - illustration1.jpg
             - illustration2.jpg
             - illustration3.jpg
+        The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata.
       tags:
         - user
       operationId: postDocument
@@ -749,8 +753,20 @@ paths:
                 $ref: '#/components/schemas/MediaRecord'
         '400':
           description: incorrect request
-          
-      
+  
+  /storage/usage:
+    get:
+      summary: get the current storage usage of user
+      tags:
+       - user
+      operationId: getStorageUsage
+      responses:
+        '200':
+          description: usage report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUsage'
   
    
 components:
@@ -1144,3 +1160,18 @@ components:
           items:
             type: string
           description: A list of media record or exposition ids that the search result should be connected to as subject or object.
+    StorageUsage:
+      description: see the used and available space for a user
+      type: object
+      required:
+        - used
+        - available
+      properties:
+        used:
+          type: number
+          format: float
+          description: used space in kiloBytes
+        available: 
+          type: number
+          format: float
+          description: available space in kiloBytes
