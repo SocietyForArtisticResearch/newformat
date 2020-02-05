@@ -705,12 +705,12 @@ paths:
         - user
       operationId: getTypesSchema
       parameters:
-      - name: schemaId
-        in: path
-        required: true
-        description: id of schema
-        schema: 
-          type: string
+        - name: schemaId
+          in: path
+          required: true
+          description: id of schema
+          schema: 
+            type: string
       responses:
         '200':
           description: free form schema specification, dealt with in client
@@ -719,12 +719,12 @@ paths:
               schema:
                 type: object
                     
-  /import/doc:
-    post:
+  /media/{mediaId}/import/doc:
+    put:
       summary: |
         Import a text document file (word, odt etc..). 
-        The document is converted using Pandoc, and creates a (media record) 
-        folder containing a text media record and a folder of its media files.
+        The document is converted using Pandoc, which results in text and a subfolder of media.
+        Text is appended to the end of any existing text in the media record.
         v text record (text converted to markdown)
           v media
             - illustration1.jpg
@@ -733,7 +733,9 @@ paths:
         The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata.
       tags:
         - user
-      operationId: postDocument
+      operationId: putMediaImportDoc
+      parameters:
+        - $ref: '#/components/parameters/mediaId'
       requestBody:
         required: true
         content:
@@ -752,8 +754,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/MediaRecord'
         '400':
+          description: incorrect 
+          
+  /media/{mediaId}/import/folder:
+    put:
+      summary: |
+        Import multiple files at once (flat list, no hierarchy) 
+        Copyright & license inhereted from parent.
+      tags:
+        - user
+      operationId: putMediaImportFolder
+      parameters:
+        - $ref: '#/components/parameters/mediaId'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses: 
+        '201':
+          description: successful import
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        '400':
           description: incorrect request
+          
   
+    
   /storage/usage:
     get:
       summary: get the current storage usage of user
