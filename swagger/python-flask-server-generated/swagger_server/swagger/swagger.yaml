@@ -1,0 +1,1578 @@
+openapi: 3.0.0
+info:
+  title: Media Repository API
+  description: The Research Catalouge Media Repository API
+  contact:
+    email: support@researchcatalogue.net
+  license:
+    name: GPL-3
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+  version: 1.0.0-oas3
+servers:
+- url: /
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: users
+  description: Operations for the users
+- name: service
+  description: Operation for external services
+paths:
+  /media:
+    post:
+      tags:
+      - user
+      summary: Post a new media record. The file needs to be uploaded separately.
+      description: Upload a media file, providing the required fields returns the
+        id of the media. A ShareStatus object is created automatically for this media
+        record.
+      operationId: post_media
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
+        required: true
+      responses:
+        "201":
+          description: successful creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        "400":
+          description: incorrect request
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}:
+    get:
+      tags:
+      - user
+      summary: get media record
+      operationId: get_media
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Update a media record
+      description: |
+        Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships
+        between that markdown and the media records it references through !{} notation.
+      operationId: put_media
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaRecord'
+        required: true
+      responses:
+        "200":
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        "400":
+          description: Incorrect request
+        "404":
+          description: Media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    delete:
+      tags:
+      - user
+      summary: delete media record
+      description: deletes a media record and also the respective share status object.
+        It cannot be deleted if media record is used in exposition.
+      operationId: media_media_id_delete
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: media record deleted
+        "404":
+          description: media record not found
+        "409":
+          description: media record is used in one or more expositions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  description: exposition ids
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/children:
+    get:
+      tags:
+      - user
+      summary: get the children of a media record
+      operationId: get_media_children
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: array of children media records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+                x-content-type: application/json
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/shareStatus:
+    get:
+      tags:
+      - user
+      summary: get the share status of a media record
+      operationId: get_share_status
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: put the share status of a media record
+      operationId: put_share_status
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareStatus'
+        required: true
+      responses:
+        "200":
+          description: share status of the media record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareStatus'
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/search:
+    post:
+      tags:
+      - user
+      summary: Search for media records using the search filter
+      operationId: media_search_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        "200":
+          description: list of media records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/index:
+    get:
+      tags:
+      - user
+      summary: get all media accessible to the user
+      description: |
+        Get all media accessible to user based on id. User is is derived from token.
+      operationId: get_media_index
+      responses:
+        "200":
+          description: list of media records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/index/public:
+    get:
+      tags:
+      - service
+      summary: Get all publicly available media records. May produce large amounts
+        of data.
+      operationId: get_public_media_index
+      responses:
+        "200":
+          description: array of children media records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaRecord'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.service_controller
+  /media/{mediaId}/thumb:
+    get:
+      tags:
+      - user
+      summary: Get the preview thumbnail of the media record. All media records have
+        a default thumb.
+      operationId: get_media_thumb
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Thumbnail in PNG format
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+                x-content-type: image/png
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Replace tge preview thumbail image.
+      operationId: put_media_thumb
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        "201":
+          description: Thumbnail updated
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/file:
+    get:
+      tags:
+      - user
+      summary: Get the file of a media record. Will not return a file if the media
+        record is a text object.
+      operationId: get_media_file
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The url of a media file of the media record
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+        "400":
+          description: No media file associated with the media record.
+        "404":
+          description: Media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Upload media file of media record or replace it if it already exists.
+      operationId: put_media_file
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        "201":
+          description: Media file updated
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/connections:
+    get:
+      tags:
+      - user
+      summary: Get all connections for which this record is the subject or the object
+      operationId: get_connections
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of connections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Connection'
+                x-content-type: application/json
+        "404":
+          description: media record not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /connection:
+    post:
+      tags:
+      - user
+      summary: Create a connection. The requester needs to have write permission for
+        the subject entity and write or read permission for the object.
+      operationId: post_connection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+        required: true
+      responses:
+        "201":
+          description: The connection has been created.
+        "400":
+          description: Connection could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemWithRCObject'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /connection/{connectionId}:
+    put:
+      tags:
+      - user
+      summary: Update a connection
+      operationId: put_connection
+      parameters:
+      - name: connectionId
+        in: path
+        description: id of a connection
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Connection'
+        required: true
+      responses:
+        "200":
+          description: The connection has been updated.
+        "400":
+          description: Connection could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemWithRCObject'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    delete:
+      tags:
+      - user
+      summary: Delete a connection
+      operationId: delete_connection
+      parameters:
+      - name: connectionId
+        in: path
+        description: id of a connection
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Connection deleted
+        "404":
+          description: Connection not found
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /predicates:
+    get:
+      tags:
+      - user
+      summary: Return all defined predicates
+      operationId: get_predicates
+      responses:
+        "200":
+          description: An array of predicates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Predicate'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    post:
+      tags:
+      - admin
+      summary: Define a new predicate.
+      operationId: post_predicate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Predicate'
+        required: true
+      responses:
+        "201":
+          description: Predicate created. Returns a predicate with id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Predicate'
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /predicates/{predicateId}:
+    put:
+      tags:
+      - admin
+      summary: Update an existing predicate.
+      operationId: put_predicate
+      parameters:
+      - name: predicateId
+        in: path
+        description: id of a predicate
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Predicate'
+        required: true
+      responses:
+        "200":
+          description: Predicate was successfully updated.
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+    delete:
+      tags:
+      - admin
+      summary: Delete an existing predicate.
+      operationId: delete_predicate
+      parameters:
+      - name: predicateId
+        in: path
+        description: id of a predicate
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Predicate was successfully deleted.
+        "404":
+          description: Predicate not found.
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /licenses:
+    get:
+      tags:
+      - user
+      summary: Get all licenses
+      operationId: get_licenses
+      responses:
+        "200":
+          description: array of licenses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/License'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /keywords/closed:
+    get:
+      tags:
+      - user
+      summary: Get closed vocabulary keywords
+      operationId: get_keywords_closed
+      responses:
+        "200":
+          description: array of vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VocabularyTerm'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    post:
+      tags:
+      - admin
+      summary: create a new keyword
+      operationId: post_keywords_closed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+        required: true
+      responses:
+        "201":
+          description: returns a vocabulary term with an id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VocabularyTerm'
+        "400":
+          description: bad request, cannot create keyword
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /keywords/closed/{keywordId}:
+    put:
+      tags:
+      - admin
+      summary: update a keyword
+      operationId: put_keywords_closed
+      parameters:
+      - name: keywordId
+        in: path
+        description: id of keyword
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VocabularyTerm'
+        required: true
+      responses:
+        "200":
+          description: keyword updated
+        "404":
+          description: keyword closed vocabulary not found
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+    delete:
+      tags:
+      - admin
+      summary: Delete a keyword. Backend needs to delete all uses of it.
+      operationId: delete_keywords_closed
+      parameters:
+      - name: keywordId
+        in: path
+        description: id of keyword
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: keyword deleted
+        "404":
+          description: keyword closed vocabulary not found
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /keywords/open:
+    get:
+      tags:
+      - user
+      summary: get open vocabulary keywords, starting with a given string
+      operationId: get_keywords_open
+      parameters:
+      - name: startingWith
+        in: query
+        description: filter keywords using this string as start
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: maximum number of keywords to return.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: array of open vocabulary terms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenVocabularyTerm'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    post:
+      tags:
+      - user
+      summary: add a keyword to the open vocabulary
+      operationId: post_keywords_open
+      requestBody:
+        description: keyword as string
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: created keyword including id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVocabularyTerm'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /keywords/open/{openKeywordId}:
+    delete:
+      tags:
+      - user
+      summary: deletes a keyword from the open vocabulary (case insensitive)
+      operationId: delete_keywords_open
+      parameters:
+      - name: openKeywordId
+        in: path
+        description: id of keyword
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: keyword successfully deleted from open vocabulary
+        "404":
+          description: keyword not found in open vocabulary
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /tags:
+    get:
+      tags:
+      - user
+      summary: |
+        get users tags, the user has a set of personal tags
+        user is identified from header
+      operationId: get_tags
+      responses:
+        "200":
+          description: array of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenVocabularyTerm'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    post:
+      tags:
+      - user
+      summary: |
+        add a tag to the users personal list of tags
+        user is identified from header
+      operationId: post_tag
+      requestBody:
+        description: tag as string
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: created tag including id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenVocabularyTerm'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /tags/{tagId}:
+    delete:
+      tags:
+      - user
+      summary: |
+        Deletes a tag from the user's list of tags.
+        User is identified from header
+      operationId: delete_tag
+      parameters:
+      - name: tagId
+        in: path
+        description: id of tag
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "202":
+          description: tag successfully deleted from users tag list
+        "404":
+          description: tag not found in users tag list
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /types:
+    get:
+      tags:
+      - user
+      summary: gets the id's of type schemas
+      operationId: get_types
+      responses:
+        "200":
+          description: this is the array of type schema id's
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /types/schema/{schemaId}:
+    get:
+      tags:
+      - user
+      summary: get the schema of a type
+      operationId: get_types_schema
+      parameters:
+      - name: schemaId
+        in: path
+        description: id of schema
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: free form schema specification, dealt with in client
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/import/doc:
+    put:
+      tags:
+      - user
+      summary: "Import a text document file (word, odt etc..). \nThe document is converted\
+        \ using Pandoc, which results in text and a subfolder of media.\nText is appended\
+        \ to the end of any existing text in the media record.\nv text record (text\
+        \ converted to markdown)\n  v media\n    - illustration1.jpg\n    - illustration2.jpg\n\
+        \    - illustration3.jpg\nThe position of the media is signaled by using the\
+        \ !{name} tokens in the Markdown, and reflected in the connections metadata.\n"
+      operationId: put_media_import_doc
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_1'
+        required: true
+      responses:
+        "201":
+          description: successful import
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        "400":
+          description: incorrect
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /media/{mediaId}/import/folder:
+    put:
+      tags:
+      - user
+      summary: "Import multiple files at once (flat list, no hierarchy) \nCopyright\
+        \ & license inhereted from parent.\n"
+      operationId: put_media_import_folder
+      parameters:
+      - name: mediaId
+        in: path
+        description: id of media record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_2'
+      responses:
+        "201":
+          description: successful import
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaRecord'
+        "400":
+          description: incorrect request
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /storage/usage:
+    get:
+      tags:
+      - user
+      summary: get the current storage usage of user
+      operationId: get_storage_usage
+      responses:
+        "200":
+          description: usage report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUsage'
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+components:
+  schemas:
+    ObjectPointer:
+      required:
+      - id
+      - objectType
+      - pointer
+      type: object
+      properties:
+        objectType:
+          type: string
+          enum:
+          - mediaRecord
+          - exposition
+        id:
+          type: string
+          description: RC id
+        pointer:
+          $ref: '#/components/schemas/ObjectPointer_pointer'
+      example:
+        pointer:
+          timePointer:
+            milliseconds: 5
+            hours: 0
+            seconds: 1
+            minutes: 6
+          channelPointer:
+            totalChannels: 3
+            channel: 9.301444
+          twoDPointer:
+            unit: ""
+            x: 5.637377
+            y: 2.302136
+          counterPointer:
+            counter: 7
+            counterType: character
+        id: id
+        objectType: mediaRecord
+    TimePointer:
+      required:
+      - hours
+      - milliseconds
+      - minutes
+      - seconds
+      type: object
+      properties:
+        hours:
+          type: integer
+        minutes:
+          type: integer
+        seconds:
+          type: integer
+        milliseconds:
+          type: integer
+      example:
+        milliseconds: 5
+        hours: 0
+        seconds: 1
+        minutes: 6
+    TwoDPointer:
+      required:
+      - unit
+      - x
+      - "y"
+      type: object
+      properties:
+        unit:
+          type: string
+          enum:
+          - perc
+          - pixel
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+      example:
+        unit: ""
+        x: 5.637377
+        y: 2.302136
+    CounterPointer:
+      required:
+      - counter
+      - counterType
+      type: object
+      properties:
+        counterType:
+          type: string
+          enum:
+          - character
+          - byte
+          - page
+        counter:
+          type: integer
+      example:
+        counter: 7
+        counterType: character
+    ChannelPointer:
+      required:
+      - channel
+      - totalChannels
+      type: object
+      properties:
+        channel:
+          type: number
+          format: float
+        totalChannels:
+          type: integer
+      example:
+        totalChannels: 3
+        channel: 9.301444
+    Connection:
+      required:
+      - object
+      - predicate
+      - subject
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the connection
+          readOnly: true
+        subject:
+          $ref: '#/components/schemas/ObjectPointer'
+        predicate:
+          type: string
+          description: Id of a predicate. Predicates can be retrieved from /predicates
+        object:
+          $ref: '#/components/schemas/ObjectPointer'
+      example:
+        predicate: predicate
+        subject:
+          pointer:
+            timePointer:
+              milliseconds: 5
+              hours: 0
+              seconds: 1
+              minutes: 6
+            channelPointer:
+              totalChannels: 3
+              channel: 9.301444
+            twoDPointer:
+              unit: ""
+              x: 5.637377
+              y: 2.302136
+            counterPointer:
+              counter: 7
+              counterType: character
+          id: id
+          objectType: mediaRecord
+        id: id
+    MediaRecord:
+      required:
+      - copyright
+      - license
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          description: id generated by server, immutable
+          readOnly: true
+        text:
+          $ref: '#/components/schemas/MediaRecord_text'
+        title:
+          type: string
+          example: My Human Title
+        copyright:
+          type: string
+          example: © Name Surname
+        license:
+          type: string
+          description: RC id of the license, obtained with the call /licenses
+        description:
+          type: string
+          example: this is a description
+        creator:
+          type: string
+          description: RC user id, immutable
+          readOnly: true
+        mediaType:
+          type: string
+          readOnly: true
+          enum:
+          - video
+          - audio
+          - image
+          - svg
+          - pdf
+          - text
+        parents:
+          type: array
+          description: media record ids
+          items:
+            type: string
+        keywordsClosed:
+          type: array
+          description: closed vocabulary keywords ids, obtained by /keywords/closed
+          items:
+            type: string
+        keywordsOpen:
+          type: array
+          description: open vocabulary keywords ids, obtained by /keywords/open
+          items:
+            type: string
+        tags:
+          type: array
+          description: tags by user, non existing tags are added automatically, obtained
+            by /tags/#userid
+          items:
+            type: string
+        recrodType:
+          $ref: '#/components/schemas/MediaRecord_recrodType'
+        creationDate:
+          type: string
+          description: date when object was created
+          format: date
+          readOnly: true
+        modifiedDate:
+          type: string
+          description: date of last change to the media record
+          format: date
+          readOnly: true
+        mediaDate:
+          type: string
+          description: Date of the media record or what it represents
+          format: date
+          readOnly: true
+        connections:
+          type: array
+          description: this connects one media record to another, or an exposition.
+          items:
+            $ref: '#/components/schemas/Connection'
+      example:
+        copyright: © Name Surname
+        creator: creator
+        description: this is a description
+        mediaType: video
+        title: My Human Title
+        creationDate: 2000-01-23
+        keywordsClosed:
+        - keywordsClosed
+        - keywordsClosed
+        tags:
+        - tags
+        - tags
+        license: license
+        recrodType:
+          metadata: {}
+          id: id
+        modifiedDate: 2000-01-23
+        id: id
+        text:
+          textType: ""
+          content: content
+        keywordsOpen:
+        - keywordsOpen
+        - keywordsOpen
+        connections:
+        - predicate: predicate
+          subject:
+            pointer:
+              timePointer:
+                milliseconds: 5
+                hours: 0
+                seconds: 1
+                minutes: 6
+              channelPointer:
+                totalChannels: 3
+                channel: 9.301444
+              twoDPointer:
+                unit: ""
+                x: 5.637377
+                y: 2.302136
+              counterPointer:
+                counter: 7
+                counterType: character
+            id: id
+            objectType: mediaRecord
+          id: id
+        - predicate: predicate
+          subject:
+            pointer:
+              timePointer:
+                milliseconds: 5
+                hours: 0
+                seconds: 1
+                minutes: 6
+              channelPointer:
+                totalChannels: 3
+                channel: 9.301444
+              twoDPointer:
+                unit: ""
+                x: 5.637377
+                y: 2.302136
+              counterPointer:
+                counter: 7
+                counterType: character
+            id: id
+            objectType: mediaRecord
+          id: id
+        parents:
+        - parents
+        - parents
+        mediaDate: 2000-01-23
+    VocabularyTerm:
+      required:
+      - terms
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        externalURI:
+          type: string
+          description: external definition URI.
+        terms:
+          type: array
+          description: a list of synonymous terms in different languages.
+          items:
+            $ref: '#/components/schemas/MultiLangString'
+      description: a term from a closed vocabulary
+      example:
+        externalURI: externalURI
+        terms:
+        - lang: lang
+          value: value
+        - lang: lang
+          value: value
+        id: id
+    License:
+      required:
+      - externalURI
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        externalURI:
+          type: string
+          description: external definition URI.
+        name:
+          type: string
+          description: The name of the license
+      description: A license
+      example:
+        externalURI: externalURI
+        name: name
+        id: id
+    OpenVocabularyTerm:
+      required:
+      - term
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        term:
+          type: string
+          description: the keyword, language unspecified
+      description: a term from a open vocabulary
+      example:
+        term: term
+        id: id
+    Predicate:
+      required:
+      - predicate
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        predicate:
+          type: string
+          description: the description
+        uri:
+          type: string
+          description: an optional uri defining the predicate
+      description: a predicate used in a connection
+      example:
+        predicate: predicate
+        id: id
+        uri: uri
+    MultiLangString:
+      required:
+      - lang
+      - value
+      type: object
+      properties:
+        lang:
+          type: string
+        value:
+          type: string
+      description: a string with language tag
+      example:
+        lang: lang
+        value: value
+    ShareStatus:
+      required:
+      - read
+      - write
+      type: object
+      properties:
+        read:
+          $ref: '#/components/schemas/ShareStatus_read'
+        write:
+          $ref: '#/components/schemas/ShareStatus_write'
+      description: Read and write permssions for users that are not the creator
+      example:
+        read:
+          public: true
+          users:
+          - users
+          - users
+        write:
+          users:
+          - users
+          - users
+    ProblemWithRCObject:
+      required:
+      - id
+      - objectType
+      - problem
+      type: object
+      properties:
+        objectType:
+          type: string
+          enum:
+          - mediaRecord
+          - exposition
+        id:
+          type: string
+          description: RC id
+        problem:
+          type: string
+          enum:
+          - does not exist
+          - insufficient permissions
+          - conflict
+      description: Problem with an expositon or media record
+    DateRange:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+      description: A temporal range between included but optional start and end points
+    SearchRequest:
+      type: object
+      properties:
+        creator:
+          type: string
+          description: User id
+        title:
+          type: string
+          description: Part of the title of the media record
+        mediaType:
+          type: string
+          enum:
+          - video
+          - audio
+          - image
+          - svg
+          - pdf
+          - text
+        recordType:
+          type: string
+          description: Id of type obtained from the portfolio API
+        creationDate:
+          $ref: '#/components/schemas/DateRange'
+        modificationDate:
+          $ref: '#/components/schemas/DateRange'
+        date:
+          $ref: '#/components/schemas/DateRange'
+        license:
+          type: string
+          description: Id of a license
+        copyright:
+          type: string
+          description: Part of the copyright statement
+        tag:
+          type: array
+          description: A list tag ids
+          items:
+            type: string
+        keywordsClosed:
+          type: array
+          description: A list closed vocabulary keyword ids
+          items:
+            type: string
+        keywordsOpen:
+          type: array
+          description: Open vocabulary keywords ids
+          items:
+            type: string
+        connectedTo:
+          type: array
+          description: A list of media record or exposition ids that the search result
+            should be connected to as subject or object.
+          items:
+            type: string
+      description: An object to filter searches for media records
+    StorageUsage:
+      required:
+      - available
+      - used
+      type: object
+      properties:
+        used:
+          type: number
+          description: used space in kiloBytes
+          format: float
+        available:
+          type: number
+          description: available space in kiloBytes
+          format: float
+      description: see the used and available space for a user
+      example:
+        available: 6.0274563
+        used: 0.8008282
+    body:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    body_1:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    body_2:
+      type: object
+      properties:
+        filename:
+          type: array
+          items:
+            type: string
+            format: binary
+    ObjectPointer_pointer:
+      type: object
+      properties:
+        timePointer:
+          $ref: '#/components/schemas/TimePointer'
+        twoDPointer:
+          $ref: '#/components/schemas/TwoDPointer'
+        counterPointer:
+          $ref: '#/components/schemas/CounterPointer'
+        channelPointer:
+          $ref: '#/components/schemas/ChannelPointer'
+      example:
+        timePointer:
+          milliseconds: 5
+          hours: 0
+          seconds: 1
+          minutes: 6
+        channelPointer:
+          totalChannels: 3
+          channel: 9.301444
+        twoDPointer:
+          unit: ""
+          x: 5.637377
+          y: 2.302136
+        counterPointer:
+          counter: 7
+          counterType: character
+    MediaRecord_text:
+      type: object
+      properties:
+        textType:
+          type: string
+          enum:
+          - markdown
+          - altText
+          - html
+          - plain
+        content:
+          type: string
+      example:
+        textType: ""
+        content: content
+    MediaRecord_recrodType:
+      type: object
+      properties:
+        id:
+          type: string
+        metadata:
+          type: object
+      description: Type obtained from the portfolio API ...
+      example:
+        metadata: {}
+        id: id
+    ShareStatus_read:
+      required:
+      - public
+      - users
+      type: object
+      properties:
+        users:
+          type: array
+          description: list of user id's who can read
+          items:
+            type: string
+        public:
+          type: boolean
+          description: if true, anybody can read
+      example:
+        public: true
+        users:
+        - users
+        - users
+    ShareStatus_write:
+      required:
+      - users
+      type: object
+      properties:
+        users:
+          type: array
+          description: list of user id's who can write
+          items:
+            type: string
+      example:
+        users:
+        - users
+        - users
+  parameters:
+    mediaId:
+      name: mediaId
+      in: path
+      description: id of media record
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+
