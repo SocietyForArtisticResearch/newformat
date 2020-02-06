@@ -242,7 +242,7 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
 Every time any text is edited or created, the relationships have to computed.
 
 
-* folder upload (casper)
+* folder upload
 
 /import/folder POST
 
@@ -250,7 +250,7 @@ through <input type="file" webkitdirectory mozdirectory>
 
 returns a folder ID
 
-* space usage / free space (casper)
+* space usage / free space
 
 /storage/usage GET 
 
@@ -263,7 +263,7 @@ returns a folder ID
 ** Set metadata vs media metadata schemes
 ** when to/how to remove media
 ** how to link things
-
+   
 * workflow descriptions
 ** user uploads folder
 The user adds/uploads a folder of documents that belong to a
@@ -307,3 +307,10 @@ In the exposition she searches for media by tags.
 The user uploads a single file
 
 THe user selects a folder where this media is inserted.
+
+* Test server
+
+see swagger/python-flask-server-generated
+to run, please refer to the readme.
+Also note that I had to patch util.py because of this:
+https://github.com/zalando/connexion/issues/739
