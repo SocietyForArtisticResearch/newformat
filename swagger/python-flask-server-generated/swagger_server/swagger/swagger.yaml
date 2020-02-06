@@ -964,7 +964,7 @@ components:
             totalChannels: 3
             channel: 9.301444
           twoDPointer:
-            unit: ""
+            unit: perc
             x: 5.637377
             y: 2.302136
           counterPointer:
@@ -1012,7 +1012,7 @@ components:
           type: number
           format: float
       example:
-        unit: ""
+        unit: perc
         x: 5.637377
         y: 2.302136
     CounterPointer:
@@ -1077,7 +1077,7 @@ components:
               totalChannels: 3
               channel: 9.301444
             twoDPointer:
-              unit: ""
+              unit: perc
               x: 5.637377
               y: 2.302136
             counterPointer:
@@ -1206,7 +1206,7 @@ components:
                 totalChannels: 3
                 channel: 9.301444
               twoDPointer:
-                unit: ""
+                unit: perc
                 x: 5.637377
                 y: 2.302136
               counterPointer:
@@ -1227,7 +1227,7 @@ components:
                 totalChannels: 3
                 channel: 9.301444
               twoDPointer:
-                unit: ""
+                unit: perc
                 x: 5.637377
                 y: 2.302136
               counterPointer:
@@ -1500,7 +1500,7 @@ components:
           totalChannels: 3
           channel: 9.301444
         twoDPointer:
-          unit: ""
+          unit: perc
           x: 5.637377
           y: 2.302136
         counterPointer:

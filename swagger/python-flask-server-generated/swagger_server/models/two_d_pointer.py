@@ -68,8 +68,12 @@ class TwoDPointer(Model):
         :param unit: The unit of this TwoDPointer.
         :type unit: str
         """
-        if unit is None:
-            raise ValueError("Invalid value for `unit`, must not be `None`")  # noqa: E501
+        allowed_values = ["perc", "pixel"]  # noqa: E501
+        if unit not in allowed_values:
+            raise ValueError(
+                "Invalid value for `unit` ({0}), must be one of {1}"
+                .format(unit, allowed_values)
+            )
 
         self._unit = unit
 
