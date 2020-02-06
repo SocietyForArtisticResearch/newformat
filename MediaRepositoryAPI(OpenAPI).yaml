@@ -864,6 +864,7 @@ components:
         - y
       properties:
         unit:
+          type: string
           enum:
             - perc
             - pixel
