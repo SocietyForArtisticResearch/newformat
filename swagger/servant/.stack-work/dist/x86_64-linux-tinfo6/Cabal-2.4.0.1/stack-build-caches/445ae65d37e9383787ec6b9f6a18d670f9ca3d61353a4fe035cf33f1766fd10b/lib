@@ -1,12 +1,12 @@
-/home/luc/Work/rc/newformat/swagger/servant2/media-repository.cabal:
-  hash: 2035d52922ed7a09c61c1d31da2159282ec1cb9a72432c833fca88580cc00ee9
-  size: 1680
-  modtime: 1580740019
-/home/luc/Work/rc/newformat/swagger/servant2/lib/MediaRepository/Types.hs:
-  hash: 9e9007bcfe9739b235f4c8d81ec2c05743ce28756d5ded0f0f5358f0415609f6
-  size: 13172
-  modtime: 1580739536
-/home/luc/Work/rc/newformat/swagger/servant2/lib/MediaRepository/API.hs:
-  hash: 7cd27008de15e3e90638b4bee04134d86afcc013624ed7befe125a0e45dda157
-  size: 17557
-  modtime: 1580739536
+/home/luc/Work/rc/newformat/swagger/servant/lib/MediaRepository/API.hs:
+  hash: 6cd6ae2d2fa39575c811cefe4a430c9bdb1d6c54f0a803878814842fac73264d
+  size: 19994
+  modtime: 1581151793
+/home/luc/Work/rc/newformat/swagger/servant/lib/MediaRepository/Types.hs:
+  hash: 754aceeddab6de1924e71f5fdb035bbd25eb17aa00c9e260ee6d247e6337dd96
+  size: 16696
+  modtime: 1581151793
+/home/luc/Work/rc/newformat/swagger/servant/media-repository.cabal:
+  hash: d4cca46e448760cff4b9738d80c8357a0920cb091760fd91b02944d8659d70e9
+  size: 2371
+  modtime: 1581088082

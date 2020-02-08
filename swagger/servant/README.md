@@ -1,3 +1,15 @@
+# RC REPO NOTES
+
+Use genhaskell.sh to update the auto-generated api. This needs another
+directory on the same level as this one called
+```servant-gen-tmp```. The script will copy the relevant files into
+this directory. In order to build and run the server do:
+
+```bash
+$ stack build
+$ stack exec rc-servant-exe
+```
+
 # Auto-Generated OpenAPI Bindings to `MediaRepository`
 
 The library in `lib` provides auto-generated-from-OpenAPI bindings to the MediaRepository API.

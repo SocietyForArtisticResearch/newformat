@@ -88,21 +88,21 @@ paths:
       summary: delete media record
       tags:
         - user
-      description: deletes a media record and also the respective share status object. 
-        It cannot be deleted if media record is used in exposition.
+      description: Deletes a media record and also the respective share status object. 
+        It cannot be deleted if media record is used in exposition. Connections to other entities should be removed.
       parameters: 
         - $ref: '#/components/parameters/mediaId'
       responses:
         '202':
-          description: media record deleted
+          description: Media record deleted
         '409':
-          description: media record is used in one or more expositions
+          description: Media record is used in one or more expositions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  description: exposition ids
+                  description: Exposition ids
                   type: string
         '404':
           description: media record not found
@@ -194,7 +194,7 @@ paths:
     get:
       tags: 
         - user
-      summary: get all media accessible to the user
+      summary: Get all media records accessible to the user
       description: | 
         Get all media accessible to user based on id. User is is derived from token.
       operationId: getMediaIndex
@@ -465,6 +465,7 @@ paths:
   /licenses:
     get:
       summary: Get all licenses
+      description: Licenses are retrieved from 'https://voc.uni-ak.ac.at/skosmos/licenses/en/page/?uri=http://base.uni-ak.ac.at/portfolio/licenses/CC-BY-NC-SA-4.0'
       tags:
         - user
       operationId: getLicenses
@@ -560,7 +561,7 @@ paths:
           
   /keywords/open:
     get:
-      summary: get open vocabulary keywords, starting with a given string
+      summary: Get open vocabulary keywords, starting with a given string
       tags:
         - user
       operationId: getKeywordsOpen
@@ -626,7 +627,7 @@ paths:
   /tags:
       get:
         summary: |
-          get users tags, the user has a set of personal tags
+          Get users tags, the user has a set of personal tags
           user is identified from header
         tags:
           - user
@@ -642,8 +643,8 @@ paths:
                     $ref: '#/components/schemas/OpenVocabularyTerm'
       post:
         summary: | 
-          add a tag to the users personal list of tags
-          user is identified from header
+          Add a tag to the users personal list of tags.
+          User is identified from header.
         tags:
           - user
         operationId: postTag
@@ -685,7 +686,7 @@ paths:
           
   /types:
     get:
-      summary: gets the id's of type schemas
+      summary: Gets the id's of type schemas
       tags:
         - user
       operationId: getTypes
@@ -698,6 +699,7 @@ paths:
                 type: array
                 items: 
                   type : string 
+
   /types/schema/{schemaId}:
     get:
       summary: get the schema of a type
@@ -724,13 +726,14 @@ paths:
       summary: |
         Import a text document file (word, odt etc..). 
         The document is converted using Pandoc, which results in text and a subfolder of media.
-        Text is appended to the end of any existing text in the media record.
-        v text record (text converted to markdown)
-          v media
+        Text is appended to the end of any existing text in the given media record.
+
+        Example:
+        v text media record (text converted to markdown) has the following children:
             - illustration1.jpg
             - illustration2.jpg
             - illustration3.jpg
-        The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata.
+        The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata. The client needs to maintain the pointers in the connections.
       tags:
         - user
       operationId: putMediaImportDoc
@@ -759,14 +762,15 @@ paths:
   /media/{mediaId}/import/folder:
     put:
       summary: |
-        Import multiple files at once (flat list, no hierarchy) 
-        Copyright & license inhereted from parent.
+        Import multiple files at once (flat list, no hierarchy).
+        Copyright and license inherited from parent.
       tags:
         - user
       operationId: putMediaImportFolder
       parameters:
         - $ref: '#/components/parameters/mediaId'
       requestBody:
+        required: true
         content:
           multipart/form-data:
             schema:
@@ -787,11 +791,10 @@ paths:
         '400':
           description: incorrect request
           
-  
     
   /storage/usage:
     get:
-      summary: get the current storage usage of user
+      summary: Get the current storage usage of user.
       tags:
        - user
       operationId: getStorageUsage
@@ -1020,7 +1023,7 @@ components:
       properties:
         id:
           type: string
-          readOnly: true
+          nullable: true
         externalURI:
           type: string
           description: external definition URI.

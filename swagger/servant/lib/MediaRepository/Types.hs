@@ -9,6 +9,8 @@ module MediaRepository.Types (
   CounterPointer (..),
   DateRange (..),
   InlineObject (..),
+  InlineObject1 (..),
+  InlineObject2 (..),
   License (..),
   MediaRecord (..),
   MediaRecordRecrodType (..),
@@ -23,6 +25,7 @@ module MediaRepository.Types (
   ShareStatus (..),
   ShareStatusRead (..),
   ShareStatusWrite (..),
+  StorageUsage (..),
   TimePointer (..),
   TwoDPointer (..),
   VocabularyTerm (..),
@@ -107,9 +110,31 @@ instance ToJSON InlineObject where
   toJSON = genericToJSON (removeFieldLabelPrefix False "inlineObject")
 
 
+-- | 
+data InlineObject1 = InlineObject1
+  { inlineObject1File :: Maybe FilePath -- ^ 
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON InlineObject1 where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "inlineObject1")
+instance ToJSON InlineObject1 where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "inlineObject1")
+
+
+-- | 
+data InlineObject2 = InlineObject2
+  { inlineObject2Filename :: Maybe [FilePath] -- ^ 
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON InlineObject2 where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "inlineObject2")
+instance ToJSON InlineObject2 where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "inlineObject2")
+
+
 -- | A license
 data License = License
-  { licenseId :: Maybe Text -- ^ 
+  { licenseId :: Text -- ^ 
   , licenseExternalURI :: Text -- ^ external definition URI.
   , licenseName :: Maybe Text -- ^ The name of the license
   } deriving (Show, Eq, Generic, Data)
@@ -304,6 +329,18 @@ instance FromJSON ShareStatusWrite where
   parseJSON = genericParseJSON (removeFieldLabelPrefix True "shareStatusWrite")
 instance ToJSON ShareStatusWrite where
   toJSON = genericToJSON (removeFieldLabelPrefix False "shareStatusWrite")
+
+
+-- | see the used and available space for a user
+data StorageUsage = StorageUsage
+  { storageUsageUsed :: Float -- ^ used space in kiloBytes
+  , storageUsageAvailable :: Float -- ^ available space in kiloBytes
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromJSON StorageUsage where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "storageUsage")
+instance ToJSON StorageUsage where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "storageUsage")
 
 
 -- | 

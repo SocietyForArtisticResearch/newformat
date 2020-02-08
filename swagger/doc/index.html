@@ -223,11 +223,12 @@ font-style: italic;
   <li><a href="#getMediaThumb"><code><span class="http-method">get</span> /media/{mediaId}/thumb</code></a></li>
   <li><a href="#getPredicates"><code><span class="http-method">get</span> /predicates</code></a></li>
   <li><a href="#getShareStatus"><code><span class="http-method">get</span> /media/{mediaId}/shareStatus</code></a></li>
+  <li><a href="#getStorageUsage"><code><span class="http-method">get</span> /storage/usage</code></a></li>
   <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
   <li><a href="#getTypes"><code><span class="http-method">get</span> /types</code></a></li>
   <li><a href="#getTypesSchema"><code><span class="http-method">get</span> /types/schema/{schemaId}</code></a></li>
   <li><a href="#mediaMediaIdDelete"><code><span class="http-method">delete</span> /media/{mediaId}</code></a></li>
-  <li><a href="#mediaSearchGet"><code><span class="http-method">get</span> /media/search</code></a></li>
+  <li><a href="#mediaSearchPost"><code><span class="http-method">post</span> /media/search</code></a></li>
   <li><a href="#postConnection"><code><span class="http-method">post</span> /connection</code></a></li>
   <li><a href="#postKeywordsOpen"><code><span class="http-method">post</span> /keywords/open</code></a></li>
   <li><a href="#postMedia"><code><span class="http-method">post</span> /media</code></a></li>
@@ -235,6 +236,8 @@ font-style: italic;
   <li><a href="#putConnection"><code><span class="http-method">put</span> /connection/{connectionId}</code></a></li>
   <li><a href="#putMedia"><code><span class="http-method">put</span> /media/{mediaId}</code></a></li>
   <li><a href="#putMediaFile"><code><span class="http-method">put</span> /media/{mediaId}/file</code></a></li>
+  <li><a href="#putMediaImportDoc"><code><span class="http-method">put</span> /media/{mediaId}/import/doc</code></a></li>
+  <li><a href="#putMediaImportFolder"><code><span class="http-method">put</span> /media/{mediaId}/import/folder</code></a></li>
   <li><a href="#putMediaThumb"><code><span class="http-method">put</span> /media/{mediaId}/thumb</code></a></li>
   <li><a href="#putShareStatus"><code><span class="http-method">put</span> /media/{mediaId}/shareStatus</code></a></li>
   </ul>
@@ -932,7 +935,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /keywords/open</code></pre></div>
-    <div class="method-summary">get open vocabulary keywords, starting with a given string (<span class="nickname">getKeywordsOpen</span>)</div>
+    <div class="method-summary">Get open vocabulary keywords, starting with a given string (<span class="nickname">getKeywordsOpen</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -982,7 +985,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /licenses</code></pre></div>
     <div class="method-summary">Get all licenses (<span class="nickname">getLicenses</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">Licenses are retrieved from 'https://voc.uni-ak.ac.at/skosmos/licenses/en/page/?uri=http://base.uni-ak.ac.at/portfolio/licenses/CC-BY-NC-SA-4.0'</div>
 
 
 
@@ -1424,7 +1427,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /media/index</code></pre></div>
-    <div class="method-summary">get all media accessible to the user (<span class="nickname">getMediaIndex</span>)</div>
+    <div class="method-summary">Get all media records accessible to the user (<span class="nickname">getMediaIndex</span>)</div>
     <div class="method-notes">Get all media accessible to user based on id. User is is derived from token.</div>
 
 
@@ -1729,11 +1732,52 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getStorageUsage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /storage/usage</code></pre></div>
+    <div class="method-summary">Get the current storage usage of user. (<span class="nickname">getStorageUsage</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#StorageUsage">StorageUsage</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "available" : 6.0274563,
+  "used" : 0.8008282
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    usage report
+        <a href="#StorageUsage">StorageUsage</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getTags"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /tags</code></pre></div>
-    <div class="method-summary">get users tags, the user has a set of personal tags
+    <div class="method-summary">Get users tags, the user has a set of personal tags
 user is identified from header (<span class="nickname">getTags</span>)</div>
     <div class="method-notes"></div>
 
@@ -1775,7 +1819,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /types</code></pre></div>
-    <div class="method-summary">gets the id's of type schemas (<span class="nickname">getTypes</span>)</div>
+    <div class="method-summary">Gets the id's of type schemas (<span class="nickname">getTypes</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -1855,7 +1899,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="delete"><code class="huge"><span class="http-method">delete</span> /media/{mediaId}</code></pre></div>
     <div class="method-summary">delete media record (<span class="nickname">mediaMediaIdDelete</span>)</div>
-    <div class="method-notes">deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition.</div>
+    <div class="method-notes">Deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. Connections to other entities should be removed.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -1882,21 +1926,21 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">202</h4>
-    media record deleted
+    Media record deleted
         <a href="#"></a>
     <h4 class="field-label">409</h4>
-    media record is used in one or more expositions
+    Media record is used in one or more expositions
         
     <h4 class="field-label">404</h4>
     media record not found
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <div class="method"><a name="mediaSearchGet"/>
+  <div class="method"><a name="mediaSearchPost"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /media/search</code></pre></div>
-    <div class="method-summary">Search for media records using the search filter (<span class="nickname">mediaSearchGet</span>)</div>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /media/search</code></pre></div>
+    <div class="method-summary">Search for media records using the search filter (<span class="nickname">mediaSearchPost</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -2357,8 +2401,8 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /tags</code></pre></div>
-    <div class="method-summary">add a tag to the users personal list of tags
-user is identified from header (<span class="nickname">postTag</span>)</div>
+    <div class="method-summary">Add a tag to the users personal list of tags.
+User is identified from header. (<span class="nickname">postTag</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -2463,7 +2507,8 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}</code></pre></div>
     <div class="method-summary">Update a media record (<span class="nickname">putMedia</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships
+between that markdown and the media records it references through !{} notation.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -2694,6 +2739,392 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="putMediaImportDoc"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}/import/doc</code></pre></div>
+    <div class="method-summary"><p>Import a text document file (word, odt etc..).
+The document is converted using Pandoc, which results in text and a subfolder of media.
+Text is appended to the end of any existing text in the given media record.</p>
+<p>Example:
+v text media record (text converted to markdown) has the following children:
+- illustration1.jpg
+- illustration2.jpg
+- illustration3.jpg
+The position of the media is signaled by using the !{name} tokens in the Markdown, and reflected in the connections metadata. The client needs to maintain the pointers in the connections.</p>
+ (<span class="nickname">putMediaImportDoc</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">file (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null format: binary</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MediaRecord">MediaRecord</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    successful import
+        <a href="#MediaRecord">MediaRecord</a>
+    <h4 class="field-label">400</h4>
+    incorrect
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putMediaImportFolder"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /media/{mediaId}/import/folder</code></pre></div>
+    <div class="method-summary">Import multiple files at once (flat list, no hierarchy).
+Copyright and license inherited from parent. (<span class="nickname">putMediaImportFolder</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">mediaId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of media record default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>multipart/form-data</code></li>
+    </ul>
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+      <div class="param">filename (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  default: null format: binary</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MediaRecord">MediaRecord</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "copyright" : "© Name Surname",
+  "creator" : "creator",
+  "description" : "this is a description",
+  "mediaType" : "video",
+  "title" : "My Human Title",
+  "creationDate" : "2000-01-23",
+  "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
+  "tags" : [ "tags", "tags" ],
+  "license" : "license",
+  "recrodType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
+  "modifiedDate" : "2000-01-23",
+  "id" : "id",
+  "text" : {
+    "textType" : "markdown",
+    "content" : "content"
+  },
+  "keywordsOpen" : [ "keywordsOpen", "keywordsOpen" ],
+  "connections" : [ {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  }, {
+    "predicate" : "predicate",
+    "subject" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    },
+    "id" : "id",
+    "object" : {
+      "pointer" : {
+        "timePointer" : {
+          "milliseconds" : 5,
+          "hours" : 0,
+          "seconds" : 1,
+          "minutes" : 6
+        },
+        "channelPointer" : {
+          "totalChannels" : 3,
+          "channel" : 9.301444
+        },
+        "twoDPointer" : {
+          "unit" : "perc",
+          "x" : 5.637377,
+          "y" : 2.302136
+        },
+        "counterPointer" : {
+          "counter" : 7,
+          "counterType" : "character"
+        }
+      },
+      "id" : "id",
+      "objectType" : "mediaRecord"
+    }
+  } ],
+  "parents" : [ "parents", "parents" ],
+  "mediaDate" : "2000-01-23"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    successful import
+        <a href="#MediaRecord">MediaRecord</a>
+    <h4 class="field-label">400</h4>
+    incorrect request
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="putMediaThumb"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -2830,10 +3261,13 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     <li><a href="#ShareStatus"><code>ShareStatus</code> - </a></li>
     <li><a href="#ShareStatus_read"><code>ShareStatus_read</code> - </a></li>
     <li><a href="#ShareStatus_write"><code>ShareStatus_write</code> - </a></li>
+    <li><a href="#StorageUsage"><code>StorageUsage</code> - </a></li>
     <li><a href="#TimePointer"><code>TimePointer</code> - </a></li>
     <li><a href="#TwoDPointer"><code>TwoDPointer</code> - </a></li>
     <li><a href="#VocabularyTerm"><code>VocabularyTerm</code> - </a></li>
     <li><a href="#inline_object"><code>inline_object</code> - </a></li>
+    <li><a href="#inline_object_1"><code>inline_object_1</code> - </a></li>
+    <li><a href="#inline_object_2"><code>inline_object_2</code> - </a></li>
   </ol>
 
   <div class="model">
@@ -2876,7 +3310,7 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     <h3><a name="License"><code>License</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A license</div>
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">externalURI </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> external definition URI. </div>
 <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The name of the license </div>
     </div>  <!-- field-items -->
@@ -3028,6 +3462,14 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="StorageUsage"><code>StorageUsage</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>see the used and available space for a user</div>
+    <div class="field-items">
+      <div class="param">used </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> used space in kiloBytes format: float</div>
+<div class="param">available </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> available space in kiloBytes format: float</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="TimePointer"><code>TimePointer</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
@@ -3062,6 +3504,20 @@ user is identified from header (<span class="nickname">postTag</span>)</div>
     <div class='model-description'></div>
     <div class="field-items">
       <div class="param">file (optional)</div><div class="param-desc"><span class="param-type"><a href="#file">File</a></span>  format: binary</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_object_1"><code>inline_object_1</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">file (optional)</div><div class="param-desc"><span class="param-type"><a href="#file">File</a></span>  format: binary</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_object_2"><code>inline_object_2</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">filename (optional)</div><div class="param-desc"><span class="param-type"><a href="#file">array[File]</a></span>  format: binary</div>
     </div>  <!-- field-items -->
   </div>
   </body>

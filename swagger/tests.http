@@ -1,0 +1,36 @@
+# -*- restclient -*-
+#
+# 
+#
+GET http://localhost:8080/licenses
+User-Agent: Emacs Restclient
+Content-Type: application/json
+Accept-Encoding: application/json
+
+
+#
+POST http://localhost:8080/keywords/open
+User-Agent: Emacs Restclient
+Content-Type: application/json
+Accept-Encoding: application/json
+
+"music"
+
+
+#
+POST http://localhost:8080/keywords/closed
+User-Agent: Emacs Restclient
+Content-Type: application/json
+Accept-Encoding: application/json
+
+{
+  "externalURI" : "http",
+  "terms" : [ {
+    "lang" : "lang",
+    "value" : "value"
+  }, {
+    "lang" : "lang",
+    "value" : "value"
+  } ]
+}
+

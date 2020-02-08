@@ -75,6 +75,20 @@ data FormPutMediaFile = FormPutMediaFile
 instance FromForm FormPutMediaFile
 instance ToForm FormPutMediaFile
 
+data FormPutMediaImportDoc = FormPutMediaImportDoc
+  { putMediaImportDocFile :: FilePath
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromForm FormPutMediaImportDoc
+instance ToForm FormPutMediaImportDoc
+
+data FormPutMediaImportFolder = FormPutMediaImportFolder
+  { putMediaImportFolderFilename :: [FilePath]
+  } deriving (Show, Eq, Generic, Data)
+
+instance FromForm FormPutMediaImportFolder
+instance ToForm FormPutMediaImportFolder
+
 
 -- | List of elements parsed from a query.
 newtype QueryList (p :: CollectionFormat) a = QueryList
@@ -149,11 +163,12 @@ type MediaRepositoryAPI
     :<|> "media" :> Capture "mediaId" Text :> "thumb" :> Verb 'GET 200 '[JSON] FilePath -- 'getMediaThumb' route
     :<|> "predicates" :> Verb 'GET 200 '[JSON] [Predicate] -- 'getPredicates' route
     :<|> "media" :> Capture "mediaId" Text :> "shareStatus" :> Verb 'GET 200 '[JSON] ShareStatus -- 'getShareStatus' route
+    :<|> "storage" :> "usage" :> Verb 'GET 200 '[JSON] StorageUsage -- 'getStorageUsage' route
     :<|> "tags" :> Verb 'GET 200 '[JSON] [OpenVocabularyTerm] -- 'getTags' route
     :<|> "types" :> Verb 'GET 200 '[JSON] [Text] -- 'getTypes' route
     :<|> "types" :> "schema" :> Capture "schemaId" Text :> Verb 'GET 200 '[JSON] Value -- 'getTypesSchema' route
     :<|> "media" :> Capture "mediaId" Text :> Verb 'DELETE 200 '[JSON] () -- 'mediaMediaIdDelete' route
-    :<|> "media" :> "search" :> ReqBody '[JSON] SearchRequest :> Verb 'GET 200 '[JSON] [MediaRecord] -- 'mediaSearchGet' route
+    :<|> "media" :> "search" :> ReqBody '[JSON] SearchRequest :> Verb 'POST 200 '[JSON] [MediaRecord] -- 'mediaSearchPost' route
     :<|> "connection" :> ReqBody '[JSON] Connection :> Verb 'POST 200 '[JSON] () -- 'postConnection' route
     :<|> "keywords" :> "open" :> ReqBody '[JSON] Text :> Verb 'POST 200 '[JSON] OpenVocabularyTerm -- 'postKeywordsOpen' route
     :<|> "media" :> ReqBody '[JSON] MediaRecord :> Verb 'POST 200 '[JSON] MediaRecord -- 'postMedia' route
@@ -161,6 +176,8 @@ type MediaRepositoryAPI
     :<|> "connection" :> Capture "connectionId" Text :> ReqBody '[JSON] Connection :> Verb 'PUT 200 '[JSON] () -- 'putConnection' route
     :<|> "media" :> Capture "mediaId" Text :> ReqBody '[JSON] MediaRecord :> Verb 'PUT 200 '[JSON] MediaRecord -- 'putMedia' route
     :<|> "media" :> Capture "mediaId" Text :> "file" :> ReqBody '[FormUrlEncoded] FormPutMediaFile :> Verb 'PUT 200 '[JSON] () -- 'putMediaFile' route
+    :<|> "media" :> Capture "mediaId" Text :> "import" :> "doc" :> ReqBody '[FormUrlEncoded] FormPutMediaImportDoc :> Verb 'PUT 200 '[JSON] MediaRecord -- 'putMediaImportDoc' route
+    :<|> "media" :> Capture "mediaId" Text :> "import" :> "folder" :> ReqBody '[FormUrlEncoded] FormPutMediaImportFolder :> Verb 'PUT 200 '[JSON] MediaRecord -- 'putMediaImportFolder' route
     :<|> "media" :> Capture "mediaId" Text :> "thumb" :> ReqBody '[JSON] FilePath :> Verb 'PUT 200 '[JSON] () -- 'putMediaThumb' route
     :<|> "media" :> Capture "mediaId" Text :> "shareStatus" :> ReqBody '[JSON] ShareStatus :> Verb 'PUT 200 '[JSON] ShareStatus -- 'putShareStatus' route
     :<|> Raw 
@@ -196,7 +213,7 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , getConnections :: Text -> m [Connection]{- ^  -}
   , getKeywordsClosed :: m [VocabularyTerm]{- ^  -}
   , getKeywordsOpen :: Maybe Text -> Maybe Int -> m [OpenVocabularyTerm]{- ^  -}
-  , getLicenses :: m [License]{- ^  -}
+  , getLicenses :: m [License]{- ^ Licenses are retrieved from 'https://voc.uni-ak.ac.at/skosmos/licenses/en/page/?uri=http://base.uni-ak.ac.at/portfolio/licenses/CC-BY-NC-SA-4.0' -}
   , getMedia :: Text -> m MediaRecord{- ^  -}
   , getMediaChildren :: Text -> m [MediaRecord]{- ^  -}
   , getMediaFile :: Text -> m Text{- ^  -}
@@ -204,18 +221,21 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , getMediaThumb :: Text -> m FilePath{- ^  -}
   , getPredicates :: m [Predicate]{- ^  -}
   , getShareStatus :: Text -> m ShareStatus{- ^  -}
+  , getStorageUsage :: m StorageUsage{- ^  -}
   , getTags :: m [OpenVocabularyTerm]{- ^  -}
   , getTypes :: m [Text]{- ^  -}
   , getTypesSchema :: Text -> m Value{- ^  -}
-  , mediaMediaIdDelete :: Text -> m (){- ^ deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. -}
-  , mediaSearchGet :: SearchRequest -> m [MediaRecord]{- ^  -}
+  , mediaMediaIdDelete :: Text -> m (){- ^ Deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. Connections to other entities should be removed. -}
+  , mediaSearchPost :: SearchRequest -> m [MediaRecord]{- ^  -}
   , postConnection :: Connection -> m (){- ^  -}
   , postKeywordsOpen :: Text -> m OpenVocabularyTerm{- ^  -}
   , postMedia :: MediaRecord -> m MediaRecord{- ^ Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record. -}
   , postTag :: Text -> m OpenVocabularyTerm{- ^  -}
   , putConnection :: Text -> Connection -> m (){- ^  -}
-  , putMedia :: Text -> MediaRecord -> m MediaRecord{- ^  -}
+  , putMedia :: Text -> MediaRecord -> m MediaRecord{- ^ Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships between that markdown and the media records it references through !{} notation.  -}
   , putMediaFile :: Text -> FormPutMediaFile -> m (){- ^  -}
+  , putMediaImportDoc :: Text -> FormPutMediaImportDoc -> m MediaRecord{- ^  -}
+  , putMediaImportFolder :: Text -> FormPutMediaImportFolder -> m MediaRecord{- ^  -}
   , putMediaThumb :: Text -> FilePath -> m (){- ^  -}
   , putShareStatus :: Text -> ShareStatus -> m ShareStatus{- ^  -}
   }
@@ -262,11 +282,12 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> getMediaThumb) :<|>
      (coerce -> getPredicates) :<|>
      (coerce -> getShareStatus) :<|>
+     (coerce -> getStorageUsage) :<|>
      (coerce -> getTags) :<|>
      (coerce -> getTypes) :<|>
      (coerce -> getTypesSchema) :<|>
      (coerce -> mediaMediaIdDelete) :<|>
-     (coerce -> mediaSearchGet) :<|>
+     (coerce -> mediaSearchPost) :<|>
      (coerce -> postConnection) :<|>
      (coerce -> postKeywordsOpen) :<|>
      (coerce -> postMedia) :<|>
@@ -274,6 +295,8 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> putConnection) :<|>
      (coerce -> putMedia) :<|>
      (coerce -> putMediaFile) :<|>
+     (coerce -> putMediaImportDoc) :<|>
+     (coerce -> putMediaImportFolder) :<|>
      (coerce -> putMediaThumb) :<|>
      (coerce -> putShareStatus) :<|>
      _) = client (Proxy :: Proxy MediaRepositoryAPI)
@@ -344,11 +367,12 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce getMediaThumb :<|>
        coerce getPredicates :<|>
        coerce getShareStatus :<|>
+       coerce getStorageUsage :<|>
        coerce getTags :<|>
        coerce getTypes :<|>
        coerce getTypesSchema :<|>
        coerce mediaMediaIdDelete :<|>
-       coerce mediaSearchGet :<|>
+       coerce mediaSearchPost :<|>
        coerce postConnection :<|>
        coerce postKeywordsOpen :<|>
        coerce postMedia :<|>
@@ -356,6 +380,8 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce putConnection :<|>
        coerce putMedia :<|>
        coerce putMediaFile :<|>
+       coerce putMediaImportDoc :<|>
+       coerce putMediaImportFolder :<|>
        coerce putMediaThumb :<|>
        coerce putShareStatus :<|>
        serveDirectoryFileServer "static")

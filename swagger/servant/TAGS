@@ -1,281 +1,355 @@
 
 ./app/Main.hs,62
-requestMiddlewares requestMiddlewares14,15
-main main18,19
+requestMiddlewares requestMiddlewares18,19
+main main22,23
 
-./lib/MediaRepository/Types.hs,8356
+./lib/MediaRepository/Types.hs,11056
 module MediaRepository.Types MediaRepository.Types5,6
-data ChannelPointer ChannelPointer46,47
-data ChannelPointer = ChannelPointerChannelPointer46,47
-  { channelPointerChannel channelPointerChannel47,48
-  , channelPointerTotalChannels channelPointerTotalChannels48,49
-instance FromJSON FromJSON ChannelPointer51,52
-  parseJSON parseJSON52,53
-instance ToJSON ToJSON ChannelPointer53,54
-  toJSON toJSON54,55
-data Connection Connection58,59
-data Connection = ConnectionConnection58,59
-  { connectionId connectionId59,60
-  , connectionSubject connectionSubject60,61
-  , connectionPredicate connectionPredicate61,62
-  , connectionObject connectionObject62,63
-instance FromJSON FromJSON Connection65,66
-  parseJSON parseJSON66,67
-instance ToJSON ToJSON Connection67,68
-  toJSON toJSON68,69
-data CounterPointer CounterPointer72,73
-data CounterPointer = CounterPointerCounterPointer72,73
-  { counterPointerCounterType counterPointerCounterType73,74
-  , counterPointerCounter counterPointerCounter74,75
-instance FromJSON FromJSON CounterPointer77,78
-  parseJSON parseJSON78,79
-instance ToJSON ToJSON CounterPointer79,80
-  toJSON toJSON80,81
-data InlineObject InlineObject84,85
-data InlineObject = InlineObjectInlineObject84,85
-  { inlineObjectFile inlineObjectFile85,86
-instance FromJSON FromJSON InlineObject88,89
-  parseJSON parseJSON89,90
-instance ToJSON ToJSON InlineObject90,91
-  toJSON toJSON91,92
-data MediaRecord MediaRecord95,96
-data MediaRecord = MediaRecordMediaRecord95,96
-  { mediaRecordId mediaRecordId96,97
-  , mediaRecordText mediaRecordText97,98
-  , mediaRecordTitle mediaRecordTitle98,99
-  , mediaRecordCopyright mediaRecordCopyright99,100
-  , mediaRecordLicense mediaRecordLicense100,101
-  , mediaRecordDescription mediaRecordDescription101,102
-  , mediaRecordCreator mediaRecordCreator102,103
-  , mediaRecordMediaType mediaRecordMediaType103,104
-  , mediaRecordParents mediaRecordParents104,105
-  , mediaRecordKeywordsClosed mediaRecordKeywordsClosed105,106
-  , mediaRecordKeywordsOpen mediaRecordKeywordsOpen106,107
-  , mediaRecordTags mediaRecordTags107,108
-  , mediaRecordType mediaRecordType108,109
-  , mediaRecordCreationDate mediaRecordCreationDate109,110
-  , mediaRecordModifiedDate mediaRecordModifiedDate110,111
-  , mediaRecordMediaDate mediaRecordMediaDate111,112
-  , mediaRecordConnections mediaRecordConnections112,113
-instance FromJSON FromJSON MediaRecord115,116
-  parseJSON parseJSON116,117
-instance ToJSON ToJSON MediaRecord117,118
-  toJSON toJSON118,119
-data MediaRecordText MediaRecordText122,123
-data MediaRecordText = MediaRecordTextMediaRecordText122,123
-  { mediaRecordTextTextType mediaRecordTextTextType123,124
-  , mediaRecordTextContent mediaRecordTextContent124,125
-instance FromJSON FromJSON MediaRecordText127,128
-  parseJSON parseJSON128,129
-instance ToJSON ToJSON MediaRecordText129,130
-  toJSON toJSON130,131
-data MediaRecordType MediaRecordType134,135
-data MediaRecordType = MediaRecordTypeMediaRecordType134,135
-  { mediaRecordTypeId mediaRecordTypeId135,136
-  , mediaRecordTypeMetadata mediaRecordTypeMetadata136,137
-instance FromJSON FromJSON MediaRecordType139,140
-  parseJSON parseJSON140,141
-instance ToJSON ToJSON MediaRecordType141,142
-  toJSON toJSON142,143
-data MultiLangString MultiLangString146,147
-data MultiLangString = MultiLangStringMultiLangString146,147
-  { multiLangStringLang multiLangStringLang147,148
-  , multiLangStringValue multiLangStringValue148,149
-instance FromJSON FromJSON MultiLangString151,152
-  parseJSON parseJSON152,153
-instance ToJSON ToJSON MultiLangString153,154
-  toJSON toJSON154,155
-data ObjectPointer ObjectPointer158,159
-data ObjectPointer = ObjectPointerObjectPointer158,159
-  { objectPointerObjectType objectPointerObjectType159,160
-  , objectPointerId objectPointerId160,161
-  , objectPointerPointer objectPointerPointer161,162
-instance FromJSON FromJSON ObjectPointer164,165
-  parseJSON parseJSON165,166
-instance ToJSON ToJSON ObjectPointer166,167
-  toJSON toJSON167,168
-data ObjectPointerPointer ObjectPointerPointer171,172
-data ObjectPointerPointer = ObjectPointerPointerObjectPointerPointer171,172
-  { objectPointerPointerTimePointer objectPointerPointerTimePointer172,173
-  , objectPointerPointerTwoDPointer objectPointerPointerTwoDPointer173,174
-  , objectPointerPointerCounterPointer objectPointerPointerCounterPointer174,175
-  , objectPointerPointerChannelPointer objectPointerPointerChannelPointer175,176
-instance FromJSON FromJSON ObjectPointerPointer178,179
-  parseJSON parseJSON179,180
-instance ToJSON ToJSON ObjectPointerPointer180,181
-  toJSON toJSON181,182
-data OpenVocabularyTerm OpenVocabularyTerm185,186
-data OpenVocabularyTerm = OpenVocabularyTermOpenVocabularyTerm185,186
-  { openVocabularyTermId openVocabularyTermId186,187
-  , openVocabularyTermTerm openVocabularyTermTerm187,188
-instance FromJSON FromJSON OpenVocabularyTerm190,191
-  parseJSON parseJSON191,192
-instance ToJSON ToJSON OpenVocabularyTerm192,193
-  toJSON toJSON193,194
-data Predicate Predicate197,198
-data Predicate = PredicatePredicate197,198
-  { predicateId predicateId198,199
-  , predicatePredicate predicatePredicate199,200
-  , predicateUri predicateUri200,201
-instance FromJSON FromJSON Predicate203,204
-  parseJSON parseJSON204,205
-instance ToJSON ToJSON Predicate205,206
-  toJSON toJSON206,207
-data ProblemWithRCObject ProblemWithRCObject210,211
-data ProblemWithRCObject = ProblemWithRCObjectProblemWithRCObject210,211
-  { problemWithRCObjectObjectType problemWithRCObjectObjectType211,212
-  , problemWithRCObjectId problemWithRCObjectId212,213
-  , problemWithRCObjectProblem problemWithRCObjectProblem213,214
-instance FromJSON FromJSON ProblemWithRCObject216,217
-  parseJSON parseJSON217,218
-instance ToJSON ToJSON ProblemWithRCObject218,219
-  toJSON toJSON219,220
-data ShareStatus ShareStatus223,224
-data ShareStatus = ShareStatusShareStatus223,224
-  { shareStatusRead shareStatusRead224,225
-  , shareStatusWrite shareStatusWrite225,226
-instance FromJSON FromJSON ShareStatus228,229
-  parseJSON parseJSON229,230
-instance ToJSON ToJSON ShareStatus230,231
-  toJSON toJSON231,232
-data ShareStatusRead ShareStatusRead235,236
-data ShareStatusRead = ShareStatusReadShareStatusRead235,236
-  { shareStatusReadUsers shareStatusReadUsers236,237
-  , shareStatusReadPublic shareStatusReadPublic237,238
-instance FromJSON FromJSON ShareStatusRead240,241
-  parseJSON parseJSON241,242
-instance ToJSON ToJSON ShareStatusRead242,243
-  toJSON toJSON243,244
-data ShareStatusWrite ShareStatusWrite247,248
-data ShareStatusWrite = ShareStatusWriteShareStatusWrite247,248
-  { shareStatusWriteUsers shareStatusWriteUsers248,249
-instance FromJSON FromJSON ShareStatusWrite251,252
-  parseJSON parseJSON252,253
-instance ToJSON ToJSON ShareStatusWrite253,254
-  toJSON toJSON254,255
-data TimePointer TimePointer258,259
-data TimePointer = TimePointerTimePointer258,259
-  { timePointerHours timePointerHours259,260
-  , timePointerMinutes timePointerMinutes260,261
-  , timePointerSeconds timePointerSeconds261,262
-  , timePointerMilliseconds timePointerMilliseconds262,263
-instance FromJSON FromJSON TimePointer265,266
-  parseJSON parseJSON266,267
-instance ToJSON ToJSON TimePointer267,268
-  toJSON toJSON268,269
-data TwoDPointer TwoDPointer272,273
-data TwoDPointer = TwoDPointerTwoDPointer272,273
-  { twoDPointerUnit twoDPointerUnit273,274
-  , twoDPointerX twoDPointerX274,275
-  , twoDPointerY twoDPointerY275,276
-instance FromJSON FromJSON TwoDPointer278,279
-  parseJSON parseJSON279,280
-instance ToJSON ToJSON TwoDPointer280,281
-  toJSON toJSON281,282
-data VocabularyTerm VocabularyTerm285,286
-data VocabularyTerm = VocabularyTermVocabularyTerm285,286
-  { vocabularyTermId vocabularyTermId286,287
-  , vocabularyTermExternalURI vocabularyTermExternalURI287,288
-  , vocabularyTermTerms vocabularyTermTerms288,289
-instance FromJSON FromJSON VocabularyTerm291,292
-  parseJSON parseJSON292,293
-instance ToJSON ToJSON VocabularyTerm293,294
-  toJSON toJSON294,295
-uncapitalize uncapitalize297,298
-removeFieldLabelPrefix removeFieldLabelPrefix307,308
+data ChannelPointer ChannelPointer52,53
+data ChannelPointer = ChannelPointerChannelPointer52,53
+  { channelPointerChannel channelPointerChannel53,54
+  , channelPointerTotalChannels channelPointerTotalChannels54,55
+instance FromJSON FromJSON ChannelPointer57,58
+  parseJSON parseJSON58,59
+instance ToJSON ToJSON ChannelPointer59,60
+  toJSON toJSON60,61
+data Connection Connection64,65
+data Connection = ConnectionConnection64,65
+  { connectionId connectionId65,66
+  , connectionSubject connectionSubject66,67
+  , connectionPredicate connectionPredicate67,68
+  , connectionObject connectionObject68,69
+instance FromJSON FromJSON Connection71,72
+  parseJSON parseJSON72,73
+instance ToJSON ToJSON Connection73,74
+  toJSON toJSON74,75
+data CounterPointer CounterPointer78,79
+data CounterPointer = CounterPointerCounterPointer78,79
+  { counterPointerCounterType counterPointerCounterType79,80
+  , counterPointerCounter counterPointerCounter80,81
+instance FromJSON FromJSON CounterPointer83,84
+  parseJSON parseJSON84,85
+instance ToJSON ToJSON CounterPointer85,86
+  toJSON toJSON86,87
+data DateRange DateRange90,91
+data DateRange = DateRangeDateRange90,91
+  { dateRangeStart dateRangeStart91,92
+  , dateRangeEnd dateRangeEnd92,93
+instance FromJSON FromJSON DateRange95,96
+  parseJSON parseJSON96,97
+instance ToJSON ToJSON DateRange97,98
+  toJSON toJSON98,99
+data InlineObject InlineObject102,103
+data InlineObject = InlineObjectInlineObject102,103
+  { inlineObjectFile inlineObjectFile103,104
+instance FromJSON FromJSON InlineObject106,107
+  parseJSON parseJSON107,108
+instance ToJSON ToJSON InlineObject108,109
+  toJSON toJSON109,110
+data InlineObject1 InlineObject1113,114
+data InlineObject1 = InlineObject1InlineObject1113,114
+  { inlineObject1File inlineObject1File114,115
+instance FromJSON FromJSON InlineObject1117,118
+  parseJSON parseJSON118,119
+instance ToJSON ToJSON InlineObject1119,120
+  toJSON toJSON120,121
+data InlineObject2 InlineObject2124,125
+data InlineObject2 = InlineObject2InlineObject2124,125
+  { inlineObject2Filename inlineObject2Filename125,126
+instance FromJSON FromJSON InlineObject2128,129
+  parseJSON parseJSON129,130
+instance ToJSON ToJSON InlineObject2130,131
+  toJSON toJSON131,132
+data License License135,136
+data License = LicenseLicense135,136
+  { licenseId licenseId136,137
+  , licenseExternalURI licenseExternalURI137,138
+  , licenseName licenseName138,139
+instance FromJSON FromJSON License141,142
+  parseJSON parseJSON142,143
+instance ToJSON ToJSON License143,144
+  toJSON toJSON144,145
+data MediaRecord MediaRecord148,149
+data MediaRecord = MediaRecordMediaRecord148,149
+  { mediaRecordId mediaRecordId149,150
+  , mediaRecordText mediaRecordText150,151
+  , mediaRecordTitle mediaRecordTitle151,152
+  , mediaRecordCopyright mediaRecordCopyright152,153
+  , mediaRecordLicense mediaRecordLicense153,154
+  , mediaRecordDescription mediaRecordDescription154,155
+  , mediaRecordCreator mediaRecordCreator155,156
+  , mediaRecordMediaType mediaRecordMediaType156,157
+  , mediaRecordParents mediaRecordParents157,158
+  , mediaRecordKeywordsClosed mediaRecordKeywordsClosed158,159
+  , mediaRecordKeywordsOpen mediaRecordKeywordsOpen159,160
+  , mediaRecordTags mediaRecordTags160,161
+  , mediaRecordRecrodType mediaRecordRecrodType161,162
+  , mediaRecordCreationDate mediaRecordCreationDate162,163
+  , mediaRecordModifiedDate mediaRecordModifiedDate163,164
+  , mediaRecordMediaDate mediaRecordMediaDate164,165
+  , mediaRecordConnections mediaRecordConnections165,166
+instance FromJSON FromJSON MediaRecord168,169
+  parseJSON parseJSON169,170
+instance ToJSON ToJSON MediaRecord170,171
+  toJSON toJSON171,172
+data MediaRecordRecrodType MediaRecordRecrodType175,176
+data MediaRecordRecrodType = MediaRecordRecrodTypeMediaRecordRecrodType175,176
+  { mediaRecordRecrodTypeId mediaRecordRecrodTypeId176,177
+  , mediaRecordRecrodTypeMetadata mediaRecordRecrodTypeMetadata177,178
+instance FromJSON FromJSON MediaRecordRecrodType180,181
+  parseJSON parseJSON181,182
+instance ToJSON ToJSON MediaRecordRecrodType182,183
+  toJSON toJSON183,184
+data MediaRecordText MediaRecordText187,188
+data MediaRecordText = MediaRecordTextMediaRecordText187,188
+  { mediaRecordTextTextType mediaRecordTextTextType188,189
+  , mediaRecordTextContent mediaRecordTextContent189,190
+instance FromJSON FromJSON MediaRecordText192,193
+  parseJSON parseJSON193,194
+instance ToJSON ToJSON MediaRecordText194,195
+  toJSON toJSON195,196
+data MultiLangString MultiLangString199,200
+data MultiLangString = MultiLangStringMultiLangString199,200
+  { multiLangStringLang multiLangStringLang200,201
+  , multiLangStringValue multiLangStringValue201,202
+instance FromJSON FromJSON MultiLangString204,205
+  parseJSON parseJSON205,206
+instance ToJSON ToJSON MultiLangString206,207
+  toJSON toJSON207,208
+data ObjectPointer ObjectPointer211,212
+data ObjectPointer = ObjectPointerObjectPointer211,212
+  { objectPointerObjectType objectPointerObjectType212,213
+  , objectPointerId objectPointerId213,214
+  , objectPointerPointer objectPointerPointer214,215
+instance FromJSON FromJSON ObjectPointer217,218
+  parseJSON parseJSON218,219
+instance ToJSON ToJSON ObjectPointer219,220
+  toJSON toJSON220,221
+data ObjectPointerPointer ObjectPointerPointer224,225
+data ObjectPointerPointer = ObjectPointerPointerObjectPointerPointer224,225
+  { objectPointerPointerTimePointer objectPointerPointerTimePointer225,226
+  , objectPointerPointerTwoDPointer objectPointerPointerTwoDPointer226,227
+  , objectPointerPointerCounterPointer objectPointerPointerCounterPointer227,228
+  , objectPointerPointerChannelPointer objectPointerPointerChannelPointer228,229
+instance FromJSON FromJSON ObjectPointerPointer231,232
+  parseJSON parseJSON232,233
+instance ToJSON ToJSON ObjectPointerPointer233,234
+  toJSON toJSON234,235
+data OpenVocabularyTerm OpenVocabularyTerm238,239
+data OpenVocabularyTerm = OpenVocabularyTermOpenVocabularyTerm238,239
+  { openVocabularyTermId openVocabularyTermId239,240
+  , openVocabularyTermTerm openVocabularyTermTerm240,241
+instance FromJSON FromJSON OpenVocabularyTerm243,244
+  parseJSON parseJSON244,245
+instance ToJSON ToJSON OpenVocabularyTerm245,246
+  toJSON toJSON246,247
+data Predicate Predicate250,251
+data Predicate = PredicatePredicate250,251
+  { predicateId predicateId251,252
+  , predicatePredicate predicatePredicate252,253
+  , predicateUri predicateUri253,254
+instance FromJSON FromJSON Predicate256,257
+  parseJSON parseJSON257,258
+instance ToJSON ToJSON Predicate258,259
+  toJSON toJSON259,260
+data ProblemWithRCObject ProblemWithRCObject263,264
+data ProblemWithRCObject = ProblemWithRCObjectProblemWithRCObject263,264
+  { problemWithRCObjectObjectType problemWithRCObjectObjectType264,265
+  , problemWithRCObjectId problemWithRCObjectId265,266
+  , problemWithRCObjectProblem problemWithRCObjectProblem266,267
+instance FromJSON FromJSON ProblemWithRCObject269,270
+  parseJSON parseJSON270,271
+instance ToJSON ToJSON ProblemWithRCObject271,272
+  toJSON toJSON272,273
+data SearchRequest SearchRequest276,277
+data SearchRequest = SearchRequestSearchRequest276,277
+  { searchRequestCreator searchRequestCreator277,278
+  , searchRequestTitle searchRequestTitle278,279
+  , searchRequestMediaType searchRequestMediaType279,280
+  , searchRequestRecordType searchRequestRecordType280,281
+  , searchRequestCreationDate searchRequestCreationDate281,282
+  , searchRequestModificationDate searchRequestModificationDate282,283
+  , searchRequestDate searchRequestDate283,284
+  , searchRequestLicense searchRequestLicense284,285
+  , searchRequestCopyright searchRequestCopyright285,286
+  , searchRequestTag searchRequestTag286,287
+  , searchRequestKeywordsClosed searchRequestKeywordsClosed287,288
+  , searchRequestKeywordsOpen searchRequestKeywordsOpen288,289
+  , searchRequestConnectedTo searchRequestConnectedTo289,290
+instance FromJSON FromJSON SearchRequest292,293
+  parseJSON parseJSON293,294
+instance ToJSON ToJSON SearchRequest294,295
+  toJSON toJSON295,296
+data ShareStatus ShareStatus299,300
+data ShareStatus = ShareStatusShareStatus299,300
+  { shareStatusRead shareStatusRead300,301
+  , shareStatusWrite shareStatusWrite301,302
+instance FromJSON FromJSON ShareStatus304,305
+  parseJSON parseJSON305,306
+instance ToJSON ToJSON ShareStatus306,307
+  toJSON toJSON307,308
+data ShareStatusRead ShareStatusRead311,312
+data ShareStatusRead = ShareStatusReadShareStatusRead311,312
+  { shareStatusReadUsers shareStatusReadUsers312,313
+  , shareStatusReadPublic shareStatusReadPublic313,314
+instance FromJSON FromJSON ShareStatusRead316,317
+  parseJSON parseJSON317,318
+instance ToJSON ToJSON ShareStatusRead318,319
+  toJSON toJSON319,320
+data ShareStatusWrite ShareStatusWrite323,324
+data ShareStatusWrite = ShareStatusWriteShareStatusWrite323,324
+  { shareStatusWriteUsers shareStatusWriteUsers324,325
+instance FromJSON FromJSON ShareStatusWrite327,328
+  parseJSON parseJSON328,329
+instance ToJSON ToJSON ShareStatusWrite329,330
+  toJSON toJSON330,331
+data StorageUsage StorageUsage334,335
+data StorageUsage = StorageUsageStorageUsage334,335
+  { storageUsageUsed storageUsageUsed335,336
+  , storageUsageAvailable storageUsageAvailable336,337
+instance FromJSON FromJSON StorageUsage339,340
+  parseJSON parseJSON340,341
+instance ToJSON ToJSON StorageUsage341,342
+  toJSON toJSON342,343
+data TimePointer TimePointer346,347
+data TimePointer = TimePointerTimePointer346,347
+  { timePointerHours timePointerHours347,348
+  , timePointerMinutes timePointerMinutes348,349
+  , timePointerSeconds timePointerSeconds349,350
+  , timePointerMilliseconds timePointerMilliseconds350,351
+instance FromJSON FromJSON TimePointer353,354
+  parseJSON parseJSON354,355
+instance ToJSON ToJSON TimePointer355,356
+  toJSON toJSON356,357
+data TwoDPointer TwoDPointer360,361
+data TwoDPointer = TwoDPointerTwoDPointer360,361
+  { twoDPointerUnit twoDPointerUnit361,362
+  , twoDPointerX twoDPointerX362,363
+  , twoDPointerY twoDPointerY363,364
+instance FromJSON FromJSON TwoDPointer366,367
+  parseJSON parseJSON367,368
+instance ToJSON ToJSON TwoDPointer368,369
+  toJSON toJSON369,370
+data VocabularyTerm VocabularyTerm373,374
+data VocabularyTerm = VocabularyTermVocabularyTerm373,374
+  { vocabularyTermId vocabularyTermId374,375
+  , vocabularyTermExternalURI vocabularyTermExternalURI375,376
+  , vocabularyTermTerms vocabularyTermTerms376,377
+instance FromJSON FromJSON VocabularyTerm379,380
+  parseJSON parseJSON380,381
+instance ToJSON ToJSON VocabularyTerm381,382
+  toJSON toJSON382,383
+uncapitalize uncapitalize385,386
+removeFieldLabelPrefix removeFieldLabelPrefix395,396
 
-./lib/MediaRepository/API.hs,4630
+./lib/MediaRepository/API.hs,5568
 module MediaRepository.APIMediaRepository.API15,16
 data FormPutMediaFile FormPutMediaFile70,71
 data FormPutMediaFile = FormPutMediaFileFormPutMediaFile70,71
   { putMediaFileFile putMediaFileFile71,72
 instance FromForm FromForm FormPutMediaFile74,75
 instance ToForm ToForm FormPutMediaFile75,76
-newtype QueryList QueryList79,80
-  { fromQueryList fromQueryList80,81
-data CollectionFormatCollectionFormat84,85
-  = CommaSeparated CommaSeparated85,86
-  | SpaceSeparated SpaceSeparated86,87
-  | TabSeparated TabSeparated87,88
-  | PipeSeparated PipeSeparated88,89
-  | MultiParamArray MultiParamArray89,90
-instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'CommaSeparated a)91,92
-  parseQueryParam parseQueryParam92,93
-instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'TabSeparated a)94,95
-  parseQueryParam parseQueryParam95,96
-instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'SpaceSeparated a)97,98
-  parseQueryParam parseQueryParam98,99
-instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'PipeSeparated a)100,101
-  parseQueryParam parseQueryParam101,102
-instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'MultiParamArray a)103,104
-  parseQueryParam parseQueryParam104,105
-parseSeparatedQueryList parseSeparatedQueryList106,107
-instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'CommaSeparated a)109,110
-  toQueryParam toQueryParam110,111
-instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'TabSeparated a)112,113
-  toQueryParam toQueryParam113,114
-instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'SpaceSeparated a)115,116
-  toQueryParam toQueryParam116,117
-instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'PipeSeparated a)118,119
-  toQueryParam toQueryParam119,120
-instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'MultiParamArray a)121,122
-  toQueryParam toQueryParam122,123
-formatSeparatedQueryList formatSeparatedQueryList124,125
-type MediaRepositoryAPIMediaRepositoryAPI129,130
-data Config Config166,167
-data Config = ConfigConfig166,167
-  { configUrl configUrl167,168
-newtype MediaRepositoryClientError MediaRepositoryClientError172,173
-data MediaRepositoryBackend MediaRepositoryBackend181,182
-data MediaRepositoryBackend m = MediaRepositoryBackendMediaRepositoryBackend181,182
-  { deletePredicate deletePredicate182,183
-  , postKeywordsClosed postKeywordsClosed183,184
-  , postPredicate postPredicate184,185
-  , putKeywordsClosed putKeywordsClosed185,186
-  , putPredicate putPredicate186,187
-  , getPublicMediaIndex getPublicMediaIndex187,188
-  , deleteConnection deleteConnection188,189
-  , deleteKeywordsOpen deleteKeywordsOpen189,190
-  , deleteTag deleteTag190,191
-  , getConnections getConnections191,192
-  , getKeywordsClosed getKeywordsClosed192,193
-  , getKeywordsOpen getKeywordsOpen193,194
-  , getMedia getMedia194,195
-  , getMediaChildren getMediaChildren195,196
-  , getMediaFile getMediaFile196,197
-  , getMediaIndex getMediaIndex197,198
-  , getMediaThumb getMediaThumb198,199
-  , getPredicates getPredicates199,200
-  , getShareStatus getShareStatus200,201
-  , getTags getTags201,202
-  , getTypes getTypes202,203
-  , getTypesSchema getTypesSchema203,204
-  , mediaMediaIdDelete mediaMediaIdDelete204,205
-  , postConnection postConnection205,206
-  , postKeywordsOpen postKeywordsOpen206,207
-  , postMedia postMedia207,208
-  , postTag postTag208,209
-  , putConnection putConnection209,210
-  , putMedia putMedia210,211
-  , putMediaFile putMediaFile211,212
-  , putMediaThumb putMediaThumb212,213
-  , putShareStatus putShareStatus213,214
-newtype MediaRepositoryClient MediaRepositoryClient216,217
-  { runClient runClient217,218
-instance Applicative Applicative MediaRepositoryClient220,221
-  pure pure221,222
-  (M(MediaRepositoryClientf)222,223
-instance Monad Monad MediaRepositoryClient225,226
-  (M(MediaRepositoryClienta)226,227
-instance MonadIO MonadIO MediaRepositoryClient231,232
-  liftIO liftIO232,233
-createMediaRepositoryClient createMediaRepositoryClient234,235
-runMediaRepositoryClient runMediaRepositoryClient272,273
-runMediaRepositoryClientWithManager runMediaRepositoryClientWithManager278,279
-callMediaRepository callMediaRepository288,289
-requestMiddlewareId requestMiddlewareId295,296
-runMediaRepositoryServer runMediaRepositoryServer302,303
-runMediaRepositoryMiddlewareServer runMediaRepositoryMiddlewareServer308,309
+data FormPutMediaImportDoc FormPutMediaImportDoc77,78
+data FormPutMediaImportDoc = FormPutMediaImportDocFormPutMediaImportDoc77,78
+  { putMediaImportDocFile putMediaImportDocFile78,79
+instance FromForm FromForm FormPutMediaImportDoc81,82
+instance ToForm ToForm FormPutMediaImportDoc82,83
+data FormPutMediaImportFolder FormPutMediaImportFolder84,85
+data FormPutMediaImportFolder = FormPutMediaImportFolderFormPutMediaImportFolder84,85
+  { putMediaImportFolderFilename putMediaImportFolderFilename85,86
+instance FromForm FromForm FormPutMediaImportFolder88,89
+instance ToForm ToForm FormPutMediaImportFolder89,90
+newtype QueryList QueryList93,94
+  { fromQueryList fromQueryList94,95
+data CollectionFormatCollectionFormat98,99
+  = CommaSeparated CommaSeparated99,100
+  | SpaceSeparated SpaceSeparated100,101
+  | TabSeparated TabSeparated101,102
+  | PipeSeparated PipeSeparated102,103
+  | MultiParamArray MultiParamArray103,104
+instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'CommaSeparated a)105,106
+  parseQueryParam parseQueryParam106,107
+instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'TabSeparated a)108,109
+  parseQueryParam parseQueryParam109,110
+instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'SpaceSeparated a)111,112
+  parseQueryParam parseQueryParam112,113
+instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'PipeSeparated a)114,115
+  parseQueryParam parseQueryParam115,116
+instance FromHttpApiData FromHttpApiData a => FromHttpApiData (QueryList 'MultiParamArray a)117,118
+  parseQueryParam parseQueryParam118,119
+parseSeparatedQueryList parseSeparatedQueryList120,121
+instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'CommaSeparated a)123,124
+  toQueryParam toQueryParam124,125
+instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'TabSeparated a)126,127
+  toQueryParam toQueryParam127,128
+instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'SpaceSeparated a)129,130
+  toQueryParam toQueryParam130,131
+instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'PipeSeparated a)132,133
+  toQueryParam toQueryParam133,134
+instance ToHttpApiData ToHttpApiData a => ToHttpApiData (QueryList 'MultiParamArray a)135,136
+  toQueryParam toQueryParam136,137
+formatSeparatedQueryList formatSeparatedQueryList138,139
+type MediaRepositoryAPIMediaRepositoryAPI143,144
+data Config Config186,187
+data Config = ConfigConfig186,187
+  { configUrl configUrl187,188
+newtype MediaRepositoryClientError MediaRepositoryClientError192,193
+data MediaRepositoryBackend MediaRepositoryBackend201,202
+data MediaRepositoryBackend m = MediaRepositoryBackendMediaRepositoryBackend201,202
+  { deleteKeywordsClosed deleteKeywordsClosed202,203
+  , deletePredicate deletePredicate203,204
+  , postKeywordsClosed postKeywordsClosed204,205
+  , postPredicate postPredicate205,206
+  , putKeywordsClosed putKeywordsClosed206,207
+  , putPredicate putPredicate207,208
+  , getPublicMediaIndex getPublicMediaIndex208,209
+  , deleteConnection deleteConnection209,210
+  , deleteKeywordsOpen deleteKeywordsOpen210,211
+  , deleteTag deleteTag211,212
+  , getConnections getConnections212,213
+  , getKeywordsClosed getKeywordsClosed213,214
+  , getKeywordsOpen getKeywordsOpen214,215
+  , getLicenses getLicenses215,216
+  , getMedia getMedia216,217
+  , getMediaChildren getMediaChildren217,218
+  , getMediaFile getMediaFile218,219
+  , getMediaIndex getMediaIndex219,220
+  , getMediaThumb getMediaThumb220,221
+  , getPredicates getPredicates221,222
+  , getShareStatus getShareStatus222,223
+  , getStorageUsage getStorageUsage223,224
+  , getTags getTags224,225
+  , getTypes getTypes225,226
+  , getTypesSchema getTypesSchema226,227
+  , mediaMediaIdDelete mediaMediaIdDelete227,228
+  , mediaSearchPost mediaSearchPost228,229
+  , postConnection postConnection229,230
+  , postKeywordsOpen postKeywordsOpen230,231
+  , postMedia postMedia231,232
+  , postTag postTag232,233
+  , putConnection putConnection233,234
+  , putMedia putMedia234,235
+  , putMediaFile putMediaFile235,236
+  , putMediaImportDoc putMediaImportDoc236,237
+  , putMediaImportFolder putMediaImportFolder237,238
+  , putMediaThumb putMediaThumb238,239
+  , putShareStatus putShareStatus239,240
+newtype MediaRepositoryClient MediaRepositoryClient242,243
+  { runClient runClient243,244
+instance Applicative Applicative MediaRepositoryClient246,247
+  pure pure247,248
+  (M(MediaRepositoryClientf)248,249
+instance Monad Monad MediaRepositoryClient251,252
+  (M(MediaRepositoryClienta)252,253
+instance MonadIO MonadIO MediaRepositoryClient257,258
+  liftIO liftIO258,259
+createMediaRepositoryClient createMediaRepositoryClient260,261
+runMediaRepositoryClient runMediaRepositoryClient304,305
+runMediaRepositoryClientWithManager runMediaRepositoryClientWithManager310,311
+callMediaRepository callMediaRepository320,321
+requestMiddlewareId requestMiddlewareId327,328
+runMediaRepositoryServer runMediaRepositoryServer334,335
+runMediaRepositoryMiddlewareServer runMediaRepositoryMiddlewareServer340,341
 
 ./Setup.hs,15
 main main1,2
