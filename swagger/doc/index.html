@@ -203,6 +203,11 @@ font-style: italic;
   <li><a href="#putKeywordsClosed"><code><span class="http-method">put</span> /keywords/closed/{keywordId}</code></a></li>
   <li><a href="#putPredicate"><code><span class="http-method">put</span> /predicates/{predicateId}</code></a></li>
   </ul>
+  <h4><a href="#Default">Default</a></h4>
+  <ul>
+  <li><a href="#postTextExpositionExport"><code><span class="http-method">post</span> /text-editor/export/{expositionId}</code></a></li>
+  <li><a href="#postTextPage"><code><span class="http-method">post</span> /text-editor/page/{expositionId}</code></a></li>
+  </ul>
   <h4><a href="#Service">Service</a></h4>
   <ul>
   <li><a href="#getPublicMediaIndex"><code><span class="http-method">get</span> /media/index/public</code></a></li>
@@ -225,6 +230,7 @@ font-style: italic;
   <li><a href="#getShareStatus"><code><span class="http-method">get</span> /media/{mediaId}/shareStatus</code></a></li>
   <li><a href="#getStorageUsage"><code><span class="http-method">get</span> /storage/usage</code></a></li>
   <li><a href="#getTags"><code><span class="http-method">get</span> /tags</code></a></li>
+  <li><a href="#getTextExposition"><code><span class="http-method">get</span> /text-editor/{expositionId}</code></a></li>
   <li><a href="#getTypes"><code><span class="http-method">get</span> /types</code></a></li>
   <li><a href="#getTypesSchema"><code><span class="http-method">get</span> /types/schema/{schemaId}</code></a></li>
   <li><a href="#mediaMediaIdDelete"><code><span class="http-method">delete</span> /media/{mediaId}</code></a></li>
@@ -240,6 +246,7 @@ font-style: italic;
   <li><a href="#putMediaImportFolder"><code><span class="http-method">put</span> /media/{mediaId}/import/folder</code></a></li>
   <li><a href="#putMediaThumb"><code><span class="http-method">put</span> /media/{mediaId}/thumb</code></a></li>
   <li><a href="#putShareStatus"><code><span class="http-method">put</span> /media/{mediaId}/shareStatus</code></a></li>
+  <li><a href="#putTextExposition"><code><span class="http-method">put</span> /text-editor/{expositionId}</code></a></li>
   </ul>
 
   <h1><a name="Admin">Admin</a></h1>
@@ -513,6 +520,112 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="Default">Default</a></h1>
+  <div class="method"><a name="postTextExpositionExport"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/export/{expositionId}</code></pre></div>
+    <div class="method-summary">Use pandoc to export exposition. (<span class="nickname">postTextExpositionExport</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">type (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The type of export file. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      File
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/pdf</code></li>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>text/html</code></li>
+      <li><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document</code></li>
+      <li><code>application/vnd.oasis.opendocument.text</code></li>
+      <li><code>application/epub+zip</code></li>
+      <li><code>application/x-latex</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The rendered file
+        <a href="#File">File</a>
+    <h4 class="field-label">404</h4>
+    Exposition not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postTextPage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/page/{expositionId}</code></pre></div>
+    <div class="method-summary">Create a new empty page. There is no request body as pages are saved with the exposition. (<span class="nickname">postTextPage</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TextExpositionPage">TextExpositionPage</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "markdown" : "markdown",
+  "html" : "html",
+  "title" : "title",
+  "pageId" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Returns a new empty page
+        <a href="#TextExpositionPage">TextExpositionPage</a>
+  </div> <!-- method -->
+  <hr/>
   <h1><a name="Service">Service</a></h1>
   <div class="method"><a name="getPublicMediaIndex"/>
     <div class="method-path">
@@ -540,6 +653,7 @@ font-style: italic;
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -551,6 +665,7 @@ font-style: italic;
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -563,22 +678,22 @@ font-style: italic;
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -589,22 +704,22 @@ font-style: italic;
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -616,22 +731,22 @@ font-style: italic;
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -642,22 +757,22 @@ font-style: italic;
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -665,6 +780,7 @@ font-style: italic;
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -817,22 +933,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
   "subject" : {
     "pointer" : {
       "timePointer" : {
-        "milliseconds" : 5,
-        "hours" : 0,
-        "seconds" : 1,
-        "minutes" : 6
+        "milliseconds" : 2,
+        "hours" : 1,
+        "seconds" : 5,
+        "minutes" : 5
       },
       "channelPointer" : {
-        "totalChannels" : 3,
-        "channel" : 9.301444
+        "totalChannels" : 4,
+        "channel" : 2.027123
       },
       "twoDPointer" : {
         "unit" : "perc",
-        "x" : 5.637377,
-        "y" : 2.302136
+        "x" : 7.0614014,
+        "y" : 9.301444
       },
       "counterPointer" : {
-        "counter" : 7,
+        "counter" : 3,
         "counterType" : "character"
       }
     },
@@ -843,22 +959,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
   "object" : {
     "pointer" : {
       "timePointer" : {
-        "milliseconds" : 5,
-        "hours" : 0,
-        "seconds" : 1,
-        "minutes" : 6
+        "milliseconds" : 2,
+        "hours" : 1,
+        "seconds" : 5,
+        "minutes" : 5
       },
       "channelPointer" : {
-        "totalChannels" : 3,
-        "channel" : 9.301444
+        "totalChannels" : 4,
+        "channel" : 2.027123
       },
       "twoDPointer" : {
         "unit" : "perc",
-        "x" : 5.637377,
-        "y" : 2.302136
+        "x" : 7.0614014,
+        "y" : 9.301444
       },
       "counterPointer" : {
-        "counter" : 7,
+        "counter" : 3,
         "counterType" : "character"
       }
     },
@@ -1054,6 +1170,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -1065,6 +1182,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1077,22 +1195,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1103,22 +1221,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1130,22 +1248,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1156,22 +1274,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1179,6 +1297,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -1191,7 +1310,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     </ul>
 
     <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
+    <h4 class="field-label">201</h4>
     media record
         <a href="#MediaRecord">MediaRecord</a>
     <h4 class="field-label">404</h4>
@@ -1231,6 +1350,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -1242,6 +1362,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1254,22 +1375,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1280,22 +1401,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1307,22 +1428,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1333,22 +1454,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1356,6 +1477,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -1449,6 +1571,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -1460,6 +1583,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1472,22 +1596,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1498,22 +1622,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1525,22 +1649,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1551,22 +1675,22 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -1574,6 +1698,7 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -1815,6 +1940,90 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
         
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getTextExposition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /text-editor/{expositionId}</code></pre></div>
+    <div class="method-summary">Get a text-based exposition (<span class="nickname">getTextExposition</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TextExposition">TextExposition</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "toolMeta" : [ {
+    "userClass" : "userClass",
+    "name" : "name",
+    "mediaId" : "mediaId"
+  }, {
+    "userClass" : "userClass",
+    "name" : "name",
+    "mediaId" : "mediaId"
+  } ],
+  "editorVersion" : "editorVersion",
+  "pages" : [ {
+    "markdown" : "markdown",
+    "html" : "html",
+    "title" : "title",
+    "pageId" : 0
+  }, {
+    "markdown" : "markdown",
+    "html" : "html",
+    "title" : "title",
+    "pageId" : 0
+  } ],
+  "toc" : [ {
+    "level" : 1,
+    "id" : "id",
+    "page" : 5,
+    "title" : "title"
+  }, {
+    "level" : 1,
+    "id" : "id",
+    "page" : 5,
+    "title" : "title"
+  } ],
+  "style" : "style",
+  "id" : "id",
+  "title" : "title",
+  "contentVersion" : 6
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Text-based exposition
+        <a href="#TextExposition">TextExposition</a>
+    <h4 class="field-label">404</h4>
+    Exposition not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getTypes"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -1974,6 +2183,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -1985,6 +2195,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -1997,22 +2208,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2023,22 +2234,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2050,22 +2261,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2076,22 +2287,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2099,6 +2310,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -2252,6 +2464,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -2263,6 +2476,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -2275,22 +2489,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2301,22 +2515,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2328,22 +2542,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2354,22 +2568,22 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2377,6 +2591,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -2547,6 +2762,7 @@ between that markdown and the media records it references through !{} notation.<
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -2558,6 +2774,7 @@ between that markdown and the media records it references through !{} notation.<
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -2570,22 +2787,22 @@ between that markdown and the media records it references through !{} notation.<
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2596,22 +2813,22 @@ between that markdown and the media records it references through !{} notation.<
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2623,22 +2840,22 @@ between that markdown and the media records it references through !{} notation.<
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2649,22 +2866,22 @@ between that markdown and the media records it references through !{} notation.<
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2672,6 +2889,7 @@ between that markdown and the media records it references through !{} notation.<
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -2791,6 +3009,7 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -2802,6 +3021,7 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -2814,22 +3034,22 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2840,22 +3060,22 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2867,22 +3087,22 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2893,22 +3113,22 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -2916,6 +3136,7 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -2980,6 +3201,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
   "title" : "My Human Title",
@@ -2991,6 +3213,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     "metadata" : "{}",
     "id" : "id"
   },
+  "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
   "text" : {
@@ -3003,22 +3226,22 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -3029,22 +3252,22 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -3056,22 +3279,22 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     "subject" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -3082,22 +3305,22 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     "object" : {
       "pointer" : {
         "timePointer" : {
-          "milliseconds" : 5,
-          "hours" : 0,
-          "seconds" : 1,
-          "minutes" : 6
+          "milliseconds" : 2,
+          "hours" : 1,
+          "seconds" : 5,
+          "minutes" : 5
         },
         "channelPointer" : {
-          "totalChannels" : 3,
-          "channel" : 9.301444
+          "totalChannels" : 4,
+          "channel" : 2.027123
         },
         "twoDPointer" : {
           "unit" : "perc",
-          "x" : 5.637377,
-          "y" : 2.302136
+          "x" : 7.0614014,
+          "y" : 9.301444
         },
         "counterPointer" : {
-          "counter" : 7,
+          "counter" : 3,
           "counterType" : "character"
         }
       },
@@ -3105,6 +3328,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
       "objectType" : "mediaRecord"
     }
   } ],
+  "height" : 6,
   "parents" : [ "parents", "parents" ],
   "mediaDate" : "2000-01-23"
 }</code></pre>
@@ -3237,6 +3461,105 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="putTextExposition"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /text-editor/{expositionId}</code></pre></div>
+    <div class="method-summary">Save text-based exposition (<span class="nickname">putTextExposition</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">TextExposition <a href="#TextExposition">TextExposition</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TextExposition">TextExposition</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "toolMeta" : [ {
+    "userClass" : "userClass",
+    "name" : "name",
+    "mediaId" : "mediaId"
+  }, {
+    "userClass" : "userClass",
+    "name" : "name",
+    "mediaId" : "mediaId"
+  } ],
+  "editorVersion" : "editorVersion",
+  "pages" : [ {
+    "markdown" : "markdown",
+    "html" : "html",
+    "title" : "title",
+    "pageId" : 0
+  }, {
+    "markdown" : "markdown",
+    "html" : "html",
+    "title" : "title",
+    "pageId" : 0
+  } ],
+  "toc" : [ {
+    "level" : 1,
+    "id" : "id",
+    "page" : 5,
+    "title" : "title"
+  }, {
+    "level" : 1,
+    "id" : "id",
+    "page" : 5,
+    "title" : "title"
+  } ],
+  "style" : "style",
+  "id" : "id",
+  "title" : "title",
+  "contentVersion" : 6
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Successful update
+        <a href="#TextExposition">TextExposition</a>
+    <h4 class="field-label">400</h4>
+    Incorrect request
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Exposition not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
 
   <h2><a name="__Models">Models</a></h2>
   [ Jump to <a href="#__Methods">Methods</a> ]
@@ -3262,6 +3585,10 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <li><a href="#ShareStatus_read"><code>ShareStatus_read</code> - </a></li>
     <li><a href="#ShareStatus_write"><code>ShareStatus_write</code> - </a></li>
     <li><a href="#StorageUsage"><code>StorageUsage</code> - </a></li>
+    <li><a href="#TextExposition"><code>TextExposition</code> - </a></li>
+    <li><a href="#TextExpositionPage"><code>TextExpositionPage</code> - </a></li>
+    <li><a href="#TextExpositionTocEntry"><code>TextExpositionTocEntry</code> - </a></li>
+    <li><a href="#TextExpositionToolMeta"><code>TextExpositionToolMeta</code> - </a></li>
     <li><a href="#TimePointer"><code>TimePointer</code> - </a></li>
     <li><a href="#TwoDPointer"><code>TwoDPointer</code> - </a></li>
     <li><a href="#VocabularyTerm"><code>VocabularyTerm</code> - </a></li>
@@ -3321,6 +3648,11 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> id generated by server, immutable </div>
 <div class="param">text (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_text">MediaRecord_text</a></span>  </div>
+<div class="param">transcodingStatus (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">noFile</div><div class="param-enum">inProgress</div><div class="param-enum">failed</div><div class="param-enum">transcoded</div>
+<div class="param">width (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Width if it is an image </div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Height if it is an image </div>
 <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">copyright </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">license </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC id of the license, obtained with the call /licenses </div>
@@ -3467,6 +3799,49 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <div class="field-items">
       <div class="param">used </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> used space in kiloBytes format: float</div>
 <div class="param">available </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> available space in kiloBytes format: float</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TextExposition"><code>TextExposition</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>An exposition with text-based pages</div>
+    <div class="field-items">
+      <div class="param">pages </div><div class="param-desc"><span class="param-type"><a href="#TextExpositionPage">array[TextExpositionPage]</a></span>  </div>
+<div class="param">toolMeta </div><div class="param-desc"><span class="param-type"><a href="#TextExpositionToolMeta">array[TextExpositionToolMeta]</a></span>  </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">style </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> CSS styling for the whole exposition </div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">editorVersion </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">contentVersion </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">toc </div><div class="param-desc"><span class="param-type"><a href="#TextExpositionTocEntry">array[TextExpositionTocEntry]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TextExpositionPage"><code>TextExpositionPage</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>A text-based exposition page</div>
+    <div class="field-items">
+      <div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Page title </div>
+<div class="param">html </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Rendered page </div>
+<div class="param">markdown </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Markdown input </div>
+<div class="param">pageId (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TextExpositionTocEntry"><code>TextExpositionTocEntry</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>An entry in the table of contents</div>
+    <div class="field-items">
+      <div class="param">level </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Id of the element it refers to </div>
+<div class="param">page </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Id of the exposition page </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TextExpositionToolMeta"><code>TextExpositionToolMeta</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Style and caption information for media</div>
+    <div class="field-items">
+      <div class="param">mediaId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">userClass (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">

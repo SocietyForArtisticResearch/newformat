@@ -76,7 +76,7 @@ paths:
       parameters: 
         - $ref: '#/components/parameters/mediaId'
       responses:
-        '200':
+        '201':
           description: media record
           content:
             application/json:
@@ -805,8 +805,105 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StorageUsage'
-  
-   
+
+  /text-editor/{expositionId}:
+    get:
+      summary: Get a text-based exposition
+      tags:
+        - user
+      operationId: getTextExposition
+      parameters:
+        - $ref: '#/components/parameters/expositionId'
+      responses:
+        '200':
+          description: Text-based exposition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextExposition'
+        '404':
+          description: Exposition not found
+    put:
+      summary: Save text-based exposition
+      tags:
+        - user
+      operationId: putTextExposition
+      parameters:
+        - $ref: '#/components/parameters/expositionId'
+      requestBody:
+        required: true        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextExposition'
+      responses:
+        '201':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextExposition'
+        '400':
+          description: Incorrect request
+          
+        '404':
+          description: Exposition not found
+  /text-editor/page/{expositionId}:
+    post:
+      summary: Create a new empty page. There is no request body as pages are saved with the exposition.
+      operationId: postTextPage
+      parameters:
+        - $ref: '#/components/parameters/expositionId'
+      responses:
+        '201':
+          description: Returns a new empty page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextExpositionPage'
+  /text-editor/export/{expositionId}:
+    post:
+      summary: Use pandoc to export exposition.
+      operationId: postTextExpositionExport
+      parameters:
+        - $ref: '#/components/parameters/expositionId'
+        - in: query
+          name: type
+          schema:
+            enum: [pdf, tex, docx, odt, epub, odt, html, md]  
+          description: The type of export file.
+      responses:
+        '200' :
+          description: The rendered file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.oasis.opendocument.text:
+              schema:
+                type: string
+                format: binary
+            application/epub+zip:
+              schema:
+                type: string
+                format: binary
+            application/x-latex:
+              schema:
+                type: string
+        '404':
+          description: Exposition not found
+
 components:
   parameters:
     mediaId:
@@ -814,6 +911,13 @@ components:
       in: path
       required: true
       description: id of media record
+      schema:
+        type: string
+    expositionId:
+      name: expositionId
+      in: path
+      required: true
+      description: id of text-based exposition
       schema:
         type: string
   schemas:
@@ -938,7 +1042,14 @@ components:
               enum: [ markdown, altText, html, plain ]
             content:
               type: string
-          
+        transcodingStatus:
+          enum: [ noFile, inProgress, failed, transcoded ]
+        width:
+          description: Width if it is an image
+          type: integer
+        height:
+          description: Height if it is an image
+          type: integer
         title:
           type: string
           example: My Human Title
@@ -1022,8 +1133,8 @@ components:
        - terms
       properties:
         id:
+          readOnly: true
           type: string
-          nullable: true
         externalURI:
           type: string
           description: external definition URI.
@@ -1135,6 +1246,91 @@ components:
           description: RC id
         problem: 
           enum: [ does not exist, insufficient permissions, conflict ]
+    TextExpositionPage:
+      type: object
+      description: A text-based exposition page
+      required:
+        - title
+        - html
+        - markdown
+      properties:
+        title:
+          description: Page title
+          type: string
+        html:
+          description: Rendered page
+          type: string
+        markdown:
+          description: Markdown input
+          type: string
+        pageId:
+          type: integer
+    TextExpositionToolMeta:
+      type: object
+      description: Style and caption information for media
+      required:
+        - mediaId
+      properties:
+        mediaId:
+          type: string
+        name:
+          type: string
+        userClass:
+          type: string
+    TextExposition:
+      type: object
+      description: An exposition with text-based pages
+      required:
+        - pages
+        - title
+        - toolMeta
+        - style
+        - editorVersion
+        - contentVersion
+        - toc
+      properties:
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextExpositionPage'
+        toolMeta:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextExpositionToolMeta'
+        title:
+          type: string
+        style:
+          description: CSS styling for the whole exposition
+          type: string
+        id:
+          type: string
+        editorVersion:
+          type: string
+        contentVersion:
+          type: integer
+        toc:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextExpositionTocEntry'
+    TextExpositionTocEntry:
+      type: object
+      description: An entry in the table of contents
+      required:
+        - level
+        - title
+        - id
+        - page
+      properties:
+        level:
+          type: integer
+        title:
+          type: string
+        id:
+          type: string
+          description: Id of the element it refers to
+        page:
+          type: integer
+          description: Id of the exposition page
     DateRange:
       type: object
       description: A temporal range between included but optional start and end points

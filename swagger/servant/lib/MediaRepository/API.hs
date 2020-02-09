@@ -148,6 +148,8 @@ type MediaRepositoryAPI
     :<|> "predicates" :> ReqBody '[JSON] Predicate :> Verb 'POST 200 '[JSON] Predicate -- 'postPredicate' route
     :<|> "keywords" :> "closed" :> Capture "keywordId" Text :> ReqBody '[JSON] VocabularyTerm :> Verb 'PUT 200 '[JSON] () -- 'putKeywordsClosed' route
     :<|> "predicates" :> Capture "predicateId" Text :> ReqBody '[JSON] Predicate :> Verb 'PUT 200 '[JSON] () -- 'putPredicate' route
+    :<|> "text-editor" :> "export" :> Capture "expositionId" Text :> QueryParam "type" Text :> Verb 'POST 200 '[JSON] FilePath -- 'postTextExpositionExport' route
+    :<|> "text-editor" :> "page" :> Capture "expositionId" Text :> Verb 'POST 200 '[JSON] TextExpositionPage -- 'postTextPage' route
     :<|> "media" :> "index" :> "public" :> Verb 'GET 200 '[JSON] [MediaRecord] -- 'getPublicMediaIndex' route
     :<|> "connection" :> Capture "connectionId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deleteConnection' route
     :<|> "keywords" :> "open" :> Capture "openKeywordId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deleteKeywordsOpen' route
@@ -165,6 +167,7 @@ type MediaRepositoryAPI
     :<|> "media" :> Capture "mediaId" Text :> "shareStatus" :> Verb 'GET 200 '[JSON] ShareStatus -- 'getShareStatus' route
     :<|> "storage" :> "usage" :> Verb 'GET 200 '[JSON] StorageUsage -- 'getStorageUsage' route
     :<|> "tags" :> Verb 'GET 200 '[JSON] [OpenVocabularyTerm] -- 'getTags' route
+    :<|> "text-editor" :> Capture "expositionId" Text :> Verb 'GET 200 '[JSON] TextExposition -- 'getTextExposition' route
     :<|> "types" :> Verb 'GET 200 '[JSON] [Text] -- 'getTypes' route
     :<|> "types" :> "schema" :> Capture "schemaId" Text :> Verb 'GET 200 '[JSON] Value -- 'getTypesSchema' route
     :<|> "media" :> Capture "mediaId" Text :> Verb 'DELETE 200 '[JSON] () -- 'mediaMediaIdDelete' route
@@ -180,6 +183,7 @@ type MediaRepositoryAPI
     :<|> "media" :> Capture "mediaId" Text :> "import" :> "folder" :> ReqBody '[FormUrlEncoded] FormPutMediaImportFolder :> Verb 'PUT 200 '[JSON] MediaRecord -- 'putMediaImportFolder' route
     :<|> "media" :> Capture "mediaId" Text :> "thumb" :> ReqBody '[JSON] FilePath :> Verb 'PUT 200 '[JSON] () -- 'putMediaThumb' route
     :<|> "media" :> Capture "mediaId" Text :> "shareStatus" :> ReqBody '[JSON] ShareStatus :> Verb 'PUT 200 '[JSON] ShareStatus -- 'putShareStatus' route
+    :<|> "text-editor" :> Capture "expositionId" Text :> ReqBody '[JSON] TextExposition :> Verb 'PUT 200 '[JSON] TextExposition -- 'putTextExposition' route
     :<|> Raw 
 
 
@@ -206,6 +210,8 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , postPredicate :: Predicate -> m Predicate{- ^  -}
   , putKeywordsClosed :: Text -> VocabularyTerm -> m (){- ^  -}
   , putPredicate :: Text -> Predicate -> m (){- ^  -}
+  , postTextExpositionExport :: Text -> Maybe Text -> m FilePath{- ^  -}
+  , postTextPage :: Text -> m TextExpositionPage{- ^  -}
   , getPublicMediaIndex :: m [MediaRecord]{- ^  -}
   , deleteConnection :: Text -> m (){- ^  -}
   , deleteKeywordsOpen :: Text -> m (){- ^  -}
@@ -223,6 +229,7 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , getShareStatus :: Text -> m ShareStatus{- ^  -}
   , getStorageUsage :: m StorageUsage{- ^  -}
   , getTags :: m [OpenVocabularyTerm]{- ^  -}
+  , getTextExposition :: Text -> m TextExposition{- ^  -}
   , getTypes :: m [Text]{- ^  -}
   , getTypesSchema :: Text -> m Value{- ^  -}
   , mediaMediaIdDelete :: Text -> m (){- ^ Deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. Connections to other entities should be removed. -}
@@ -238,6 +245,7 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , putMediaImportFolder :: Text -> FormPutMediaImportFolder -> m MediaRecord{- ^  -}
   , putMediaThumb :: Text -> FilePath -> m (){- ^  -}
   , putShareStatus :: Text -> ShareStatus -> m ShareStatus{- ^  -}
+  , putTextExposition :: Text -> TextExposition -> m TextExposition{- ^  -}
   }
 
 newtype MediaRepositoryClient a = MediaRepositoryClient
@@ -267,6 +275,8 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> postPredicate) :<|>
      (coerce -> putKeywordsClosed) :<|>
      (coerce -> putPredicate) :<|>
+     (coerce -> postTextExpositionExport) :<|>
+     (coerce -> postTextPage) :<|>
      (coerce -> getPublicMediaIndex) :<|>
      (coerce -> deleteConnection) :<|>
      (coerce -> deleteKeywordsOpen) :<|>
@@ -284,6 +294,7 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> getShareStatus) :<|>
      (coerce -> getStorageUsage) :<|>
      (coerce -> getTags) :<|>
+     (coerce -> getTextExposition) :<|>
      (coerce -> getTypes) :<|>
      (coerce -> getTypesSchema) :<|>
      (coerce -> mediaMediaIdDelete) :<|>
@@ -299,6 +310,7 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> putMediaImportFolder) :<|>
      (coerce -> putMediaThumb) :<|>
      (coerce -> putShareStatus) :<|>
+     (coerce -> putTextExposition) :<|>
      _) = client (Proxy :: Proxy MediaRepositoryAPI)
 
 -- | Run requests in the MediaRepositoryClient monad.
@@ -352,6 +364,8 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce postPredicate :<|>
        coerce putKeywordsClosed :<|>
        coerce putPredicate :<|>
+       coerce postTextExpositionExport :<|>
+       coerce postTextPage :<|>
        coerce getPublicMediaIndex :<|>
        coerce deleteConnection :<|>
        coerce deleteKeywordsOpen :<|>
@@ -369,6 +383,7 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce getShareStatus :<|>
        coerce getStorageUsage :<|>
        coerce getTags :<|>
+       coerce getTextExposition :<|>
        coerce getTypes :<|>
        coerce getTypesSchema :<|>
        coerce mediaMediaIdDelete :<|>
@@ -384,4 +399,5 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce putMediaImportFolder :<|>
        coerce putMediaThumb :<|>
        coerce putShareStatus :<|>
+       coerce putTextExposition :<|>
        serveDirectoryFileServer "static")
