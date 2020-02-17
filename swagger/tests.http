@@ -34,3 +34,36 @@ Accept-Encoding: application/json
   } ]
 }
 
+
+
+# vienna
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/vocabularies?lang=en
+
+#
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/potax/types?lang=en
+
+#
+GET https://base.uni-ak.ac.at/portfolio/api/v1/entry/types/
+
+#
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/potax
+
+#
+GET http://base.uni-ak.ac.at/portfolio/taxonomy/portfolio_taxonomy
+Accept-Encoding: application/json
+
+
+# taxonomy list of types
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/potax/topConcepts?lang=en
+
+# 
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/potax/data?uri=http%3A%2F%2Fbase.uni-ak.ac.at%2Fportfolio%2Ftaxonomy%2Fconcert&format=application/ld%2Bjson
+
+#
+GET https://base.uni-ak.ac.at/skosmos/rest/v1/jsonschema/http%3A%2F%2Fbase.uni-ak.ac.at%2Fportfolio%2Ftaxonomy%2Fconcert/
+
+
+
+
+# base kw
+GET https://voc.uni-ak.ac.at/skosmos/rest/v1/basekw/data

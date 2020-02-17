@@ -203,11 +203,6 @@ font-style: italic;
   <li><a href="#putKeywordsClosed"><code><span class="http-method">put</span> /keywords/closed/{keywordId}</code></a></li>
   <li><a href="#putPredicate"><code><span class="http-method">put</span> /predicates/{predicateId}</code></a></li>
   </ul>
-  <h4><a href="#Default">Default</a></h4>
-  <ul>
-  <li><a href="#postTextExpositionExport"><code><span class="http-method">post</span> /text-editor/export/{expositionId}</code></a></li>
-  <li><a href="#postTextPage"><code><span class="http-method">post</span> /text-editor/page/{expositionId}</code></a></li>
-  </ul>
   <h4><a href="#Service">Service</a></h4>
   <ul>
   <li><a href="#getPublicMediaIndex"><code><span class="http-method">get</span> /media/index/public</code></a></li>
@@ -239,6 +234,8 @@ font-style: italic;
   <li><a href="#postKeywordsOpen"><code><span class="http-method">post</span> /keywords/open</code></a></li>
   <li><a href="#postMedia"><code><span class="http-method">post</span> /media</code></a></li>
   <li><a href="#postTag"><code><span class="http-method">post</span> /tags</code></a></li>
+  <li><a href="#postTextExpositionExport"><code><span class="http-method">post</span> /text-editor/export/{expositionId}</code></a></li>
+  <li><a href="#postTextPage"><code><span class="http-method">post</span> /text-editor/page/{expositionId}</code></a></li>
   <li><a href="#putConnection"><code><span class="http-method">put</span> /connection/{connectionId}</code></a></li>
   <li><a href="#putMedia"><code><span class="http-method">put</span> /media/{mediaId}</code></a></li>
   <li><a href="#putMediaFile"><code><span class="http-method">put</span> /media/{mediaId}/file</code></a></li>
@@ -520,112 +517,6 @@ font-style: italic;
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
-  <h1><a name="Default">Default</a></h1>
-  <div class="method"><a name="postTextExpositionExport"/>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/export/{expositionId}</code></pre></div>
-    <div class="method-summary">Use pandoc to export exposition. (<span class="nickname">postTextExpositionExport</span>)</div>
-    <div class="method-notes"></div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">expositionId (required)</div>
-
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
-    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Query parameters</h3>
-    <div class="field-items">
-      <div class="param">type (optional)</div>
-
-      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The type of export file. default: null </div>
-    </div>  <!-- field-items -->
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      
-      File
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/pdf</code></li>
-      <li><code>text/plain; charset=utf-8</code></li>
-      <li><code>text/html</code></li>
-      <li><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document</code></li>
-      <li><code>application/vnd.oasis.opendocument.text</code></li>
-      <li><code>application/epub+zip</code></li>
-      <li><code>application/x-latex</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    The rendered file
-        <a href="#File">File</a>
-    <h4 class="field-label">404</h4>
-    Exposition not found
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="postTextPage"/>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/page/{expositionId}</code></pre></div>
-    <div class="method-summary">Create a new empty page. There is no request body as pages are saved with the exposition. (<span class="nickname">postTextPage</span>)</div>
-    <div class="method-notes"></div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">expositionId (required)</div>
-
-      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
-    </div>  <!-- field-items -->
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#TextExpositionPage">TextExpositionPage</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "markdown" : "markdown",
-  "html" : "html",
-  "title" : "title",
-  "pageId" : 0
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">201</h4>
-    Returns a new empty page
-        <a href="#TextExpositionPage">TextExpositionPage</a>
-  </div> <!-- method -->
-  <hr/>
   <h1><a name="Service">Service</a></h1>
   <div class="method"><a name="getPublicMediaIndex"/>
     <div class="method-path">
@@ -653,6 +544,10 @@ font-style: italic;
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -661,10 +556,6 @@ font-style: italic;
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -1170,6 +1061,10 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -1178,10 +1073,6 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -1350,6 +1241,10 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -1358,10 +1253,6 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -1571,6 +1462,10 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -1579,10 +1474,6 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -1881,7 +1772,6 @@ User is identified from header (<span class="nickname">deleteTag</span>)</div>
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "available" : 6.0274563,
   "used" : 0.8008282
 }</code></pre>
 
@@ -1972,11 +1862,11 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <pre class="example"><code>{
   "toolMeta" : [ {
     "userClass" : "userClass",
-    "name" : "name",
+    "caption" : "caption",
     "mediaId" : "mediaId"
   }, {
     "userClass" : "userClass",
-    "name" : "name",
+    "caption" : "caption",
     "mediaId" : "mediaId"
   } ],
   "editorVersion" : "editorVersion",
@@ -2149,7 +2039,9 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /media/search</code></pre></div>
-    <div class="method-summary">Search for media records using the search filter (<span class="nickname">mediaSearchPost</span>)</div>
+    <div class="method-summary">Search for media records using the search filter.
+This is also used for obtaining the media used in an exposition
+as these are all &quot;connected-to&quot; the exposition. (<span class="nickname">mediaSearchPost</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -2183,6 +2075,10 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -2191,10 +2087,6 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -2332,7 +2224,7 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /connection</code></pre></div>
-    <div class="method-summary">Create a connection. The requester needs to have write permission for the subject entity and write or read permission for the object. (<span class="nickname">postConnection</span>)</div>
+    <div class="method-summary">Create a connection. The requester needs to have at least write permission for the subject entity and write or read permission for the object. When a MediaRecord is used in an exposition a connection needs to be created. (<span class="nickname">postConnection</span>)</div>
     <div class="method-notes"></div>
 
 
@@ -2464,6 +2356,10 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -2472,10 +2368,6 @@ user is identified from header (<span class="nickname">getTags</span>)</div>
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -2666,6 +2558,111 @@ User is identified from header. (<span class="nickname">postTag</span>)</div>
         <a href="#OpenVocabularyTerm">OpenVocabularyTerm</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="postTextExpositionExport"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/export/{expositionId}</code></pre></div>
+    <div class="method-summary">Use pandoc to export exposition. (<span class="nickname">postTextExpositionExport</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">type (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The type of export file. default: null </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      File
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/pdf</code></li>
+      <li><code>text/plain; charset=utf-8</code></li>
+      <li><code>text/html</code></li>
+      <li><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document</code></li>
+      <li><code>application/vnd.oasis.opendocument.text</code></li>
+      <li><code>application/epub+zip</code></li>
+      <li><code>application/x-latex</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The rendered file
+        <a href="#File">File</a>
+    <h4 class="field-label">404</h4>
+    Exposition not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="postTextPage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /text-editor/page/{expositionId}</code></pre></div>
+    <div class="method-summary">Create a new empty page. There is no request body as pages are saved with the exposition. (<span class="nickname">postTextPage</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">expositionId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; id of text-based exposition default: null </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#TextExpositionPage">TextExpositionPage</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "markdown" : "markdown",
+  "html" : "html",
+  "title" : "title",
+  "pageId" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Returns a new empty page
+        <a href="#TextExpositionPage">TextExpositionPage</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="putConnection"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -2762,6 +2759,10 @@ between that markdown and the media records it references through !{} notation.<
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -2770,10 +2771,6 @@ between that markdown and the media records it references through !{} notation.<
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -3009,6 +3006,10 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -3017,10 +3018,6 @@ The position of the media is signaled by using the !{name} tokens in the Markdow
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -3201,6 +3198,10 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <pre class="example"><code>{
   "copyright" : "© Name Surname",
   "creator" : "creator",
+  "recordType" : {
+    "metadata" : "{}",
+    "id" : "id"
+  },
   "transcodingStatus" : "noFile",
   "description" : "this is a description",
   "mediaType" : "video",
@@ -3209,10 +3210,6 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
   "keywordsClosed" : [ "keywordsClosed", "keywordsClosed" ],
   "tags" : [ "tags", "tags" ],
   "license" : "license",
-  "recrodType" : {
-    "metadata" : "{}",
-    "id" : "id"
-  },
   "width" : 0,
   "modifiedDate" : "2000-01-23",
   "id" : "id",
@@ -3505,11 +3502,11 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <pre class="example"><code>{
   "toolMeta" : [ {
     "userClass" : "userClass",
-    "name" : "name",
+    "caption" : "caption",
     "mediaId" : "mediaId"
   }, {
     "userClass" : "userClass",
-    "name" : "name",
+    "caption" : "caption",
     "mediaId" : "mediaId"
   } ],
   "editorVersion" : "editorVersion",
@@ -3572,7 +3569,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <li><a href="#DateRange"><code>DateRange</code> - </a></li>
     <li><a href="#License"><code>License</code> - </a></li>
     <li><a href="#MediaRecord"><code>MediaRecord</code> - </a></li>
-    <li><a href="#MediaRecord_recrodType"><code>MediaRecord_recrodType</code> - </a></li>
+    <li><a href="#MediaRecord_recordType"><code>MediaRecord_recordType</code> - </a></li>
     <li><a href="#MediaRecord_text"><code>MediaRecord_text</code> - </a></li>
     <li><a href="#MultiLangString"><code>MultiLangString</code> - </a></li>
     <li><a href="#ObjectPointer"><code>ObjectPointer</code> - </a></li>
@@ -3665,7 +3662,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
 <div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> closed vocabulary keywords ids, obtained by /keywords/closed </div>
 <div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> open vocabulary keywords ids, obtained by /keywords/open </div>
 <div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> tags by user, non existing tags are added automatically, obtained by /tags/#userid </div>
-<div class="param">recrodType (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_recrodType">MediaRecord_recrodType</a></span>  </div>
+<div class="param">recordType (optional)</div><div class="param-desc"><span class="param-type"><a href="#MediaRecord_recordType">MediaRecord_recordType</a></span>  </div>
 <div class="param">creationDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date when object was created format: date</div>
 <div class="param">modifiedDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> date of last change to the media record format: date</div>
 <div class="param">mediaDate (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span> Date of the media record or what it represents format: date</div>
@@ -3673,7 +3670,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     </div>  <!-- field-items -->
   </div>
   <div class="model">
-    <h3><a name="MediaRecord_recrodType"><code>MediaRecord_recrodType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <h3><a name="MediaRecord_recordType"><code>MediaRecord_recordType</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>Type obtained from the portfolio API ...</div>
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
@@ -3706,7 +3703,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">mediaRecord</div><div class="param-enum">exposition</div>
 <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> RC id </div>
-<div class="param">pointer </div><div class="param-desc"><span class="param-type"><a href="#ObjectPointer_pointer">ObjectPointer_pointer</a></span>  </div>
+<div class="param">pointer (optional)</div><div class="param-desc"><span class="param-type"><a href="#ObjectPointer_pointer">ObjectPointer_pointer</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -3767,6 +3764,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
 <div class="param">tag (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list tag ids </div>
 <div class="param">keywordsClosed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list closed vocabulary keyword ids </div>
 <div class="param">keywordsOpen (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> Open vocabulary keywords ids </div>
+<div class="param">textContent (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Full text search in text MediaRecords (only for text media records) </div>
 <div class="param">connectedTo (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> A list of media record or exposition ids that the search result should be connected to as subject or object. </div>
     </div>  <!-- field-items -->
   </div>
@@ -3795,10 +3793,9 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
   </div>
   <div class="model">
     <h3><a name="StorageUsage"><code>StorageUsage</code> - </a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>see the used and available space for a user</div>
+    <div class='model-description'>See the space used by a user</div>
     <div class="field-items">
       <div class="param">used </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> used space in kiloBytes format: float</div>
-<div class="param">available </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span> available space in kiloBytes format: float</div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -3840,7 +3837,7 @@ Copyright and license inherited from parent. (<span class="nickname">putMediaImp
     <div class='model-description'>Style and caption information for media</div>
     <div class="field-items">
       <div class="param">mediaId </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">caption (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">userClass (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>

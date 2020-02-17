@@ -13,7 +13,7 @@ module MediaRepository.Types (
   InlineObject2 (..),
   License (..),
   MediaRecord (..),
-  MediaRecordRecrodType (..),
+  MediaRecordRecordType (..),
   MediaRecordText (..),
   MultiLangString (..),
   ObjectPointer (..),
@@ -166,7 +166,7 @@ data MediaRecord = MediaRecord
   , mediaRecordKeywordsClosed :: Maybe [Text] -- ^ closed vocabulary keywords ids, obtained by /keywords/closed
   , mediaRecordKeywordsOpen :: Maybe [Text] -- ^ open vocabulary keywords ids, obtained by /keywords/open
   , mediaRecordTags :: Maybe [Text] -- ^ tags by user, non existing tags are added automatically, obtained by /tags/#userid
-  , mediaRecordRecrodType :: Maybe MediaRecordRecrodType -- ^ 
+  , mediaRecordRecordType :: Maybe MediaRecordRecordType -- ^ 
   , mediaRecordCreationDate :: Maybe Day -- ^ date when object was created
   , mediaRecordModifiedDate :: Maybe Day -- ^ date of last change to the media record
   , mediaRecordMediaDate :: Maybe Day -- ^ Date of the media record or what it represents
@@ -180,15 +180,15 @@ instance ToJSON MediaRecord where
 
 
 -- | Type obtained from the portfolio API ...
-data MediaRecordRecrodType = MediaRecordRecrodType
-  { mediaRecordRecrodTypeId :: Maybe Text -- ^ 
-  , mediaRecordRecrodTypeMetadata :: Maybe Value -- ^ 
+data MediaRecordRecordType = MediaRecordRecordType
+  { mediaRecordRecordTypeId :: Maybe Text -- ^ 
+  , mediaRecordRecordTypeMetadata :: Maybe Value -- ^ 
   } deriving (Show, Eq, Generic, Data)
 
-instance FromJSON MediaRecordRecrodType where
-  parseJSON = genericParseJSON (removeFieldLabelPrefix True "mediaRecordRecrodType")
-instance ToJSON MediaRecordRecrodType where
-  toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecordRecrodType")
+instance FromJSON MediaRecordRecordType where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "mediaRecordRecordType")
+instance ToJSON MediaRecordRecordType where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "mediaRecordRecordType")
 
 
 -- | 
@@ -219,7 +219,7 @@ instance ToJSON MultiLangString where
 data ObjectPointer = ObjectPointer
   { objectPointerObjectType :: Text -- ^ 
   , objectPointerId :: Text -- ^ RC id
-  , objectPointerPointer :: ObjectPointerPointer -- ^ 
+  , objectPointerPointer :: Maybe ObjectPointerPointer -- ^ 
   } deriving (Show, Eq, Generic, Data)
 
 instance FromJSON ObjectPointer where
@@ -294,6 +294,7 @@ data SearchRequest = SearchRequest
   , searchRequestTag :: Maybe [Text] -- ^ A list tag ids
   , searchRequestKeywordsClosed :: Maybe [Text] -- ^ A list closed vocabulary keyword ids
   , searchRequestKeywordsOpen :: Maybe [Text] -- ^ Open vocabulary keywords ids
+  , searchRequestTextContent :: Maybe Text -- ^ Full text search in text MediaRecords (only for text media records)
   , searchRequestConnectedTo :: Maybe [Text] -- ^ A list of media record or exposition ids that the search result should be connected to as subject or object.
   } deriving (Show, Eq, Generic, Data)
 
@@ -338,10 +339,9 @@ instance ToJSON ShareStatusWrite where
   toJSON = genericToJSON (removeFieldLabelPrefix False "shareStatusWrite")
 
 
--- | see the used and available space for a user
+-- | See the space used by a user
 data StorageUsage = StorageUsage
   { storageUsageUsed :: Float -- ^ used space in kiloBytes
-  , storageUsageAvailable :: Float -- ^ available space in kiloBytes
   } deriving (Show, Eq, Generic, Data)
 
 instance FromJSON StorageUsage where
@@ -399,7 +399,7 @@ instance ToJSON TextExpositionTocEntry where
 -- | Style and caption information for media
 data TextExpositionToolMeta = TextExpositionToolMeta
   { textExpositionToolMetaMediaId :: Text -- ^ 
-  , textExpositionToolMetaName :: Maybe Text -- ^ 
+  , textExpositionToolMetaCaption :: Maybe Text -- ^ 
   , textExpositionToolMetaUserClass :: Maybe Text -- ^ 
   } deriving (Show, Eq, Generic, Data)
 

@@ -20,9 +20,11 @@ module Api.Data exposing
     , CounterPointer, CounterPointerCounterType(..), counterPointerCounterTypeVariants
     , DateRange
     , InlineObject
+    , InlineObject1
+    , InlineObject2
     , License
-    , MediaRecord, MediaRecordMediaType(..), mediaRecordMediaTypeVariants
-    , MediaRecordRecrodType
+    , MediaRecord, MediaRecordTranscodingStatus(..), mediaRecordTranscodingStatusVariants, MediaRecordMediaType(..), mediaRecordMediaTypeVariants
+    , MediaRecordRecordType
     , MediaRecordText, MediaRecordTextTextType(..), mediaRecordTextTextTypeVariants
     , MultiLangString
     , ObjectPointer, ObjectPointerObjectType(..), objectPointerObjectTypeVariants
@@ -34,6 +36,11 @@ module Api.Data exposing
     , ShareStatus
     , ShareStatusRead
     , ShareStatusWrite
+    , StorageUsage
+    , TextExposition
+    , TextExpositionPage
+    , TextExpositionTocEntry
+    , TextExpositionToolMeta
     , TimePointer
     , TwoDPointer, TwoDPointerUnit(..), twoDPointerUnitVariants
     , VocabularyTerm
@@ -42,9 +49,11 @@ module Api.Data exposing
     , encodeCounterPointer
     , encodeDateRange
     , encodeInlineObject
+    , encodeInlineObject1
+    , encodeInlineObject2
     , encodeLicense
     , encodeMediaRecord
-    , encodeMediaRecordRecrodType
+    , encodeMediaRecordRecordType
     , encodeMediaRecordText
     , encodeMultiLangString
     , encodeObjectPointer
@@ -56,6 +65,11 @@ module Api.Data exposing
     , encodeShareStatus
     , encodeShareStatusRead
     , encodeShareStatusWrite
+    , encodeStorageUsage
+    , encodeTextExposition
+    , encodeTextExpositionPage
+    , encodeTextExpositionTocEntry
+    , encodeTextExpositionToolMeta
     , encodeTimePointer
     , encodeTwoDPointer
     , encodeVocabularyTerm
@@ -64,9 +78,11 @@ module Api.Data exposing
     , counterPointerDecoder
     , dateRangeDecoder
     , inlineObjectDecoder
+    , inlineObject1Decoder
+    , inlineObject2Decoder
     , licenseDecoder
     , mediaRecordDecoder
-    , mediaRecordRecrodTypeDecoder
+    , mediaRecordRecordTypeDecoder
     , mediaRecordTextDecoder
     , multiLangStringDecoder
     , objectPointerDecoder
@@ -78,6 +94,11 @@ module Api.Data exposing
     , shareStatusDecoder
     , shareStatusReadDecoder
     , shareStatusWriteDecoder
+    , storageUsageDecoder
+    , textExpositionDecoder
+    , textExpositionPageDecoder
+    , textExpositionTocEntryDecoder
+    , textExpositionToolMetaDecoder
     , timePointerDecoder
     , twoDPointerDecoder
     , vocabularyTermDecoder
@@ -140,10 +161,20 @@ type alias InlineObject =
     }
 
 
+type alias InlineObject1 =
+    { file : Maybe String
+    }
+
+
+type alias InlineObject2 =
+    { filename : Maybe (List (String))
+    }
+
+
 {-| A license
 -}
 type alias License =
-    { id : Maybe String
+    { id : String
     , externalURI : String
     , name : Maybe String
     }
@@ -152,6 +183,9 @@ type alias License =
 type alias MediaRecord =
     { id : Maybe String
     , text : Maybe MediaRecordText
+    , transcodingStatus : Maybe MediaRecordTranscodingStatus
+    , width : Maybe Int
+    , height : Maybe Int
     , title : String
     , copyright : String
     , license : String
@@ -162,12 +196,28 @@ type alias MediaRecord =
     , keywordsClosed : Maybe (List (String))
     , keywordsOpen : Maybe (List (String))
     , tags : Maybe (List (String))
-    , recrodType : Maybe MediaRecordRecrodType
+    , recordType : Maybe MediaRecordRecordType
     , creationDate : Maybe Posix
     , modifiedDate : Maybe Posix
     , mediaDate : Maybe Posix
     , connections : Maybe (List (Connection))
     }
+
+
+type MediaRecordTranscodingStatus
+    = MediaRecordTranscodingStatusNoFile
+    | MediaRecordTranscodingStatusInProgress
+    | MediaRecordTranscodingStatusFailed
+    | MediaRecordTranscodingStatusTranscoded
+
+
+mediaRecordTranscodingStatusVariants : List MediaRecordTranscodingStatus
+mediaRecordTranscodingStatusVariants =
+    [ MediaRecordTranscodingStatusNoFile
+    , MediaRecordTranscodingStatusInProgress
+    , MediaRecordTranscodingStatusFailed
+    , MediaRecordTranscodingStatusTranscoded
+    ]
 
 
 type MediaRecordMediaType
@@ -192,7 +242,7 @@ mediaRecordMediaTypeVariants =
 
 {-| Type obtained from the portfolio API ...
 -}
-type alias MediaRecordRecrodType =
+type alias MediaRecordRecordType =
     { id : Maybe String
     , metadata : Maybe Object
     }
@@ -231,7 +281,7 @@ type alias MultiLangString =
 type alias ObjectPointer =
     { objectType : ObjectPointerObjectType
     , id : String
-    , pointer : ObjectPointerPointer
+    , pointer : Maybe ObjectPointerPointer
     }
 
 
@@ -322,6 +372,7 @@ type alias SearchRequest =
     , tag : Maybe (List (String))
     , keywordsClosed : Maybe (List (String))
     , keywordsOpen : Maybe (List (String))
+    , textContent : Maybe String
     , connectedTo : Maybe (List (String))
     }
 
@@ -362,6 +413,56 @@ type alias ShareStatusRead =
 
 type alias ShareStatusWrite =
     { users : List (String)
+    }
+
+
+{-| See the space used by a user
+-}
+type alias StorageUsage =
+    { used : Float
+    }
+
+
+{-| An exposition with text-based pages
+-}
+type alias TextExposition =
+    { pages : List (TextExpositionPage)
+    , toolMeta : List (TextExpositionToolMeta)
+    , title : String
+    , style : String
+    , id : Maybe String
+    , editorVersion : String
+    , contentVersion : Int
+    , toc : List (TextExpositionTocEntry)
+    }
+
+
+{-| A text-based exposition page
+-}
+type alias TextExpositionPage =
+    { title : String
+    , html : String
+    , markdown : String
+    , pageId : Maybe Int
+    }
+
+
+{-| An entry in the table of contents
+-}
+type alias TextExpositionTocEntry =
+    { level : Int
+    , title : String
+    , id : String
+    , page : Int
+    }
+
+
+{-| Style and caption information for media
+-}
+type alias TextExpositionToolMeta =
+    { mediaId : String
+    , caption : Maybe String
+    , userClass : Maybe String
     }
 
 
@@ -528,6 +629,46 @@ encodeInlineObjectPairs model =
     pairs
 
 
+encodeInlineObject1 : InlineObject1 -> Json.Encode.Value
+encodeInlineObject1 =
+    encodeObject << encodeInlineObject1Pairs
+
+
+encodeInlineObject1WithTag : ( String, String ) -> InlineObject1 -> Json.Encode.Value
+encodeInlineObject1WithTag (tagField, tag) model =
+    encodeObject (encodeInlineObject1Pairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeInlineObject1Pairs : InlineObject1 -> List EncodedField
+encodeInlineObject1Pairs model =
+    let
+        pairs =
+            [ maybeEncode "file" Json.Decode.string model.file
+            ]
+    in
+    pairs
+
+
+encodeInlineObject2 : InlineObject2 -> Json.Encode.Value
+encodeInlineObject2 =
+    encodeObject << encodeInlineObject2Pairs
+
+
+encodeInlineObject2WithTag : ( String, String ) -> InlineObject2 -> Json.Encode.Value
+encodeInlineObject2WithTag (tagField, tag) model =
+    encodeObject (encodeInlineObject2Pairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeInlineObject2Pairs : InlineObject2 -> List EncodedField
+encodeInlineObject2Pairs model =
+    let
+        pairs =
+            [ maybeEncode "filename" (Json.Encode.list Json.Decode.string) model.filename
+            ]
+    in
+    pairs
+
+
 encodeLicense : License -> Json.Encode.Value
 encodeLicense =
     encodeObject << encodeLicensePairs
@@ -542,7 +683,7 @@ encodeLicensePairs : License -> List EncodedField
 encodeLicensePairs model =
     let
         pairs =
-            [ maybeEncode "id" Json.Encode.string model.id
+            [ encode "id" Json.Encode.string model.id
             , encode "externalURI" Json.Encode.string model.externalURI
             , maybeEncode "name" Json.Encode.string model.name
             ]
@@ -566,6 +707,9 @@ encodeMediaRecordPairs model =
         pairs =
             [ maybeEncode "id" Json.Encode.string model.id
             , maybeEncode "text" encodeMediaRecordText model.text
+            , maybeEncode "transcodingStatus"  model.transcodingStatus
+            , maybeEncode "width" Json.Encode.int model.width
+            , maybeEncode "height" Json.Encode.int model.height
             , encode "title" Json.Encode.string model.title
             , encode "copyright" Json.Encode.string model.copyright
             , encode "license" Json.Encode.string model.license
@@ -576,7 +720,7 @@ encodeMediaRecordPairs model =
             , maybeEncode "keywordsClosed" (Json.Encode.list Json.Encode.string) model.keywordsClosed
             , maybeEncode "keywordsOpen" (Json.Encode.list Json.Encode.string) model.keywordsOpen
             , maybeEncode "tags" (Json.Encode.list Json.Encode.string) model.tags
-            , maybeEncode "recrodType" encodeMediaRecordRecrodType model.recrodType
+            , maybeEncode "recordType" encodeMediaRecordRecordType model.recordType
             , maybeEncode "creationDate" Api.Time.encodeDate model.creationDate
             , maybeEncode "modifiedDate" Api.Time.encodeDate model.modifiedDate
             , maybeEncode "mediaDate" Api.Time.encodeDate model.mediaDate
@@ -584,6 +728,27 @@ encodeMediaRecordPairs model =
             ]
     in
     pairs
+
+stringFromMediaRecordTranscodingStatus : MediaRecordTranscodingStatus -> String
+stringFromMediaRecordTranscodingStatus model =
+    case model of
+        MediaRecordTranscodingStatusNoFile ->
+            "noFile"
+
+        MediaRecordTranscodingStatusInProgress ->
+            "inProgress"
+
+        MediaRecordTranscodingStatusFailed ->
+            "failed"
+
+        MediaRecordTranscodingStatusTranscoded ->
+            "transcoded"
+
+
+encodeMediaRecordTranscodingStatus : MediaRecordTranscodingStatus -> Json.Encode.Value
+encodeMediaRecordTranscodingStatus =
+    Json.Encode.string << stringFromMediaRecordTranscodingStatus
+
 
 stringFromMediaRecordMediaType : MediaRecordMediaType -> String
 stringFromMediaRecordMediaType model =
@@ -613,18 +778,18 @@ encodeMediaRecordMediaType =
 
 
 
-encodeMediaRecordRecrodType : MediaRecordRecrodType -> Json.Encode.Value
-encodeMediaRecordRecrodType =
-    encodeObject << encodeMediaRecordRecrodTypePairs
+encodeMediaRecordRecordType : MediaRecordRecordType -> Json.Encode.Value
+encodeMediaRecordRecordType =
+    encodeObject << encodeMediaRecordRecordTypePairs
 
 
-encodeMediaRecordRecrodTypeWithTag : ( String, String ) -> MediaRecordRecrodType -> Json.Encode.Value
-encodeMediaRecordRecrodTypeWithTag (tagField, tag) model =
-    encodeObject (encodeMediaRecordRecrodTypePairs model ++ [ encode tagField Json.Encode.string tag ])
+encodeMediaRecordRecordTypeWithTag : ( String, String ) -> MediaRecordRecordType -> Json.Encode.Value
+encodeMediaRecordRecordTypeWithTag (tagField, tag) model =
+    encodeObject (encodeMediaRecordRecordTypePairs model ++ [ encode tagField Json.Encode.string tag ])
 
 
-encodeMediaRecordRecrodTypePairs : MediaRecordRecrodType -> List EncodedField
-encodeMediaRecordRecrodTypePairs model =
+encodeMediaRecordRecordTypePairs : MediaRecordRecordType -> List EncodedField
+encodeMediaRecordRecordTypePairs model =
     let
         pairs =
             [ maybeEncode "id" Json.Encode.string model.id
@@ -713,7 +878,7 @@ encodeObjectPointerPairs model =
         pairs =
             [ encode "objectType"  model.objectType
             , encode "id" Json.Encode.string model.id
-            , encode "pointer" encodeObjectPointerPointer model.pointer
+            , maybeEncode "pointer" encodeObjectPointerPointer model.pointer
             ]
     in
     pairs
@@ -881,6 +1046,7 @@ encodeSearchRequestPairs model =
             , maybeEncode "tag" (Json.Encode.list Json.Encode.string) model.tag
             , maybeEncode "keywordsClosed" (Json.Encode.list Json.Encode.string) model.keywordsClosed
             , maybeEncode "keywordsOpen" (Json.Encode.list Json.Encode.string) model.keywordsOpen
+            , maybeEncode "textContent" Json.Encode.string model.textContent
             , maybeEncode "connectedTo" (Json.Encode.list Json.Encode.string) model.connectedTo
             ]
     in
@@ -971,6 +1137,121 @@ encodeShareStatusWritePairs model =
     let
         pairs =
             [ encode "users" (Json.Encode.list Json.Encode.string) model.users
+            ]
+    in
+    pairs
+
+
+encodeStorageUsage : StorageUsage -> Json.Encode.Value
+encodeStorageUsage =
+    encodeObject << encodeStorageUsagePairs
+
+
+encodeStorageUsageWithTag : ( String, String ) -> StorageUsage -> Json.Encode.Value
+encodeStorageUsageWithTag (tagField, tag) model =
+    encodeObject (encodeStorageUsagePairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeStorageUsagePairs : StorageUsage -> List EncodedField
+encodeStorageUsagePairs model =
+    let
+        pairs =
+            [ encode "used" Json.Encode.float model.used
+            ]
+    in
+    pairs
+
+
+encodeTextExposition : TextExposition -> Json.Encode.Value
+encodeTextExposition =
+    encodeObject << encodeTextExpositionPairs
+
+
+encodeTextExpositionWithTag : ( String, String ) -> TextExposition -> Json.Encode.Value
+encodeTextExpositionWithTag (tagField, tag) model =
+    encodeObject (encodeTextExpositionPairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeTextExpositionPairs : TextExposition -> List EncodedField
+encodeTextExpositionPairs model =
+    let
+        pairs =
+            [ encode "pages" (Json.Encode.list encodeTextExpositionPage) model.pages
+            , encode "toolMeta" (Json.Encode.list encodeTextExpositionToolMeta) model.toolMeta
+            , encode "title" Json.Encode.string model.title
+            , encode "style" Json.Encode.string model.style
+            , maybeEncode "id" Json.Encode.string model.id
+            , encode "editorVersion" Json.Encode.string model.editorVersion
+            , encode "contentVersion" Json.Encode.int model.contentVersion
+            , encode "toc" (Json.Encode.list encodeTextExpositionTocEntry) model.toc
+            ]
+    in
+    pairs
+
+
+encodeTextExpositionPage : TextExpositionPage -> Json.Encode.Value
+encodeTextExpositionPage =
+    encodeObject << encodeTextExpositionPagePairs
+
+
+encodeTextExpositionPageWithTag : ( String, String ) -> TextExpositionPage -> Json.Encode.Value
+encodeTextExpositionPageWithTag (tagField, tag) model =
+    encodeObject (encodeTextExpositionPagePairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeTextExpositionPagePairs : TextExpositionPage -> List EncodedField
+encodeTextExpositionPagePairs model =
+    let
+        pairs =
+            [ encode "title" Json.Encode.string model.title
+            , encode "html" Json.Encode.string model.html
+            , encode "markdown" Json.Encode.string model.markdown
+            , maybeEncode "pageId" Json.Encode.int model.pageId
+            ]
+    in
+    pairs
+
+
+encodeTextExpositionTocEntry : TextExpositionTocEntry -> Json.Encode.Value
+encodeTextExpositionTocEntry =
+    encodeObject << encodeTextExpositionTocEntryPairs
+
+
+encodeTextExpositionTocEntryWithTag : ( String, String ) -> TextExpositionTocEntry -> Json.Encode.Value
+encodeTextExpositionTocEntryWithTag (tagField, tag) model =
+    encodeObject (encodeTextExpositionTocEntryPairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeTextExpositionTocEntryPairs : TextExpositionTocEntry -> List EncodedField
+encodeTextExpositionTocEntryPairs model =
+    let
+        pairs =
+            [ encode "level" Json.Encode.int model.level
+            , encode "title" Json.Encode.string model.title
+            , encode "id" Json.Encode.string model.id
+            , encode "page" Json.Encode.int model.page
+            ]
+    in
+    pairs
+
+
+encodeTextExpositionToolMeta : TextExpositionToolMeta -> Json.Encode.Value
+encodeTextExpositionToolMeta =
+    encodeObject << encodeTextExpositionToolMetaPairs
+
+
+encodeTextExpositionToolMetaWithTag : ( String, String ) -> TextExpositionToolMeta -> Json.Encode.Value
+encodeTextExpositionToolMetaWithTag (tagField, tag) model =
+    encodeObject (encodeTextExpositionToolMetaPairs model ++ [ encode tagField Json.Encode.string tag ])
+
+
+encodeTextExpositionToolMetaPairs : TextExpositionToolMeta -> List EncodedField
+encodeTextExpositionToolMetaPairs model =
+    let
+        pairs =
+            [ encode "mediaId" Json.Encode.string model.mediaId
+            , maybeEncode "caption" Json.Encode.string model.caption
+            , maybeEncode "userClass" Json.Encode.string model.userClass
             ]
     in
     pairs
@@ -1118,10 +1399,22 @@ inlineObjectDecoder =
         |> maybeDecode "file" Json.Decode.string Nothing
 
 
+inlineObject1Decoder : Json.Decode.Decoder InlineObject1
+inlineObject1Decoder =
+    Json.Decode.succeed InlineObject1
+        |> maybeDecode "file" Json.Decode.string Nothing
+
+
+inlineObject2Decoder : Json.Decode.Decoder InlineObject2
+inlineObject2Decoder =
+    Json.Decode.succeed InlineObject2
+        |> maybeDecode "filename" (Json.Decode.list Json.Decode.string) Nothing
+
+
 licenseDecoder : Json.Decode.Decoder License
 licenseDecoder =
     Json.Decode.succeed License
-        |> maybeDecode "id" Json.Decode.string Nothing
+        |> decode "id" Json.Decode.string 
         |> decode "externalURI" Json.Decode.string 
         |> maybeDecode "name" Json.Decode.string Nothing
 
@@ -1131,6 +1424,9 @@ mediaRecordDecoder =
     Json.Decode.succeed MediaRecord
         |> maybeDecode "id" Json.Decode.string Nothing
         |> maybeDecode "text" mediaRecordTextDecoder Nothing
+        |> maybeDecode "transcodingStatus"  Nothing
+        |> maybeDecode "width" Json.Decode.int Nothing
+        |> maybeDecode "height" Json.Decode.int Nothing
         |> decode "title" Json.Decode.string 
         |> decode "copyright" Json.Decode.string 
         |> decode "license" Json.Decode.string 
@@ -1141,11 +1437,35 @@ mediaRecordDecoder =
         |> maybeDecode "keywordsClosed" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "keywordsOpen" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "tags" (Json.Decode.list Json.Decode.string) Nothing
-        |> maybeDecode "recrodType" mediaRecordRecrodTypeDecoder Nothing
+        |> maybeDecode "recordType" mediaRecordRecordTypeDecoder Nothing
         |> maybeDecode "creationDate" Api.Time.dateDecoder Nothing
         |> maybeDecode "modifiedDate" Api.Time.dateDecoder Nothing
         |> maybeDecode "mediaDate" Api.Time.dateDecoder Nothing
         |> maybeDecode "connections" (Json.Decode.list connectionDecoder) Nothing
+
+
+mediaRecordTranscodingStatusDecoder : Json.Decode.Decoder MediaRecordTranscodingStatus
+mediaRecordTranscodingStatusDecoder =
+    Json.Decode.string
+        |> Json.Decode.andThen
+            (\value ->
+                case value of
+                    "noFile" ->
+                        Json.Decode.succeed MediaRecordTranscodingStatusNoFile
+
+                    "inProgress" ->
+                        Json.Decode.succeed MediaRecordTranscodingStatusInProgress
+
+                    "failed" ->
+                        Json.Decode.succeed MediaRecordTranscodingStatusFailed
+
+                    "transcoded" ->
+                        Json.Decode.succeed MediaRecordTranscodingStatusTranscoded
+
+                    other ->
+                        Json.Decode.fail <| "Unknown type: " ++ other
+            )
+
 
 
 mediaRecordMediaTypeDecoder : Json.Decode.Decoder MediaRecordMediaType
@@ -1178,9 +1498,9 @@ mediaRecordMediaTypeDecoder =
 
 
 
-mediaRecordRecrodTypeDecoder : Json.Decode.Decoder MediaRecordRecrodType
-mediaRecordRecrodTypeDecoder =
-    Json.Decode.succeed MediaRecordRecrodType
+mediaRecordRecordTypeDecoder : Json.Decode.Decoder MediaRecordRecordType
+mediaRecordRecordTypeDecoder =
+    Json.Decode.succeed MediaRecordRecordType
         |> maybeDecode "id" Json.Decode.string Nothing
         |> maybeDecode "metadata" objectDecoder Nothing
 
@@ -1228,7 +1548,7 @@ objectPointerDecoder =
     Json.Decode.succeed ObjectPointer
         |> decode "objectType"  
         |> decode "id" Json.Decode.string 
-        |> decode "pointer" objectPointerPointerDecoder 
+        |> maybeDecode "pointer" objectPointerPointerDecoder Nothing
 
 
 objectPointerObjectTypeDecoder : Json.Decode.Decoder ObjectPointerObjectType
@@ -1335,6 +1655,7 @@ searchRequestDecoder =
         |> maybeDecode "tag" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "keywordsClosed" (Json.Decode.list Json.Decode.string) Nothing
         |> maybeDecode "keywordsOpen" (Json.Decode.list Json.Decode.string) Nothing
+        |> maybeDecode "textContent" Json.Decode.string Nothing
         |> maybeDecode "connectedTo" (Json.Decode.list Json.Decode.string) Nothing
 
 
@@ -1386,6 +1707,51 @@ shareStatusWriteDecoder : Json.Decode.Decoder ShareStatusWrite
 shareStatusWriteDecoder =
     Json.Decode.succeed ShareStatusWrite
         |> decode "users" (Json.Decode.list Json.Decode.string) 
+
+
+storageUsageDecoder : Json.Decode.Decoder StorageUsage
+storageUsageDecoder =
+    Json.Decode.succeed StorageUsage
+        |> decode "used" Json.Decode.float 
+
+
+textExpositionDecoder : Json.Decode.Decoder TextExposition
+textExpositionDecoder =
+    Json.Decode.succeed TextExposition
+        |> decode "pages" (Json.Decode.list textExpositionPageDecoder) 
+        |> decode "toolMeta" (Json.Decode.list textExpositionToolMetaDecoder) 
+        |> decode "title" Json.Decode.string 
+        |> decode "style" Json.Decode.string 
+        |> maybeDecode "id" Json.Decode.string Nothing
+        |> decode "editorVersion" Json.Decode.string 
+        |> decode "contentVersion" Json.Decode.int 
+        |> decode "toc" (Json.Decode.list textExpositionTocEntryDecoder) 
+
+
+textExpositionPageDecoder : Json.Decode.Decoder TextExpositionPage
+textExpositionPageDecoder =
+    Json.Decode.succeed TextExpositionPage
+        |> decode "title" Json.Decode.string 
+        |> decode "html" Json.Decode.string 
+        |> decode "markdown" Json.Decode.string 
+        |> maybeDecode "pageId" Json.Decode.int Nothing
+
+
+textExpositionTocEntryDecoder : Json.Decode.Decoder TextExpositionTocEntry
+textExpositionTocEntryDecoder =
+    Json.Decode.succeed TextExpositionTocEntry
+        |> decode "level" Json.Decode.int 
+        |> decode "title" Json.Decode.string 
+        |> decode "id" Json.Decode.string 
+        |> decode "page" Json.Decode.int 
+
+
+textExpositionToolMetaDecoder : Json.Decode.Decoder TextExpositionToolMeta
+textExpositionToolMetaDecoder =
+    Json.Decode.succeed TextExpositionToolMeta
+        |> decode "mediaId" Json.Decode.string 
+        |> maybeDecode "caption" Json.Decode.string Nothing
+        |> maybeDecode "userClass" Json.Decode.string Nothing
 
 
 timePointerDecoder : Json.Decode.Decoder TimePointer

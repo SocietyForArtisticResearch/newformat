@@ -29,20 +29,27 @@ module Api.Request.User exposing
     , getMediaThumb
     , getPredicates
     , getShareStatus
+    , getStorageUsage
     , getTags
+    , getTextExposition
     , getTypes
     , getTypesSchema
     , mediaMediaIdDelete
-    , mediaSearchGet
+    , mediaSearchPost
     , postConnection
     , postKeywordsOpen
     , postMedia
     , postTag
+    , postTextExpositionExport, Type(..), type_Variants
+    , postTextPage
     , putConnection
     , putMedia
     , putMediaFile
+    , putMediaImportDoc
+    , putMediaImportFolder
     , putMediaThumb
     , putShareStatus
+    , putTextExposition
     )
 
 import Api
@@ -51,6 +58,60 @@ import Dict
 import Http
 import Json.Decode
 import Json.Encode
+
+
+type Type
+    = TypePdf
+    | TypeTex
+    | TypeDocx
+    | TypeOdt
+    | TypeEpub
+    | TypeOdt
+    | TypeHtml
+    | TypeMd
+
+
+type_Variants : List Type
+type_Variants =
+    [ TypePdf
+    , TypeTex
+    , TypeDocx
+    , TypeOdt
+    , TypeEpub
+    , TypeOdt
+    , TypeHtml
+    , TypeMd
+    ]
+
+
+stringFromType : Type -> String
+stringFromType model =
+    case model of
+        TypePdf ->
+            "pdf"
+
+        TypeTex ->
+            "tex"
+
+        TypeDocx ->
+            "docx"
+
+        TypeOdt ->
+            "odt"
+
+        TypeEpub ->
+            "epub"
+
+        TypeOdt ->
+            "odt"
+
+        TypeHtml ->
+            "html"
+
+        TypeMd ->
+            "md"
+
+
 
 
 
@@ -132,6 +193,8 @@ getKeywordsOpen startingWith_query limit_query =
 
 
 
+{-| Licenses are retrieved from 'https://voc.uni-ak.ac.at/skosmos/licenses/en/page/?uri=http://base.uni-ak.ac.at/portfolio/licenses/CC-BY-NC-SA-4.0'
+-}
 getLicenses : Api.Request (List Api.Data.License)
 getLicenses =
     Api.request
@@ -238,6 +301,19 @@ getShareStatus mediaId_path =
 
 
 
+getStorageUsage : Api.Request Api.Data.StorageUsage
+getStorageUsage =
+    Api.request
+        "GET"
+        "/storage/usage"
+        []
+        []
+        []
+        Nothing
+        Api.Data.storageUsageDecoder
+
+
+
 getTags : Api.Request (List Api.Data.OpenVocabularyTerm)
 getTags =
     Api.request
@@ -248,6 +324,19 @@ getTags =
         []
         Nothing
         (Json.Decode.list Api.Data.openVocabularyTermDecoder)
+
+
+
+getTextExposition : String -> Api.Request Api.Data.TextExposition
+getTextExposition expositionId_path =
+    Api.request
+        "GET"
+        "/text-editor/{expositionId}"
+        [ ( "expositionId", identity expositionId_path ) ]
+        []
+        []
+        Nothing
+        Api.Data.textExpositionDecoder
 
 
 
@@ -277,7 +366,7 @@ getTypesSchema schemaId_path =
 
 
 
-{-| deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition.
+{-| Deletes a media record and also the respective share status object. It cannot be deleted if media record is used in exposition. Connections to other entities should be removed.
 -}
 mediaMediaIdDelete : String -> Api.Request ()
 mediaMediaIdDelete mediaId_path =
@@ -292,10 +381,10 @@ mediaMediaIdDelete mediaId_path =
 
 
 
-mediaSearchGet : Api.Data.SearchRequest -> Api.Request (List Api.Data.MediaRecord)
-mediaSearchGet searchRequest_body =
+mediaSearchPost : Api.Data.SearchRequest -> Api.Request (List Api.Data.MediaRecord)
+mediaSearchPost searchRequest_body =
     Api.request
-        "GET"
+        "POST"
         "/media/search"
         []
         []
@@ -359,6 +448,32 @@ postTag body_body =
 
 
 
+postTextExpositionExport : String -> Maybe Type -> Api.Request String
+postTextExpositionExport expositionId_path type__query =
+    Api.request
+        "POST"
+        "/text-editor/export/{expositionId}"
+        [ ( "expositionId", identity expositionId_path ) ]
+        [ ( "type", Maybe.map stringFromType type__query ) ]
+        []
+        Nothing
+        Json.Decode.string
+
+
+
+postTextPage : String -> Api.Request Api.Data.TextExpositionPage
+postTextPage expositionId_path =
+    Api.request
+        "POST"
+        "/text-editor/page/{expositionId}"
+        [ ( "expositionId", identity expositionId_path ) ]
+        []
+        []
+        Nothing
+        Api.Data.textExpositionPageDecoder
+
+
+
 putConnection : String -> Api.Data.Connection -> Api.Request ()
 putConnection connectionId_path connection_body =
     Api.request
@@ -372,6 +487,8 @@ putConnection connectionId_path connection_body =
 
 
 
+{-| Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships between that markdown and the media records it references through !{} notation. 
+-}
 putMedia : String -> Api.Data.MediaRecord -> Api.Request Api.Data.MediaRecord
 putMedia mediaId_path mediaRecord_body =
     Api.request
@@ -398,6 +515,32 @@ putMediaFile mediaId_path file =
 
 
 
+putMediaImportDoc : String -> Maybe String -> Api.Request Api.Data.MediaRecord
+putMediaImportDoc mediaId_path file =
+    Api.request
+        "PUT"
+        "/media/{mediaId}/import/doc"
+        [ ( "mediaId", identity mediaId_path ) ]
+        []
+        []
+        Nothing
+        Api.Data.mediaRecordDecoder
+
+
+
+putMediaImportFolder : String -> Maybe List String -> Api.Request Api.Data.MediaRecord
+putMediaImportFolder mediaId_path filename =
+    Api.request
+        "PUT"
+        "/media/{mediaId}/import/folder"
+        [ ( "mediaId", identity mediaId_path ) ]
+        []
+        []
+        Nothing
+        Api.Data.mediaRecordDecoder
+
+
+
 putMediaThumb : String -> String -> Api.Request ()
 putMediaThumb mediaId_path body_body =
     Api.request
@@ -421,3 +564,16 @@ putShareStatus mediaId_path shareStatus_body =
         []
         (Just (Api.Data.encodeShareStatus shareStatus_body))
         Api.Data.shareStatusDecoder
+
+
+
+putTextExposition : String -> Api.Data.TextExposition -> Api.Request Api.Data.TextExposition
+putTextExposition expositionId_path textExposition_body =
+    Api.request
+        "PUT"
+        "/text-editor/{expositionId}"
+        [ ( "expositionId", identity expositionId_path ) ]
+        []
+        []
+        (Just (Api.Data.encodeTextExposition textExposition_body))
+        Api.Data.textExpositionDecoder

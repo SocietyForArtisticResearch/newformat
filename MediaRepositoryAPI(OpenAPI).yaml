@@ -172,7 +172,10 @@ paths:
     post:
       tags:
         - user
-      summary: Search for media records using the search filter
+      summary: |
+        Search for media records using the search filter.
+        This is also used for obtaining the media used in an exposition
+        as these are all "connected-to" the exposition. 
       requestBody:
         required: true
         content:
@@ -188,8 +191,7 @@ paths:
                 type: array 
                 items:
                   $ref: '#/components/schemas/MediaRecord'
-        
-          
+                  
   /media/index:
     get:
       tags: 
@@ -328,7 +330,7 @@ paths:
       post:
         tags:
           - user
-        summary: Create a connection. The requester needs to have write permission for the subject entity and write or read permission for the object.
+        summary: Create a connection. The requester needs to have at least write permission for the subject entity and write or read permission for the object. When a MediaRecord is used in an exposition a connection needs to be created.
         operationId: postConnection
         requestBody:
           required: true        
@@ -850,6 +852,8 @@ paths:
           description: Exposition not found
   /text-editor/page/{expositionId}:
     post:
+      tags:
+        - user
       summary: Create a new empty page. There is no request body as pages are saved with the exposition.
       operationId: postTextPage
       parameters:
@@ -863,6 +867,8 @@ paths:
                 $ref: '#/components/schemas/TextExpositionPage'
   /text-editor/export/{expositionId}:
     post:
+      tags:
+        - user
       summary: Use pandoc to export exposition.
       operationId: postTextExpositionExport
       parameters:
@@ -926,7 +932,6 @@ components:
       required:
        - objectType
        - id
-       - pointer
       properties:
         objectType:
           type: string
@@ -1098,7 +1103,7 @@ components:
           description: >-
             tags by user, non existing tags are added automatically, obtained by
             /tags/#userid
-        recrodType:
+        recordType:
           description: Type obtained from the portfolio API ...
           type: object
           properties:
@@ -1273,7 +1278,7 @@ components:
       properties:
         mediaId:
           type: string
-        name:
+        caption:
           type: string
         userClass:
           type: string
@@ -1390,23 +1395,21 @@ components:
           items:
             type: string
           description: Open vocabulary keywords ids
+        textContent:
+          type: string
+          description: Full text search in text MediaRecords (only for text media records)
         connectedTo:
           type: array
           items:
             type: string
           description: A list of media record or exposition ids that the search result should be connected to as subject or object.
     StorageUsage:
-      description: see the used and available space for a user
+      description: See the space used by a user
       type: object
       required:
         - used
-        - available
       properties:
         used:
           type: number
           format: float
           description: used space in kiloBytes
-        available: 
-          type: number
-          format: float
-          description: available space in kiloBytes

@@ -148,8 +148,6 @@ type MediaRepositoryAPI
     :<|> "predicates" :> ReqBody '[JSON] Predicate :> Verb 'POST 200 '[JSON] Predicate -- 'postPredicate' route
     :<|> "keywords" :> "closed" :> Capture "keywordId" Text :> ReqBody '[JSON] VocabularyTerm :> Verb 'PUT 200 '[JSON] () -- 'putKeywordsClosed' route
     :<|> "predicates" :> Capture "predicateId" Text :> ReqBody '[JSON] Predicate :> Verb 'PUT 200 '[JSON] () -- 'putPredicate' route
-    :<|> "text-editor" :> "export" :> Capture "expositionId" Text :> QueryParam "type" Text :> Verb 'POST 200 '[JSON] FilePath -- 'postTextExpositionExport' route
-    :<|> "text-editor" :> "page" :> Capture "expositionId" Text :> Verb 'POST 200 '[JSON] TextExpositionPage -- 'postTextPage' route
     :<|> "media" :> "index" :> "public" :> Verb 'GET 200 '[JSON] [MediaRecord] -- 'getPublicMediaIndex' route
     :<|> "connection" :> Capture "connectionId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deleteConnection' route
     :<|> "keywords" :> "open" :> Capture "openKeywordId" Text :> Verb 'DELETE 200 '[JSON] () -- 'deleteKeywordsOpen' route
@@ -176,6 +174,8 @@ type MediaRepositoryAPI
     :<|> "keywords" :> "open" :> ReqBody '[JSON] Text :> Verb 'POST 200 '[JSON] OpenVocabularyTerm -- 'postKeywordsOpen' route
     :<|> "media" :> ReqBody '[JSON] MediaRecord :> Verb 'POST 200 '[JSON] MediaRecord -- 'postMedia' route
     :<|> "tags" :> ReqBody '[JSON] Text :> Verb 'POST 200 '[JSON] OpenVocabularyTerm -- 'postTag' route
+    :<|> "text-editor" :> "export" :> Capture "expositionId" Text :> QueryParam "type" Text :> Verb 'POST 200 '[JSON] FilePath -- 'postTextExpositionExport' route
+    :<|> "text-editor" :> "page" :> Capture "expositionId" Text :> Verb 'POST 200 '[JSON] TextExpositionPage -- 'postTextPage' route
     :<|> "connection" :> Capture "connectionId" Text :> ReqBody '[JSON] Connection :> Verb 'PUT 200 '[JSON] () -- 'putConnection' route
     :<|> "media" :> Capture "mediaId" Text :> ReqBody '[JSON] MediaRecord :> Verb 'PUT 200 '[JSON] MediaRecord -- 'putMedia' route
     :<|> "media" :> Capture "mediaId" Text :> "file" :> ReqBody '[FormUrlEncoded] FormPutMediaFile :> Verb 'PUT 200 '[JSON] () -- 'putMediaFile' route
@@ -210,8 +210,6 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , postPredicate :: Predicate -> m Predicate{- ^  -}
   , putKeywordsClosed :: Text -> VocabularyTerm -> m (){- ^  -}
   , putPredicate :: Text -> Predicate -> m (){- ^  -}
-  , postTextExpositionExport :: Text -> Maybe Text -> m FilePath{- ^  -}
-  , postTextPage :: Text -> m TextExpositionPage{- ^  -}
   , getPublicMediaIndex :: m [MediaRecord]{- ^  -}
   , deleteConnection :: Text -> m (){- ^  -}
   , deleteKeywordsOpen :: Text -> m (){- ^  -}
@@ -238,6 +236,8 @@ data MediaRepositoryBackend m = MediaRepositoryBackend
   , postKeywordsOpen :: Text -> m OpenVocabularyTerm{- ^  -}
   , postMedia :: MediaRecord -> m MediaRecord{- ^ Upload a media file, providing the required fields returns the id of the media. A ShareStatus object is created automatically for this media record. -}
   , postTag :: Text -> m OpenVocabularyTerm{- ^  -}
+  , postTextExpositionExport :: Text -> Maybe Text -> m FilePath{- ^  -}
+  , postTextPage :: Text -> m TextExpositionPage{- ^  -}
   , putConnection :: Text -> Connection -> m (){- ^  -}
   , putMedia :: Text -> MediaRecord -> m MediaRecord{- ^ Every time the text of a media record is edited or created, the markdown has to be parsed to recompute relationships between that markdown and the media records it references through !{} notation.  -}
   , putMediaFile :: Text -> FormPutMediaFile -> m (){- ^  -}
@@ -275,8 +275,6 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> postPredicate) :<|>
      (coerce -> putKeywordsClosed) :<|>
      (coerce -> putPredicate) :<|>
-     (coerce -> postTextExpositionExport) :<|>
-     (coerce -> postTextPage) :<|>
      (coerce -> getPublicMediaIndex) :<|>
      (coerce -> deleteConnection) :<|>
      (coerce -> deleteKeywordsOpen) :<|>
@@ -303,6 +301,8 @@ createMediaRepositoryClient = MediaRepositoryBackend{..}
      (coerce -> postKeywordsOpen) :<|>
      (coerce -> postMedia) :<|>
      (coerce -> postTag) :<|>
+     (coerce -> postTextExpositionExport) :<|>
+     (coerce -> postTextPage) :<|>
      (coerce -> putConnection) :<|>
      (coerce -> putMedia) :<|>
      (coerce -> putMediaFile) :<|>
@@ -364,8 +364,6 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce postPredicate :<|>
        coerce putKeywordsClosed :<|>
        coerce putPredicate :<|>
-       coerce postTextExpositionExport :<|>
-       coerce postTextPage :<|>
        coerce getPublicMediaIndex :<|>
        coerce deleteConnection :<|>
        coerce deleteKeywordsOpen :<|>
@@ -392,6 +390,8 @@ runMediaRepositoryMiddlewareServer Config{..} middleware backend = do
        coerce postKeywordsOpen :<|>
        coerce postMedia :<|>
        coerce postTag :<|>
+       coerce postTextExpositionExport :<|>
+       coerce postTextPage :<|>
        coerce putConnection :<|>
        coerce putMedia :<|>
        coerce putMediaFile :<|>
