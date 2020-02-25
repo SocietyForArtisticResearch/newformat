@@ -314,3 +314,7 @@ see swagger/python-flask-server-generated
 to run, please refer to the readme.
 Also note that I had to patch util.py because of this:
 https://github.com/zalando/connexion/issues/739
+
+
+* NOTES from berlin meeting 15th of February
+* Search by plain text
