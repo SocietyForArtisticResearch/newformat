@@ -1,0 +1,64 @@
+@import url('http://fonts.googleapis.com/css?family=Inconsolata');
+@import url('http://fonts.googleapis.com/css?family=Lato:400');
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+body {
+    background-color: #ebebeb
+}
+
+.reveal .title {
+    text-align: left;
+    border-bottom: 2px solid;
+    padding-bottom: 20px;
+}
+
+
+.reveal .author {
+    text-align: left;
+}
+
+
+.reveal .date {
+    text-align: left;
+    font-size: 0.75em;
+}
+
+.reveal p {
+    text-align: left;
+}
+
+
+.reveal .figure p {
+    text-align: unset;
+}
+
+.reveal {
+    font-size: 33px;
+    font-family: 'Lato', 'sans-serif';
+}
+
+.reveal .slides {
+    zoom: 1.45 !important; 
+}
+
+
+.reveal li {
+    margin-bottom: 12px;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+    font-family: 'Lato', 'sans-serif';
+    text-transform: none;
+    text-shadow: none;
+    font-weight: 400;
+}
+
+.reveal h1 { font-size: 2.5em; }
+.reveal h2 { font-size: 1.75em; }
+.reveal h3 { font-size: 1.5em; }
+.reveal h4 { font-size: 1.25em; }
+
+.reveal section img {
+    margin: 10px 0px
+}

@@ -1,0 +1,114 @@
+#+REVEAL_THEME: white
+#+REVEAL_EXTRA_CSS: style.css
+#+DATE: February 2020
+#+TITLE: Unfinished Publication
+#+AUTHOR: Döbereiner and Schipper
+#+OPTIONS: toc:nil
+#+OPTIONS: timestamp:nil
+#+OPTIONS: num:nil
+#+LANGUAGE: en
+#+REVEAL_PLUGINS: (highlight)
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+
+* 
+#+ATTR_HTML: :style width:40%;
+[[file:./perec.png]] 
+
+
+* The RC Exposition
+#+ATTR_REVEAL: :frag (appear)
+- Knowledge, writing an reading are inseparable from sensory and aesthetic experience
+- Online rich media format for publication, reviewing, archiving of
+  artistic research
+- Extended form of academic writing (as making)
+- Reflexivity of aesthetic knowledge 
+- Experimentation with translations of practices
+- Answers to everyday problems of the making, dissemination and
+  publication of artistic research
+
+* Challenges 
+#+ATTR_REVEAL: :frag (appear)
+- Focus on fixity of publication
+- Note taking and sketching
+- Relating things, expressing structure
+- Absolute positioning (poster and page printing paradigms)
+- "Visucentrism"
+- Materiality of the digital medium
+- Digital obsolescence 
+
+* The Exposition as a Digital Object
+#+ATTR_REVEAL: :frag (appear)
+- Digital objects exist in relation to their milieux
+- Malleable entity that adapts
+- Multiplicity of rendering methods, ways of querying 
+- Role of the author
+- Format specification
+
+** Relations
+
+#+ATTR_REVEAL: :frag (appear)
+- Data (such as text, media objects, etc.) can be related 
+  - Visually (above, below, etc.)
+  - Temporally (after, before, etc.)
+  - Semantically (annotation, comment, reference, representation, etc.)   
+- Networks of relation that can be *rendered* and *transposed*
+- Multiple layers of relations
+
+** Unfinished Publication
+#+ATTR_REVEAL: :frag (appear)
+- Open-endedness of art and documentation
+- Version control
+- Diverse reading practices 
+- How can reading affect the object?
+
+* notes :noexport:
+** Expositions as Digital Objects
+
+*** Respond to display device
+*** Program the behavior of an exposition
+*** A format makes exposition independent from a single implementation
+*** Dynamic entity that can be connected to services, devices and other digital objects
+*** Ensure (long term) accessibility
+*** Extensibility 
+
+
+  static two-dimensional visual presentation
+
+  temporal
+  malleability and its existence in a multiplicity of milieux
+
+
+
+
+
+** Questions
+*** Modes of writing
+*** Relations, milieu
+*** Forms of knowledge, aesthetic experience and materiality
+*** Publishing practice
+*** Diverse reading practices, how to affect object?
+
+** how can reading affect the object
+
+
+** Documentation
+*** Social and technological context
+*** Publication: fixed, persistence and referenceability, assessability
+*** Open-endedness of art and documentation
+
+** Digital object
+*** Dynamic nature of web technologies
+*** Responsiveness
+*** Different role of the author
+*** Dominance of the visual
+
+** Milieus 
+ Digital objects and digital tools are constituted in a dynamic
+ networks of relations with other technologies, human actors and
+ quasi-natural environmental objects
+** Multiplicity
+** Adabtability
+** Programmability
+** Relations
+** Trace reading, malleable object
